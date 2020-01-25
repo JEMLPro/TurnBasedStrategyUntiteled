@@ -5,16 +5,16 @@ using UnityEngine;
 public class Create_Map : MonoBehaviour
 {
     [SerializeField]
-    GameObject m_Cell;
+    GameObject m_Cell; // The prefab for the cell object. Used for spawning clones. 
 
     [SerializeField]
-    List<GameObject> m_GridMap;
+    List<GameObject> m_GridMap; // This will hold references to all of the cells created within this function. allowing for access later. 
 
     [SerializeField]
-    int m_Rows = 2, m_Columns = 2;
+    int m_Rows = 2, m_Columns = 2; // The Default dimentions for the grid, can be modified within engine. 
 
     [SerializeField]
-    Transform m_StartPos;
+    Transform m_StartPos; // The empty game object which will act as the parent of all the cell objects. The transform will be used to place the grid. 
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +43,7 @@ public class Create_Map : MonoBehaviour
 
         Debug.Log("Map Created with " + m_GridMap.Count + " Cells."); 
 
-        // Assign Cell Neighbours. 
+        // Assign Cell Neighbours. Used for pathfinding. 
 
         for(int i = 0; i < m_GridMap.Count; i++)
         {
@@ -81,12 +81,7 @@ public class Create_Map : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Will be used to return a game object at a position (X, Y). 
     GameObject m_FindGridPos(int x, int y)
     {
         for(int i = 0; i < m_GridMap.Count; i++)
@@ -100,6 +95,7 @@ public class Create_Map : MonoBehaviour
         return null;
     }
 
+    // Will return a random cell. Used for debugging. 
     public GameObject m_GetRandomCell()
     {
         if(m_GridMap.Count > 0)

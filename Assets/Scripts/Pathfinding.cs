@@ -4,39 +4,44 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
-    [SerializeField]
-    Material m_ClosedSetMat;
+    // Materials. Used for debugging.
 
     [SerializeField]
-    Material m_OpenSetMat;
+    Material m_ClosedSetMat; // Used for closed set. 
 
     [SerializeField]
-    Material m_PathMat;
+    Material m_OpenSetMat; // Used for open set. 
 
     [SerializeField]
-    GameObject m_GameMap; 
+    Material m_PathMat; // Used for final path. 
+
+    // Main Items. 
 
     [SerializeField]
-    List<GameObject> m_OpenSet;
+    GameObject m_GameMap; // The map which cantains all cells.
 
     [SerializeField]
-    List<GameObject> m_ClosedSet;
+    List<GameObject> m_OpenSet; // The list of items to check. 
 
     [SerializeField]
-    GameObject m_StartCell; 
+    List<GameObject> m_ClosedSet; // A list of already checked items. 
+
 
     [SerializeField]
-    GameObject m_CurrentCell;
+    GameObject m_StartCell; // The starting point for the path. 
 
     [SerializeField]
-    GameObject m_EndCell;
+    GameObject m_CurrentCell; // The current cell being reviewed. 
 
-    float m_MovementCost = 10;
+    [SerializeField] 
+    GameObject m_EndCell; // The goal for the path, the end point for the algorithm. 
+
+    float m_MovementCost = 10; // The cost it takes to move from one cell to another. Can be refined with different cell costs. 
 
     [SerializeField]
-    List<GameObject> m_Path;
+    List<GameObject> m_Path; // The final path for the algorithm. 
 
-    bool m_FoundPath = false; 
+    bool m_FoundPath = false; // Used to end the findig algorithm. 
 
     // Start is called before the first frame update
     void Start()
@@ -54,17 +59,26 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    // This will continue to look for the end point until it is found and will construct a path along the way. 
     void m_FindPath()
     {
-        if (m_CurrentCell == null && m_EndCell == null)
+        // If there is no start/end cell generate one. For debugging. 
+
+        if (m_StartCell == null && m_EndCell == null)
         {
             m_StartCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
-
-            m_CurrentCell = m_StartCell; 
 
             m_EndCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
         }
 
+        // If there is no current cell it becomes equal to the start cell. 
+
+        if(m_CurrentCell == null)
+        { 
+            m_CurrentCell = m_StartCell;
+        }
+
+        // Check if we are at the goal.
         if (m_CurrentCell != m_EndCell)
         {
             // Add Current Cell's neighbours to open list; 
@@ -77,7 +91,7 @@ public class Pathfinding : MonoBehaviour
             m_CalculateHScore(m_OpenSet, m_CurrentCell, m_MovementCost);
             m_CalculateFScore(m_OpenSet);
 
-            // Add Current cell to closed set
+            // Add Current cell to closed set.
 
             m_AddCellsToClosedSet(m_CurrentCell);
 
@@ -85,7 +99,7 @@ public class Pathfinding : MonoBehaviour
 
             m_OpenSet.Remove(m_CurrentCell);
 
-            // Add To path
+            // Add To path.
 
             m_Path.Add(m_CurrentCell);
 
@@ -108,6 +122,7 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    // Used to change the look of the affected cells. For Debugging. 
     void m_SetColours()
     {
         for(int i = 0; i < m_OpenSet.Count; i++)
@@ -126,6 +141,7 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    // Use to add new cells to the open set. (Prevents duplicates).
     void m_AddCellsToOpenSet(GameObject currentCell)
     {
         // Add Up
@@ -257,6 +273,7 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    // Use to add new cells to the closed set. (Prevents duplicates).
     void m_AddCellsToClosedSet(GameObject currentCell)
     {
         bool l_AddCell = true;
@@ -275,6 +292,7 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    // Finds the cell with the lowest F score. This will become the next current cell. 
     GameObject m_FindCellWithLowestFScore()
     {
         GameObject l_LowestF = m_OpenSet[0]; 
@@ -290,12 +308,11 @@ public class Pathfinding : MonoBehaviour
         return l_LowestF; 
     }
 
+    // Calculate the G score for all of the cells in the open set. 
     void m_CalculateGScore(List<GameObject> openSet, GameObject endCell, float moveCost)
     {
         for (int i = 0; i < openSet.Count; i++)
-        {
-            float l_GScore = 0;
-
+        { 
             int l_GridPosXOne = openSet[i].GetComponent<Cell_Info>().m_GetGridPos().x;
             int l_GridPosXTwo = endCell.GetComponent<Cell_Info>().m_GetGridPos().x;
 
@@ -324,20 +341,17 @@ public class Pathfinding : MonoBehaviour
                 l_YMove = l_GridPosYTwo - l_GridPosYOne;
             }
 
-            l_GScore = (l_XMove * moveCost) + (l_YMove * moveCost);
-
-            Debug.Log(l_GScore);
+            float l_GScore = (l_XMove * moveCost) + (l_YMove * moveCost);
 
             openSet[i].GetComponent<Cell_Info>().m_SetGScore(l_GScore); 
         }
     }
 
+    // Calculate the H score for all of the cells in the open set. 
     void m_CalculateHScore(List<GameObject> openSet, GameObject currentCell, float moveCost)
     {
         for (int i = 0; i < openSet.Count; i++)
         {
-            float l_HScore = 0;
-
             int l_GridPosXOne = openSet[i].GetComponent<Cell_Info>().m_GetGridPos().x;
             int l_GridPosXTwo = currentCell.GetComponent<Cell_Info>().m_GetGridPos().x;
 
@@ -366,21 +380,18 @@ public class Pathfinding : MonoBehaviour
                 l_YMove = l_GridPosYTwo - l_GridPosYOne;
             }
 
-            l_HScore = (l_XMove * moveCost) + (l_YMove * moveCost);
-
-            Debug.Log(l_HScore);
+            float l_HScore = (l_XMove * moveCost) + (l_YMove * moveCost);
 
             openSet[i].GetComponent<Cell_Info>().m_SetHScore(l_HScore);
         }
     }
 
+    // Calculate the F score for all of the cells in the open set. 
     void m_CalculateFScore(List<GameObject> openSet)
     {
-        float l_FScore = 0; 
-
         for (int i = 0; i < openSet.Count; i++)
         {
-            l_FScore = openSet[i].GetComponent<Cell_Info>().m_GetGScore() + openSet[i].GetComponent<Cell_Info>().m_GetHScore;
+            float l_FScore = openSet[i].GetComponent<Cell_Info>().m_GetGScore() + openSet[i].GetComponent<Cell_Info>().m_GetHScore;
 
             openSet[i].GetComponent<Cell_Info>().m_SetFScore(l_FScore); 
         }
