@@ -151,8 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Cell: {fileID: 4348686584362636035, guid: ff32ab8b040592b41af9df9be0bd08c8, type: 3}
   m_GridMap: []
-  m_Rows: 10
-  m_Columns: 10
+  m_Rows: 50
+  m_Columns: 50
   m_StartPos: {fileID: 0}
 --- !u!4 &464421127
 Transform:
@@ -259,6 +259,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &910865048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910865050}
+  - component: {fileID: 910865049}
+  m_Layer: 0
+  m_Name: Pathfinding
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &910865049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910865048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78f3ab73121800469bca01ce5296851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ClosedSetMat: {fileID: 2100000, guid: f3ac8617e4dbd874c896fdf25f1969f7, type: 2}
+  m_OpenSetMat: {fileID: 2100000, guid: 80e140374c504ff46a8905036c22819a, type: 2}
+  m_PathMat: {fileID: 2100000, guid: 59fc952f5bd9f7d46b07ff5891378520, type: 2}
+  m_GameMap: {fileID: 464421125}
+  m_OpenSet: []
+  m_ClosedSet: []
+  m_StartCell: {fileID: 0}
+  m_CurrentCell: {fileID: 0}
+  m_EndCell: {fileID: 0}
+  m_Path: []
+--- !u!4 &910865050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910865048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.8102636, y: 4.313431, z: 0.28243068}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

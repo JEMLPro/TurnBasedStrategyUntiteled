@@ -91,3 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1563e5b0b5a8499ec46b70a1f2552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CellUp: {fileID: 0}
+  m_CellDown: {fileID: 0}
+  m_CellLeft: {fileID: 0}
+  m_CellRight: {fileID: 0}
+  m_HScore: 0
+  m_GScore: 0
+  m_FScore: 0

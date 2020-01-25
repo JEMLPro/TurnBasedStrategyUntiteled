@@ -5,6 +5,15 @@ using UnityEngine;
 public class Pathfinding : MonoBehaviour
 {
     [SerializeField]
+    Material m_ClosedSetMat;
+
+    [SerializeField]
+    Material m_OpenSetMat;
+
+    [SerializeField]
+    Material m_PathMat;
+
+    [SerializeField]
     GameObject m_GameMap; 
 
     [SerializeField]
@@ -12,6 +21,9 @@ public class Pathfinding : MonoBehaviour
 
     [SerializeField]
     List<GameObject> m_ClosedSet;
+
+    [SerializeField]
+    GameObject m_StartCell; 
 
     [SerializeField]
     GameObject m_CurrentCell;
@@ -29,7 +41,7 @@ public class Pathfinding : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_CurrentCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
+        m_StartCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
         m_EndCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
     }
 
@@ -46,7 +58,10 @@ public class Pathfinding : MonoBehaviour
     {
         if (m_CurrentCell == null && m_EndCell == null)
         {
-            m_CurrentCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
+            m_StartCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
+
+            m_CurrentCell = m_StartCell; 
+
             m_EndCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
         }
 
@@ -78,6 +93,10 @@ public class Pathfinding : MonoBehaviour
 
             m_CurrentCell = m_FindCellWithLowestFScore();
 
+            // Update Colours 
+
+            m_SetColours(); 
+
         }
         else
         {
@@ -86,6 +105,24 @@ public class Pathfinding : MonoBehaviour
             Debug.Log("Reached End Cell");
 
             m_FoundPath = true; 
+        }
+    }
+
+    void m_SetColours()
+    {
+        for(int i = 0; i < m_OpenSet.Count; i++)
+        {
+            m_OpenSet[i].GetComponent<Renderer>().material = m_OpenSetMat; 
+        }
+
+        for (int i = 0; i < m_ClosedSet.Count; i++)
+        {
+            m_ClosedSet[i].GetComponent<Renderer>().material = m_ClosedSetMat;
+        }
+
+        for (int i = 0; i < m_Path.Count; i++)
+        {
+            m_Path[i].GetComponent<Renderer>().material = m_PathMat;
         }
     }
 
