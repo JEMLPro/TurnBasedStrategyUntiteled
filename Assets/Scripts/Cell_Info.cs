@@ -22,7 +22,16 @@ public class Cell_Info : MonoBehaviour
     GameObject m_CellLeft = null;
 
     [SerializeField]
-    GameObject m_CellRight = null; 
+    GameObject m_CellRight = null;
+
+    [SerializeField]
+    float m_HScore = 0; // The Cost to get from the currnt node to this one. 
+
+    [SerializeField]
+    float m_GScore = 0; // The cost to get from this cell to the end cell. 
+
+    [SerializeField]
+    float m_FScore = 0; // The combination of G and H scores to get final score. 
 
     // Start is called before the first frame update
     void Start()
@@ -107,4 +116,25 @@ public class Cell_Info : MonoBehaviour
 
         return null;
     }
+
+    public void m_SetGScore(float newG)
+    {
+        m_GScore = newG; 
+    }
+
+    public float m_GetGScore() => m_GScore;
+
+    public void m_SetHScore(float newH)
+    {
+        m_HScore = newH;
+    }
+
+    public float m_GetHScore => m_HScore;
+
+    public void m_SetFScore(float newF)
+    {
+        m_FScore = newF;
+    }
+
+    public float m_GetFScore => m_FScore;
 }

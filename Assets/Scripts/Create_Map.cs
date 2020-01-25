@@ -99,4 +99,14 @@ public class Create_Map : MonoBehaviour
 
         return null;
     }
+
+    public GameObject m_GetRandomCell()
+    {
+        if(m_GridMap.Count > 0)
+        {
+            return m_GridMap[Random.Range(0, m_GridMap.Count)];
+        }
+
+        return null; 
+    }
 }
