@@ -66,12 +66,28 @@ public class Resource_Manager : MonoBehaviour
         }
     }
 
+    // Manage Gold
+
     public void m_AddToGold(float addAmount)
     {
         m_Gold += addAmount;
     }
 
-    public float m_GetGold() => m_Gold; 
+    public float m_GetGold() => m_Gold;
+
+    public bool m_RemoveGold(float removeAmount)
+    {
+        if (m_Gold - removeAmount >= 0)
+        {
+            m_Gold -= removeAmount;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    // Manage Food
 
     public void m_AddToFood(float addAmount)
     {
@@ -80,10 +96,36 @@ public class Resource_Manager : MonoBehaviour
 
     public float m_GetFood() => m_Food;
 
+    public bool m_RemoveFood(float removeAmount)
+    {
+        if (m_Food - removeAmount >= 0)
+        {
+            m_Food -= removeAmount;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    // Manage Iron 
+
     public void m_AddToIron(float addAmount)
     {
         m_Iron += addAmount;
     }
 
     public float m_GetIron() => m_Iron;
+
+    public bool m_RemoveIron(float removeAmount)
+    {
+        if(m_Iron - removeAmount >= 0)
+        {
+            m_Iron -= removeAmount;
+
+            return true; 
+        }
+
+        return false;
+    }
 }
