@@ -20,6 +20,9 @@ public class Cell_Info : MonoBehaviour
     GameObject m_CellRight = null; // The cell right of this one (Null if none exists). 
 
     [SerializeField]
+    bool m_Obsticle = false; 
+
+    [SerializeField]
     float m_HScore = 0; // The Cost to get from the currnt node to this one. 
 
     [SerializeField]
@@ -135,4 +138,11 @@ public class Cell_Info : MonoBehaviour
 
     // Used to get the F Score for this cell.
     public float m_GetFScore => m_FScore;
+
+    public void m_SetObsticle(bool newSetting)
+    {
+        m_Obsticle = newSetting; 
+    }
+
+    public bool m_GetObsticle => m_Obsticle;
 }
