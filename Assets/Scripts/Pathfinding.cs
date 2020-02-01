@@ -26,7 +26,6 @@ public class Pathfinding : MonoBehaviour
     [SerializeField]
     List<GameObject> m_ClosedSet; // A list of already checked items. 
 
-
     [SerializeField]
     GameObject m_StartCell; // The starting point for the path. 
 
@@ -41,6 +40,7 @@ public class Pathfinding : MonoBehaviour
     [SerializeField]
     List<GameObject> m_Path; // The final path for the algorithm. 
 
+    [SerializeField]
     bool m_FoundPath = false; // Used to end the findig algorithm. 
 
     // Start is called before the first frame update
@@ -69,6 +69,8 @@ public class Pathfinding : MonoBehaviour
             m_StartCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
 
             m_EndCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
+
+            m_Path.Clear(); 
         }
 
         // If there is no current cell it becomes equal to the start cell. 
@@ -118,7 +120,13 @@ public class Pathfinding : MonoBehaviour
 
             Debug.Log("Reached End Cell");
 
-            m_FoundPath = true; 
+            m_FoundPath = true;
+
+            m_StartCell = null;
+            m_EndCell = null;
+
+            m_OpenSet.Clear();
+            m_ClosedSet.Clear();
         }
     }
 
@@ -152,27 +160,34 @@ public class Pathfinding : MonoBehaviour
 
             // Check if already inside closed set. 
 
-            for (int i = 0; i < m_ClosedSet.Count; i++)
+            if (currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Up").GetComponent<Cell_Info>().m_GetObsticle == false)
             {
-                if (m_ClosedSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Up"))
+                for (int i = 0; i < m_ClosedSet.Count; i++)
                 {
-                    l_AddCell = false;
+                    if (m_ClosedSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Up"))
+                    {
+                        l_AddCell = false;
+                    }
+                }
+
+                // Check if already in open set. 
+
+                for (int i = 0; i < m_OpenSet.Count; i++)
+                {
+                    if (m_OpenSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Up"))
+                    {
+                        l_AddCell = false;
+                    }
+                }
+
+                if (l_AddCell == true)
+                {
+                    m_OpenSet.Add(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Up"));
                 }
             }
-
-            // Check if already in open set. 
-
-            for (int i = 0; i < m_OpenSet.Count; i++)
+            else
             {
-                if (m_OpenSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Up"))
-                {
-                    l_AddCell = false;
-                }
-            }
-
-            if (l_AddCell == true)
-            {
-                m_OpenSet.Add(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Up"));
+                m_AddCellsToClosedSet(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Up")); 
             }
         }
 
@@ -184,28 +199,37 @@ public class Pathfinding : MonoBehaviour
 
             // Check if already inside closed set. 
 
-            for (int i = 0; i < m_ClosedSet.Count; i++)
+            if (currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Down").GetComponent<Cell_Info>().m_GetObsticle == false)
             {
-                if (m_ClosedSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Down"))
+
+                for (int i = 0; i < m_ClosedSet.Count; i++)
                 {
-                    l_AddCell = false;
+                    if (m_ClosedSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Down"))
+                    {
+                        l_AddCell = false;
+                    }
+                }
+
+                // Check if already in open set. 
+
+                for (int i = 0; i < m_OpenSet.Count; i++)
+                {
+                    if (m_OpenSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Down"))
+                    {
+                        l_AddCell = false;
+                    }
+                }
+
+                if (l_AddCell == true)
+                {
+                    m_OpenSet.Add(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Down"));
                 }
             }
-
-            // Check if already in open set. 
-
-            for (int i = 0; i < m_OpenSet.Count; i++)
+            else
             {
-                if (m_OpenSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Down"))
-                {
-                    l_AddCell = false;
-                }
+                m_AddCellsToClosedSet(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Down"));
             }
 
-            if (l_AddCell == true)
-            {
-                m_OpenSet.Add(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Down"));
-            }
         }
 
         // Add Left
@@ -216,27 +240,35 @@ public class Pathfinding : MonoBehaviour
 
             // Check if already inside closed set. 
 
-            for (int i = 0; i < m_ClosedSet.Count; i++)
+            if (currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Left").GetComponent<Cell_Info>().m_GetObsticle == false)
             {
-                if (m_ClosedSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Left"))
+
+                for (int i = 0; i < m_ClosedSet.Count; i++)
                 {
-                    l_AddCell = false;
+                    if (m_ClosedSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Left"))
+                    {
+                        l_AddCell = false;
+                    }
+                }
+
+                // Check if already in open set. 
+
+                for (int i = 0; i < m_OpenSet.Count; i++)
+                {
+                    if (m_OpenSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Left"))
+                    {
+                        l_AddCell = false;
+                    }
+                }
+
+                if (l_AddCell == true)
+                {
+                    m_OpenSet.Add(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Left"));
                 }
             }
-
-            // Check if already in open set. 
-
-            for (int i = 0; i < m_OpenSet.Count; i++)
+            else
             {
-                if (m_OpenSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Left"))
-                {
-                    l_AddCell = false;
-                }
-            }
-
-            if (l_AddCell == true)
-            {
-                m_OpenSet.Add(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Left"));
+                m_AddCellsToClosedSet(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Left"));
             }
         }
 
@@ -248,27 +280,35 @@ public class Pathfinding : MonoBehaviour
 
             // Check if already inside closed set. 
 
-            for (int i = 0; i < m_ClosedSet.Count; i++)
+            if (currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Right").GetComponent<Cell_Info>().m_GetObsticle == false)
             {
-                if (m_ClosedSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Right"))
+
+                for (int i = 0; i < m_ClosedSet.Count; i++)
                 {
-                    l_AddCell = false;
+                    if (m_ClosedSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Right"))
+                    {
+                        l_AddCell = false;
+                    }
+                }
+
+                // Check if already in open set. 
+
+                for (int i = 0; i < m_OpenSet.Count; i++)
+                {
+                    if (m_OpenSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Right"))
+                    {
+                        l_AddCell = false;
+                    }
+                }
+
+                if (l_AddCell == true)
+                {
+                    m_OpenSet.Add(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Right"));
                 }
             }
-
-            // Check if already in open set. 
-
-            for (int i = 0; i < m_OpenSet.Count; i++)
+            else
             {
-                if (m_OpenSet[i] == currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Right"))
-                {
-                    l_AddCell = false;
-                }
-            }
-
-            if (l_AddCell == true)
-            {
-                m_OpenSet.Add(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Right"));
+                m_AddCellsToClosedSet(currentCell.GetComponent<Cell_Info>().m_GetCellNeighbour("Right"));
             }
         }
     }

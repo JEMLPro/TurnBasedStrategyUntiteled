@@ -942,6 +942,7 @@ MonoBehaviour:
   m_CurrentCell: {fileID: 0}
   m_EndCell: {fileID: 0}
   m_Path: []
+  m_FoundPath: 1
 --- !u!4 &910865050
 Transform:
   m_ObjectHideFlags: 0

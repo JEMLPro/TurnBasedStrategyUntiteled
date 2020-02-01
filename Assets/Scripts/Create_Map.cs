@@ -16,6 +16,12 @@ public class Create_Map : MonoBehaviour
     [SerializeField]
     Transform m_StartPos; // The empty game object which will act as the parent of all the cell objects. The transform will be used to place the grid. 
 
+    [SerializeField]
+    int m_ObsticleCount = 20;
+
+    [SerializeField]
+    bool m_AddObsticles = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,6 +85,22 @@ public class Create_Map : MonoBehaviour
 
         Debug.Log("Cell Neighbours Assigned"); 
 
+    }
+
+    private void Update()
+    {
+        if (m_AddObsticles == true)
+        {
+            for (int i = 0; i < m_ObsticleCount; i++)
+            {
+                int l_Temp = Random.Range(0, m_GridMap.Count);
+
+                m_GridMap[l_Temp].GetComponent<Cell_Info>().m_SetObsticle(true); 
+
+            }
+
+            m_AddObsticles = false; 
+        }
     }
 
     // Will be used to return a game object at a position (X, Y). 
