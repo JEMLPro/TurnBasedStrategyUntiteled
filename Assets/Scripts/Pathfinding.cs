@@ -26,7 +26,6 @@ public class Pathfinding : MonoBehaviour
     [SerializeField]
     List<GameObject> m_ClosedSet; // A list of already checked items. 
 
-
     [SerializeField]
     GameObject m_StartCell; // The starting point for the path. 
 
