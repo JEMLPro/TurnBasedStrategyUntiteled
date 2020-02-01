@@ -412,6 +412,8 @@ MonoBehaviour:
   m_Rows: 50
   m_Columns: 50
   m_StartPos: {fileID: 0}
+  m_ObsticleCount: 20
+  m_AddObsticles: 0
 --- !u!4 &464421127
 Transform:
   m_ObjectHideFlags: 0
@@ -458,6 +460,7 @@ GameObject:
   - component: {fileID: 498238175}
   - component: {fileID: 498238174}
   - component: {fileID: 498238173}
+  - component: {fileID: 498238178}
   m_Layer: 0
   m_Name: UnitPrefab
   m_TagString: Untagged
@@ -474,9 +477,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 498238172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e3440187cda7f945b66c1da99c41496, type: 3}
+  m_Script: {fileID: 11500000, guid: 26747f48d8d4f6d41a97efb30fac4d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
+  Attack: 0
+  AttackRange: 0
+  Defence: 0
+  BuildTime: 0
+  BuildCost: 0
+  Type: 0
+  maxHP: 100
 --- !u!65 &498238174
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -544,12 +555,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498238172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.96, y: 1.87, z: -3.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &498238178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498238172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19262a20421e37d4a914043fc361dcf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &703374353
 GameObject:
   m_ObjectHideFlags: 0
