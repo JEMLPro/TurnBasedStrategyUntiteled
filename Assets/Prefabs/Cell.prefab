@@ -95,6 +95,7 @@ MonoBehaviour:
   m_CellDown: {fileID: 0}
   m_CellLeft: {fileID: 0}
   m_CellRight: {fileID: 0}
+  m_Obsticle: 0
   m_HScore: 0
   m_GScore: 0
   m_FScore: 0
