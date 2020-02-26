@@ -28,6 +28,9 @@ public class UnitStat : MonoBehaviour
     int BuildCost;
 
     [SerializeField]
+    int m_MoveRadius = 4;
+
+    [SerializeField]
     unitType Type;
 
     // Start is called before the first frame update
@@ -70,6 +73,6 @@ public class UnitStat : MonoBehaviour
         Debug.Log(transform.name + " died ");
     }
 
-
+    public int m_GetMoveRadius() => m_MoveRadius; 
 
 }

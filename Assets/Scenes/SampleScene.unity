@@ -437,16 +437,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 464421125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a14ed0ca8e0a45a4980e7846b8a9d59a, type: 3}
+  m_Script: {fileID: 11500000, guid: 19262a20421e37d4a914043fc361dcf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 0}
-  m_Gold: 0
-  m_Food: 0
-  m_Iron: 0
-  m_GoldText: {fileID: 0}
-  m_FoodText: {fileID: 0}
-  m_IronText: {fileID: 0}
+  l_MousePos: {x: 0, y: 0, z: 0}
 --- !u!1 &498238172
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +455,7 @@ GameObject:
   - component: {fileID: 498238174}
   - component: {fileID: 498238173}
   - component: {fileID: 498238178}
+  - component: {fileID: 498238180}
   m_Layer: 0
   m_Name: UnitPrefab
   m_TagString: Untagged
@@ -486,6 +481,7 @@ MonoBehaviour:
   Defence: 0
   BuildTime: 0
   BuildCost: 0
+  m_MoveRadius: 4
   Type: 0
   maxHP: 100
 --- !u!65 &498238174
@@ -573,6 +569,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19262a20421e37d4a914043fc361dcf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  l_MousePos: {x: 0, y: 0, z: 0}
+--- !u!114 &498238180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498238172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2729224c41b2ae4ab67903f66d3d847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CurrentCell: {fileID: 0}
+  m_GameManager: {fileID: 0}
+  m_MousePos: {x: 0, y: 0, z: 0}
+  m_MoveRangeMat: {fileID: 2100000, guid: 59fc952f5bd9f7d46b07ff5891378520, type: 2}
 --- !u!1 &703374353
 GameObject:
   m_ObjectHideFlags: 0

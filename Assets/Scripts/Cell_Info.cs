@@ -31,6 +31,14 @@ public class Cell_Info : MonoBehaviour
     [SerializeField]
     float m_FScore = 0; // The combination of G and H scores to get final score. 
 
+    [SerializeField]
+    bool m_WithinRange = false; 
+
+    public Vector3 m_GetCellPosition()
+    {
+        return gameObject.transform.position; 
+    }
+
     public struct GridPos // Struct Creates a set of data for X and Y positions. 
     {
         public int x, y;
@@ -145,4 +153,13 @@ public class Cell_Info : MonoBehaviour
     }
 
     public bool m_GetObsticle => m_Obsticle;
+
+
+    public void m_SetWithinRange(bool newSetting)
+    {
+        m_WithinRange = newSetting;
+    }
+
+    public bool m_GetWithinRange => m_WithinRange;
+
 }
