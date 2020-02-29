@@ -5,6 +5,9 @@ using UnityEngine;
 public class Cell_Info : MonoBehaviour
 {
     [SerializeField]
+    GameObject m_MousePos;
+
+    [SerializeField]
     GridPos m_GridPos; // This cells current grid postion, in two coordinates (X and Y). 
 
     [SerializeField]
@@ -32,7 +35,17 @@ public class Cell_Info : MonoBehaviour
     float m_FScore = 0; // The combination of G and H scores to get final score. 
 
     [SerializeField]
-    bool m_WithinRange = false; 
+    bool m_WithinRange = false;
+
+    void Update()
+    {
+        
+    }
+
+    private void OnMouseEnter()
+    {
+        Debug.Log("Inside Cell " + m_GridPos.x + ", " + m_GridPos.y);
+    }
 
     public Vector3 m_GetCellPosition()
     {

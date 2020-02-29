@@ -103,6 +103,8 @@ public class Create_Map : MonoBehaviour
         }
     }
 
+    public List<GameObject> m_GetGameMap() => m_GridMap; 
+
     // Will be used to return a game object at a position (X, Y). 
     GameObject m_FindGridPos(int x, int y)
     {
