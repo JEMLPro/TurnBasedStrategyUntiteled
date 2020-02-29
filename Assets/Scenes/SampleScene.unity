@@ -387,7 +387,6 @@ GameObject:
   m_Component:
   - component: {fileID: 464421127}
   - component: {fileID: 464421126}
-  - component: {fileID: 464421128}
   m_Layer: 0
   m_Name: Game Map
   m_TagString: Untagged
@@ -409,11 +408,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Cell: {fileID: 4348686584362636035, guid: ff32ab8b040592b41af9df9be0bd08c8, type: 3}
   m_GridMap: []
-  m_Rows: 50
-  m_Columns: 50
+  m_Rows: 10
+  m_Columns: 10
   m_StartPos: {fileID: 0}
   m_ObsticleCount: 20
   m_AddObsticles: 0
+  m_CellMats:
+  - {fileID: 2100000, guid: 4e55ee731632d15469db31f1f5385d34, type: 2}
 --- !u!4 &464421127
 Transform:
   m_ObjectHideFlags: 0
@@ -428,19 +429,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &464421128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464421125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19262a20421e37d4a914043fc361dcf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  l_MousePos: {x: 0, y: 0, z: 0}
 --- !u!1 &498238172
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,9 +441,8 @@ GameObject:
   - component: {fileID: 498238176}
   - component: {fileID: 498238175}
   - component: {fileID: 498238174}
+  - component: {fileID: 498238179}
   - component: {fileID: 498238173}
-  - component: {fileID: 498238178}
-  - component: {fileID: 498238180}
   m_Layer: 0
   m_Name: UnitPrefab
   m_TagString: Untagged
@@ -557,20 +544,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &498238178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 498238172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19262a20421e37d4a914043fc361dcf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  l_MousePos: {x: 0, y: 0, z: 0}
---- !u!114 &498238180
+--- !u!114 &498238179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -583,8 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentCell: {fileID: 0}
-  m_GameManager: {fileID: 0}
-  m_MousePos: {x: 0, y: 0, z: 0}
+  m_GameManager: {fileID: 464421125}
   m_MoveRangeMat: {fileID: 2100000, guid: 59fc952f5bd9f7d46b07ff5891378520, type: 2}
 --- !u!1 &703374353
 GameObject:
@@ -1004,6 +977,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1076,6 +1050,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf58bd210eda4a46bf7f7ed1ad7983e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1244789008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,6 +1144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1487166858}
+  - component: {fileID: 1487166859}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -1179,6 +1166,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1487166859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487166857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a83f03c6ce73745ad2d95448fbe85a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MousePos: {x: 0, y: 0, z: 0}
 --- !u!1 &1792366186
 GameObject:
   m_ObjectHideFlags: 0
