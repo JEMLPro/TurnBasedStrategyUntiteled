@@ -38,7 +38,14 @@ public class Unit_Movement : MonoBehaviour
             m_CurrentCell = m_GameManager.GetComponent<Create_Map>().m_GetRandomCell();
         }
 
+        GameObject l_MoveDestination = m_GameManager.GetComponent<Create_Map>().m_GetSelectedCell();
 
+        if (l_MoveDestination != null)
+        {
+            m_CurrentCell = l_MoveDestination;
+
+            m_GameManager.GetComponent<Create_Map>().m_ResetCells(); 
+        }
     }
 
     private void OnMouseOver()
@@ -90,9 +97,14 @@ public class Unit_Movement : MonoBehaviour
             if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction) != null)
             {
                 l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
+
                 l_CurrentCellInRange.GetComponent<Cell_Info>().m_SetWithinRange(true);
 
                 l_CurrentCellInRange.GetComponent<Renderer>().material = m_MoveRangeMat;
+            }
+            else
+            {
+                break; 
             }
         }
     }
@@ -129,46 +141,69 @@ public class Unit_Movement : MonoBehaviour
     {
         GameObject l_CurrentCellInRange = m_CurrentCell;
 
+        bool l_bExit = false; 
+
         string l_Direction = "Up";
 
-        l_CurrentCellInRange = m_CurrentCell.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
-
-        for(int k = 0; k < steps; k++)
+        for (int l = 0; l < 2; l++)
         {
-            if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction) != null)
-            {
-                l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
-            }
-        }
+            l_CurrentCellInRange = m_CurrentCell.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
 
-        for (int j = 0; j <= 1; j++)
-        {
-            for (int i = 0; i < gameObject.GetComponent<UnitStat>().m_GetMoveRadius() - 1 - steps; i++)
+            if (l_CurrentCellInRange != null)
             {
-                if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction) != null)
+                for (int k = 0; k < steps; k++)
                 {
-                    l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction);
+                    if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction) != null)
+                    {
+                        l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
+                    }
+                    else
+                    {
+                        l_bExit = true;
 
-                    l_CurrentCellInRange.GetComponent<Cell_Info>().m_SetWithinRange(true);
-
-                    l_CurrentCellInRange.GetComponent<Renderer>().material = m_MoveRangeMat;
+                        break;
+                    }
                 }
-            }
 
-            if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction) != null)
-            {
-                l_CurrentCellInRange = m_CurrentCell.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
-            }
-
-            for (int k = 0; k < steps; k++)
-            {
-                if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction) != null)
+                if (l_bExit != true)
                 {
-                    l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
+                    for (int j = 0; j <= 1; j++)
+                    {
+                        if (l_CurrentCellInRange != null)
+                        {
+                            for (int i = 0; i < gameObject.GetComponent<UnitStat>().m_GetMoveRadius() - 1 - steps; i++)
+                            {
+                                if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction) != null)
+                                {
+                                    l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction);
+
+                                    l_CurrentCellInRange.GetComponent<Cell_Info>().m_SetWithinRange(true);
+
+                                    l_CurrentCellInRange.GetComponent<Renderer>().material = m_MoveRangeMat;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                        if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction) != null)
+                        {
+                            l_CurrentCellInRange = m_CurrentCell.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                 }
             }
 
             l_Direction = "Down";
+
+            l_bExit = false; 
+
         }
     }
 }

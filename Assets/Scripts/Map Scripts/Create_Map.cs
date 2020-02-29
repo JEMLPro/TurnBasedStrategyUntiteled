@@ -22,6 +22,9 @@ public class Create_Map : MonoBehaviour
     [SerializeField]
     bool m_AddObsticles = false;
 
+    [SerializeField]
+    List<Material> m_CellMats;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -128,5 +131,31 @@ public class Create_Map : MonoBehaviour
         }
 
         return null; 
+    }
+
+    public GameObject m_GetSelectedCell()
+    {
+        GameObject l_ReturnValue = null;
+        
+        for(int i = 0; i < m_GridMap.Count; i++)
+        {
+            if(m_GridMap[i].GetComponent<Cell_Info>().m_GetSelectedCell() == true)
+            {
+                l_ReturnValue = m_GridMap[i];
+
+                m_GridMap[i].GetComponent<Cell_Info>().m_SetSelectedCell(false); 
+            }
+        }
+
+        return l_ReturnValue;
+    }
+
+    public void m_ResetCells()
+    {
+        for(int i = 0; i < m_GridMap.Count; i++)
+        {
+            m_GridMap[i].GetComponent<Renderer>().material = m_CellMats[0];
+            m_GridMap[i].GetComponent<Cell_Info>().m_SetWithinRange(false);
+        }
     }
 }

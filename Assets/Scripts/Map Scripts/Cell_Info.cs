@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Cell_Info : MonoBehaviour
 {
+    //-----------------------------------------------------------------------------------------------------------------------
+    //                                                  Data Members 
+    //-----------------------------------------------------------------------------------------------------------------------
+
     [SerializeField]
     GameObject m_MousePos;
 
@@ -37,20 +41,55 @@ public class Cell_Info : MonoBehaviour
     [SerializeField]
     bool m_WithinRange = false;
 
+    bool m_bSelectedCell;
+
+    //-----------------------------------------------------------------------------------------------------------------------
+    //                                              Member Functions 
+    //-----------------------------------------------------------------------------------------------------------------------
+
     void Update()
     {
         
     }
 
-    private void OnMouseEnter()
+    //-----------------------------------------------------------------------------------------------------------------------
+    //                                              Player Interaction 
+    //-----------------------------------------------------------------------------------------------------------------------
+
+    private void OnMouseOver()
+    { 
+        if(Input.GetMouseButtonDown(0))
+        {
+            if(m_WithinRange == true)
+            {
+                m_bSelectedCell = true; 
+            }
+        }
+    }
+
+    public bool m_GetSelectedCell() => m_bSelectedCell;
+
+    public void m_SetSelectedCell(bool newValue)
     {
-        Debug.Log("Inside Cell " + m_GridPos.x + ", " + m_GridPos.y);
+        m_bSelectedCell = newValue; 
     }
 
     public Vector3 m_GetCellPosition()
     {
         return gameObject.transform.position; 
     }
+
+    public bool m_GetWithinRange => m_WithinRange;
+
+    public void m_SetWithinRange(bool newSetting)
+    {
+        m_WithinRange = newSetting;
+    }
+
+
+    //-----------------------------------------------------------------------------------------------------------------------
+    //                                                   Map Creation 
+    //-----------------------------------------------------------------------------------------------------------------------
 
     public struct GridPos // Struct Creates a set of data for X and Y positions. 
     {
@@ -133,6 +172,10 @@ public class Cell_Info : MonoBehaviour
         return null;
     }
 
+    //-----------------------------------------------------------------------------------------------------------------------
+    //                                          Pathfinding
+    //-----------------------------------------------------------------------------------------------------------------------
+
     // Used to set the G Score for this cell.
     public void m_SetGScore(float newG)
     {
@@ -167,12 +210,8 @@ public class Cell_Info : MonoBehaviour
 
     public bool m_GetObsticle => m_Obsticle;
 
-
-    public void m_SetWithinRange(bool newSetting)
-    {
-        m_WithinRange = newSetting;
-    }
-
-    public bool m_GetWithinRange => m_WithinRange;
+    //-----------------------------------------------------------------------------------------------------------------------
+    //                                                      End Of File
+    //-----------------------------------------------------------------------------------------------------------------------
 
 }
