@@ -8,6 +8,9 @@ public class Unit_Movement : MonoBehaviour
     GameObject m_CurrentCell = null;
 
     [SerializeField]
+    GameObject m_GameMap;
+
+    [SerializeField]
     GameObject m_GameManager;
 
     [SerializeField]
@@ -30,21 +33,28 @@ public class Unit_Movement : MonoBehaviour
             {
                 gameObject.transform.position = m_CurrentCell.GetComponent<Cell_Info>().m_GetCellPosition();
             }
-
-            m_CellRange(); 
         }
         else
         {
-            m_CurrentCell = m_GameManager.GetComponent<Create_Map>().m_GetRandomCell();
+            m_CurrentCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
         }
 
-        GameObject l_MoveDestination = m_GameManager.GetComponent<Create_Map>().m_GetSelectedCell();
-
-        if (l_MoveDestination != null)
+        if (gameObject.GetComponent<UnitStat>().m_GetOwner() == m_GameManager.GetComponent<Turn_Management>().m_GetTurn())
         {
-            m_CurrentCell = l_MoveDestination;
+            m_CellRange();
 
-            m_GameManager.GetComponent<Create_Map>().m_ResetCells(); 
+            GameObject l_MoveDestination = m_GameMap.GetComponent<Create_Map>().m_GetSelectedCell();
+
+            if (l_MoveDestination != null)
+            {
+                m_CurrentCell = l_MoveDestination;
+
+                m_GameMap.GetComponent<Create_Map>().m_ResetCells();
+            }
+        }
+        else
+        {
+            m_GameMap.GetComponent<Create_Map>().m_ResetCells();
         }
     }
 

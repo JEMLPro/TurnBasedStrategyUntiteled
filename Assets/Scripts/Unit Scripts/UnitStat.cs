@@ -9,6 +9,15 @@ public class UnitStat : MonoBehaviour
         
     }
 
+    enum currentPlayer
+    {
+        player = 0x00,
+        opponent = 0x01
+    }
+
+    [SerializeField]
+    currentPlayer m_Owner = currentPlayer.player; 
+
     [SerializeField]
     int HP;
 
@@ -73,6 +82,8 @@ public class UnitStat : MonoBehaviour
         Debug.Log(transform.name + " died ");
     }
 
-    public int m_GetMoveRadius() => m_MoveRadius; 
+    public int m_GetMoveRadius() => m_MoveRadius;
+
+    public int m_GetOwner() => (int)m_Owner;
 
 }
