@@ -18,7 +18,13 @@ public class Turn_Management : MonoBehaviour
     bool m_bEndTurn = false;
 
     [SerializeField]
-    Text m_TurnDisplay; 
+    Text m_TurnDisplay;
+
+    [SerializeField]
+    GameObject m_PlayerUnitManager;
+
+    [SerializeField]
+    GameObject m_EnemyUnitManager;
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +39,17 @@ public class Turn_Management : MonoBehaviour
         {
             m_SwitchTurn();
 
+            m_PlayerUnitManager.GetComponent<Unit_Manager>().m_ResetUnitMovePoints();
+
+            m_EnemyUnitManager.GetComponent<Unit_Manager>().m_ResetUnitMovePoints();
+
             m_bEndTurn = false; 
         }
+    }
+
+    public void m_EndTurn()
+    {
+        m_bEndTurn = true; 
     }
 
     void m_SwitchTurn()

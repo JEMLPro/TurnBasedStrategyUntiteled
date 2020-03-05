@@ -40,18 +40,34 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    public void m_ResetUnitMovePoints()
+    {
+        for (int i = 0; i < m_UnitList.Count; i++)
+        {
+            if (m_UnitList[i] != null)
+            {
+                m_UnitList[i].GetComponent<Unit_Movement>().m_ResetMovementPoints();
+            }
+        }
+    }
 
     public GameObject m_GetSelectedUnit()
     {
-        GameObject l_ReturnValue = null; 
+        GameObject l_ReturnValue = null;
 
-        for(int i = 0; i < m_UnitList.Count; i++)
+        if (m_UnitList.Count > 0)
         {
-            if(m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
+            for (int i = 0; i < m_UnitList.Count; i++)
             {
-                l_ReturnValue = m_UnitList[i];
+                if (m_UnitList[i] != null)
+                {
+                    if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
+                    {
+                        l_ReturnValue = m_UnitList[i];
 
-                return l_ReturnValue; 
+                        return l_ReturnValue;
+                    }
+                }
             }
         }
 

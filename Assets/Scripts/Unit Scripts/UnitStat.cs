@@ -16,7 +16,10 @@ public class UnitStat : MonoBehaviour
     }
 
     [SerializeField]
-    currentPlayer m_Owner = currentPlayer.player; 
+    currentPlayer m_Owner = currentPlayer.player;
+
+    [SerializeField]
+    GameObject m_GameManager;
 
     [SerializeField]
     int HP = 100;
@@ -54,9 +57,12 @@ public class UnitStat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (m_GameManager.GetComponent<Turn_Management>().m_GetTurn() == (int)m_Owner)
         {
-            m_bSelected = false; 
+            if (Input.GetMouseButtonDown(1))
+            {
+                m_bSelected = false;
+            }
         }
     }
 
@@ -67,11 +73,27 @@ public class UnitStat : MonoBehaviour
             m_bSelected = true;
         }
     }
+   
+    public void m_GetHit(int damage)
+    {
+        HP -= damage;
+
+        Debug.Log("New Hp == " + HP); 
+
+        if(HP <= 0)
+        {
+            Destroy(gameObject); 
+        }
+    }
 
     public int m_GetMoveRadius() => m_MoveRadius;
 
     public int m_GetOwner() => (int)m_Owner;
 
-    public bool m_GetSelected() => m_bSelected; 
+    public bool m_GetSelected() => m_bSelected;
+
+    public int m_GetAttack() => Attack;
+
+    public int m_GetDefence() => Defence; 
 
 }
