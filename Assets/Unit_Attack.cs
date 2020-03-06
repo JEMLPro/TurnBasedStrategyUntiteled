@@ -10,17 +10,13 @@ public class Unit_Attack : MonoBehaviour
     [SerializeField]
     bool m_bAttack = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         if(m_bAttack == true)
         {
+            m_AttackTarget = gameObject.GetComponentInParent<Get_Attack_Target>().m_GetAttackTarget();
+
             if (m_AttackTarget != null)
             {
                 m_Attack();
@@ -32,7 +28,7 @@ public class Unit_Attack : MonoBehaviour
 
     void m_Attack()
     {
-        int l_iDamageDealt = 0, l_iDamageRecived = 0;
+        int l_iDamageDealt, l_iDamageRecived;
 
         // Attack Opponent.
 

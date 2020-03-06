@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class Turn_Management : MonoBehaviour
 {
-    enum currentPlayer
+    enum CurrentPlayer
     {
         player = 0x00,
         opponent = 0x01
     }
 
     [SerializeField]
-    currentPlayer m_Turn = currentPlayer.player;
+    CurrentPlayer m_Turn = CurrentPlayer.player;
 
     [SerializeField]
     bool m_bEndTurn = false;
@@ -25,12 +25,6 @@ public class Turn_Management : MonoBehaviour
 
     [SerializeField]
     GameObject m_EnemyUnitManager;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -54,15 +48,15 @@ public class Turn_Management : MonoBehaviour
 
     void m_SwitchTurn()
     {
-        if(m_Turn == currentPlayer.player)
+        if(m_Turn == CurrentPlayer.player)
         {
-            m_Turn = currentPlayer.opponent;
+            m_Turn = CurrentPlayer.opponent;
 
             m_TurnDisplay.text = "Opponent's Turn";
         }
         else
         {
-            m_Turn = currentPlayer.player;
+            m_Turn = CurrentPlayer.player;
 
             m_TurnDisplay.text = "Player's Turn";
         }

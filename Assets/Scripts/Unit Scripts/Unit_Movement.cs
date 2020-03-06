@@ -21,12 +21,6 @@ public class Unit_Movement : MonoBehaviour
 
     int m_ScaledMoveRadius;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -90,7 +84,7 @@ public class Unit_Movement : MonoBehaviour
 
     private int m_CalculateUsedPoints(int xOne, int yOne, int xTwo, int yTwo)
     {
-        int l_ReturnValue = 0;
+        int l_ReturnValue;
 
         int newX, newY;
 
@@ -172,37 +166,9 @@ public class Unit_Movement : MonoBehaviour
         }
     }
 
-    void m_CheckMoveDirectionDiagonal(string direction)
-    {
-        GameObject l_CurrentCellInRange = m_CurrentCell;
-
-        l_CurrentCellInRange = m_CurrentCell.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
-
-        string l_Direction = "Up";
-
-        for (int j = 0; j <= 1; j++)
-        {
-            for (int i = 0; i < m_ScaledMoveRadius - 1; i++)
-            {
-                l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction);
-
-                if (l_CurrentCellInRange != null)
-                {
-                    l_CurrentCellInRange.GetComponent<Cell_Info>().m_SetWithinRange(true);
-
-                    l_CurrentCellInRange.GetComponent<Renderer>().material = m_MoveRangeMat;
-                }
-            }
-
-            l_CurrentCellInRange = m_CurrentCell.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
-
-            l_Direction = "Down";
-        }
-    }
-
     void m_CheckMoveDirectionDiagonal(string direction, int steps)
     {
-        GameObject l_CurrentCellInRange = m_CurrentCell;
+        GameObject l_CurrentCellInRange;
 
         bool l_bExit = false; 
 
