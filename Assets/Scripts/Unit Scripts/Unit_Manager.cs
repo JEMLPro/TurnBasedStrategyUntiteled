@@ -10,6 +10,12 @@ public class Unit_Manager : MonoBehaviour
     [SerializeField]
     GameObject m_UnitMenu; 
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -34,34 +40,18 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
-    public void m_ResetUnitMovePoints()
-    {
-        for (int i = 0; i < m_UnitList.Count; i++)
-        {
-            if (m_UnitList[i] != null)
-            {
-                m_UnitList[i].GetComponent<Unit_Movement>().m_ResetMovementPoints();
-            }
-        }
-    }
 
     public GameObject m_GetSelectedUnit()
     {
-        GameObject l_ReturnValue = null;
+        GameObject l_ReturnValue = null; 
 
-        if (m_UnitList.Count > 0)
+        for(int i = 0; i < m_UnitList.Count; i++)
         {
-            for (int i = 0; i < m_UnitList.Count; i++)
+            if(m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
             {
-                if (m_UnitList[i] != null)
-                {
-                    if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
-                    {
-                        l_ReturnValue = m_UnitList[i];
+                l_ReturnValue = m_UnitList[i];
 
-                        return l_ReturnValue;
-                    }
-                }
+                return l_ReturnValue; 
             }
         }
 

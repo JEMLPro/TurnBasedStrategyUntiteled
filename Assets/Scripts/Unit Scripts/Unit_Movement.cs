@@ -16,7 +16,16 @@ public class Unit_Movement : MonoBehaviour
     [SerializeField]
     Material m_MoveRangeMat;
 
-    bool m_bSelected = false; 
+    [SerializeField]
+    int m_UsedPoints;
+
+    int m_ScaledMoveRadius;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
@@ -33,19 +42,31 @@ public class Unit_Movement : MonoBehaviour
             m_CurrentCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
         }
 
-        
-        if (gameObject.GetComponent<UnitStat>().m_GetOwner() == m_GameManager.GetComponent<Turn_Management>().m_GetTurn())
-        { 
-            if (gameObject.GetComponent<UnitStat>().m_GetSelected() == true)
+        if (gameObject.GetComponent<UnitStat>().m_GetSelected() == true)
+        {
+            if (gameObject.GetComponent<UnitStat>().m_GetOwner() == m_GameManager.GetComponent<Turn_Management>().m_GetTurn())
             {
-                m_CellRange();
+                m_ScaledMoveRadius = gameObject.GetComponent<UnitStat>().m_GetMoveRadius() - m_UsedPoints;
 
-                GameObject l_MoveDestination = m_GameMap.GetComponent<Create_Map>().m_GetSelectedCell();
-
-                if (l_MoveDestination != null)
+                if (m_ScaledMoveRadius >= 0)
                 {
-                    m_CurrentCell = l_MoveDestination;
+                    m_CellRange();
 
+                    GameObject l_MoveDestination = m_GameMap.GetComponent<Create_Map>().m_GetSelectedCell();
+
+                    if (l_MoveDestination != null)
+                    {
+                        m_UsedPoints += m_CalculateUsedPoints(m_CurrentCell.GetComponent<Cell_Info>().m_GetGridPos().x, m_CurrentCell.GetComponent<Cell_Info>().m_GetGridPos().y,
+                            l_MoveDestination.GetComponent<Cell_Info>().m_GetGridPos().x, l_MoveDestination.GetComponent<Cell_Info>().m_GetGridPos().y);
+
+                        m_CurrentCell = l_MoveDestination;
+
+                        m_GameMap.GetComponent<Create_Map>().m_ResetCells();
+                    }
+                }
+
+                if(gameObject.GetComponent<UnitStat>().m_GetMoveRadius() == m_UsedPoints)
+                {
                     m_GameMap.GetComponent<Create_Map>().m_ResetCells();
                 }
             }
@@ -56,15 +77,19 @@ public class Unit_Movement : MonoBehaviour
         }
     }
 
-    private void OnMouseOver()
+    public void m_Wait()
     {
-        Debug.Log("Over Unit");
+        m_UsedPoints = gameObject.GetComponent<UnitStat>().m_GetMoveRadius(); 
     }
 
-    private void OnMouseExit()
+    public void m_ResetMovementPoints()
     {
-<<<<<<< HEAD
-        int l_ReturnValue;
+        m_UsedPoints = 0; 
+    }
+
+    private int m_CalculateUsedPoints(int xOne, int yOne, int xTwo, int yTwo)
+    {
+        int l_ReturnValue = 0;
 
         int newX, newY;
 
@@ -93,9 +118,6 @@ public class Unit_Movement : MonoBehaviour
         l_ReturnValue = newX + newY; 
 
         return l_ReturnValue; 
-=======
-        m_bSelected = false; 
->>>>>>> parent of cfc3319... Limited Unit Movement
     }
 
     void m_CellRange()
@@ -120,7 +142,7 @@ public class Unit_Movement : MonoBehaviour
 
         // Cell Range Diagonal
 
-        for(int i = 0; i < gameObject.GetComponent<UnitStat>().m_GetMoveRadius(); i++)
+        for(int i = 0; i < m_ScaledMoveRadius; i++)
         {
             m_CheckMoveDirectionDiagonal("Left", i);
 
@@ -132,7 +154,7 @@ public class Unit_Movement : MonoBehaviour
     {
         GameObject l_CurrentCellInRange = m_CurrentCell;
 
-        for (int i = 0; i < gameObject.GetComponent<UnitStat>().m_GetMoveRadius(); i++)
+        for (int i = 0; i < m_ScaledMoveRadius; i++)
         {
             if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction) != null)
             {
@@ -149,8 +171,6 @@ public class Unit_Movement : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-=======
     void m_CheckMoveDirectionDiagonal(string direction)
     {
         GameObject l_CurrentCellInRange = m_CurrentCell;
@@ -161,7 +181,7 @@ public class Unit_Movement : MonoBehaviour
 
         for (int j = 0; j <= 1; j++)
         {
-            for (int i = 0; i < gameObject.GetComponent<UnitStat>().m_GetMoveRadius() - 1; i++)
+            for (int i = 0; i < m_ScaledMoveRadius - 1; i++)
             {
                 l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction);
 
@@ -179,10 +199,9 @@ public class Unit_Movement : MonoBehaviour
         }
     }
 
->>>>>>> parent of cfc3319... Limited Unit Movement
     void m_CheckMoveDirectionDiagonal(string direction, int steps)
     {
-        GameObject l_CurrentCellInRange;
+        GameObject l_CurrentCellInRange = m_CurrentCell;
 
         bool l_bExit = false; 
 
@@ -214,7 +233,7 @@ public class Unit_Movement : MonoBehaviour
                     {
                         if (l_CurrentCellInRange != null)
                         {
-                            for (int i = 0; i < gameObject.GetComponent<UnitStat>().m_GetMoveRadius() - 1 - steps; i++)
+                            for (int i = 0; i < m_ScaledMoveRadius - 1 - steps; i++)
                             {
                                 if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(l_Direction) != null)
                                 {
