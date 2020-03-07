@@ -57,4 +57,23 @@ public class Unit_Manager : MonoBehaviour
 
         return l_ReturnValue;
     }
+
+    public void m_ResetSelectedUnits()
+    {
+        for (int i = 0; i < m_UnitList.Count; i++)
+        {
+            if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
+            {
+                m_UnitList[i].GetComponent<UnitStat>().m_SetSelected(false);
+            }
+        }
+    }
+
+    public void m_ResetUnitMovementPoints()
+    {
+        for (int i = 0; i < m_UnitList.Count; i++)
+        {
+            m_UnitList[i].GetComponent<Unit_Movement>().m_ResetMovementPoints();
+        }
+    }
 }

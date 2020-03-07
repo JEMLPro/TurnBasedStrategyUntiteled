@@ -61,25 +61,26 @@ public class Unit_Movement : MonoBehaviour
 
                         m_CurrentCell = l_MoveDestination;
 
-                        m_GameMap.GetComponent<Create_Map>().m_ResetCells();
+                        m_ResetMapCells();
                     }
                 }
 
                 if(gameObject.GetComponent<UnitStat>().m_GetMoveRadius() == m_UsedPoints)
                 {
-                    m_GameMap.GetComponent<Create_Map>().m_ResetCells();
+                    m_ResetMapCells();
                 }
             }
-        }
-        else
-        {
-            m_GameMap.GetComponent<Create_Map>().m_ResetCells();
         }
     }
 
     public void m_Wait()
     {
         m_UsedPoints = gameObject.GetComponent<UnitStat>().m_GetMoveRadius(); 
+    }
+
+    public void m_ResetMapCells()
+    {
+        m_GameMap.GetComponent<Create_Map>().m_ResetCells();
     }
 
     public void m_ResetMovementPoints()
@@ -122,6 +123,8 @@ public class Unit_Movement : MonoBehaviour
 
     void m_CellRange()
     {
+        // Debug.Log("Entered Cell Range"); 
+
         m_CurrentCell.GetComponent<Cell_Info>().m_SetWithinRange(true);
 
         // Cell Range Up 
