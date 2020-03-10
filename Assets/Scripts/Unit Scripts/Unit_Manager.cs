@@ -19,27 +19,33 @@ public class Unit_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(m_GetSelectedUnit() != null)
+
+        if (m_UnitMenu != null)
         {
-            m_UnitMenu.SetActive(true);
-        }
-        else
-        {
-            m_UnitMenu.SetActive(false);
+            if (m_GetSelectedUnit() != null)
+            {
+                m_UnitMenu.SetActive(true);
+            }
+            else
+            {
+                m_UnitMenu.SetActive(false);
+            }
         }
     }
 
     public void m_Wait()
     {
-        for (int i = 0; i < m_UnitList.Count; i++)
-        {
-            if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
-            {
-                m_UnitList[i].GetComponent<Unit_Movement>().m_Wait(); 
-            }
-        }
+        GameObject l_CurrentObj = m_GetSelectedUnit();
+
+        l_CurrentObj.GetComponent<Unit_Movement>().m_Wait();
     }
 
+    public void m_Attack()
+    {
+        GameObject l_CurrentObj = m_GetSelectedUnit();
+
+        l_CurrentObj.GetComponent<Attack>().m_SetAttack(true); 
+    }
 
     public GameObject m_GetSelectedUnit()
     {
@@ -47,11 +53,14 @@ public class Unit_Manager : MonoBehaviour
 
         for(int i = 0; i < m_UnitList.Count; i++)
         {
-            if(m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
+            if (m_UnitList[i] != null)
             {
-                l_ReturnValue = m_UnitList[i];
+                if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
+                {
+                    l_ReturnValue = m_UnitList[i];
 
-                return l_ReturnValue; 
+                    return l_ReturnValue;
+                }
             }
         }
 
@@ -62,9 +71,12 @@ public class Unit_Manager : MonoBehaviour
     {
         for (int i = 0; i < m_UnitList.Count; i++)
         {
-            if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
+            if (m_UnitList[i] != null)
             {
-                m_UnitList[i].GetComponent<UnitStat>().m_SetSelected(false);
+                if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
+                {
+                    m_UnitList[i].GetComponent<UnitStat>().m_SetSelected(false);
+                }
             }
         }
     }
@@ -73,7 +85,10 @@ public class Unit_Manager : MonoBehaviour
     {
         for (int i = 0; i < m_UnitList.Count; i++)
         {
-            m_UnitList[i].GetComponent<Unit_Movement>().m_ResetMovementPoints();
+            if (m_UnitList[i] != null)
+            {
+                m_UnitList[i].GetComponent<Unit_Movement>().m_ResetMovementPoints();
+            }
         }
     }
 }

@@ -121,7 +121,7 @@ public class Unit_Movement : MonoBehaviour
         return l_ReturnValue; 
     }
 
-    void m_CellRange()
+    public void m_CellRange()
     {
         // Debug.Log("Entered Cell Range"); 
 
@@ -153,6 +153,29 @@ public class Unit_Movement : MonoBehaviour
         }
     }
 
+    public void m_CellRange(Material newMat, int range)
+    {
+        // Debug.Log("Entered Cell Range"); 
+
+        m_CurrentCell.GetComponent<Cell_Info>().m_SetWithinRange(true);
+
+        // Cell Range Up 
+
+        m_CheckMoveDirection("Up", range, newMat);
+
+        // Cell Range Down 
+
+        m_CheckMoveDirection("Down", range, newMat);
+
+        // Cell Range Left
+
+        m_CheckMoveDirection("Left", range, newMat);
+
+        // Cell Range Right 
+
+        m_CheckMoveDirection("Right", range, newMat);
+    }
+
     void m_CheckMoveDirection(string direction)
     {
         GameObject l_CurrentCellInRange = m_CurrentCell;
@@ -170,6 +193,27 @@ public class Unit_Movement : MonoBehaviour
             else
             {
                 break; 
+            }
+        }
+    }
+
+    void m_CheckMoveDirection(string direction, int range, Material newMat)
+    {
+        GameObject l_CurrentCellInRange = m_CurrentCell;
+
+        for (int i = 0; i < range; i++)
+        {
+            if (l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction) != null)
+            {
+                l_CurrentCellInRange = l_CurrentCellInRange.GetComponent<Cell_Info>().m_GetCellNeighbour(direction);
+
+                l_CurrentCellInRange.GetComponent<Cell_Info>().m_SetWithinRange(true);
+
+                l_CurrentCellInRange.GetComponent<Renderer>().material = newMat;
+            }
+            else
+            {
+                break;
             }
         }
     }

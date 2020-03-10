@@ -6,7 +6,7 @@ public class UnitStat : MonoBehaviour
 {
     public enum unitType
     {
-        
+        militia = 0x00
     }
 
     enum currentPlayer
@@ -19,16 +19,16 @@ public class UnitStat : MonoBehaviour
     currentPlayer m_Owner = currentPlayer.player; 
 
     [SerializeField]
-    int HP = 100;
+    int m_HP = 100;
 
     [SerializeField]
-    int Attack = 10;
+    int m_Attack = 10;
 
     [SerializeField]
     int AttackRange = 1;
 
     [SerializeField]
-    int Defence = 5;
+    int m_Defence = 5;
 
     [SerializeField]
     int BuildTime = 2;
@@ -40,7 +40,7 @@ public class UnitStat : MonoBehaviour
     int m_MoveRadius = 4;
 
     [SerializeField]
-    unitType Type;
+    unitType Type = unitType.militia;
 
     [SerializeField]
     bool m_bSelected = false;
@@ -87,6 +87,26 @@ public class UnitStat : MonoBehaviour
     public void m_SetSelected(bool newValue)
     {
         m_bSelected = newValue;
+    }
+
+    public int m_GetAttack() => m_Attack;
+
+    public int m_GetAttackRange() => AttackRange; 
+
+    public int m_GetDefence() => m_Defence;
+
+    public void m_TakeHit(int damage)
+    {
+        m_HP -= damage;
+
+        Debug.Log("Unit Hp : " + m_HP); 
+
+        if(m_HP <= 0)
+        {
+            Debug.Log("Unit Killed");
+
+            Destroy(gameObject);
+        }
     }
 
 }

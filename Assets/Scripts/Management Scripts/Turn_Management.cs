@@ -15,7 +15,7 @@ public class Turn_Management : MonoBehaviour
     int m_TurnCount = 1; 
 
     [SerializeField]
-    currentPlayer m_Turn = currentPlayer.player;
+    currentPlayer m_Turn = currentPlayer.opponent;
 
     [SerializeField]
     bool m_bEndTurn = false;
