@@ -13,6 +13,9 @@ public class Attack : MonoBehaviour
     [SerializeField]
     Material m_AttackRangeMat;
 
+    [SerializeField]
+    int m_iNumberOfAttacks = 1; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +29,14 @@ public class Attack : MonoBehaviour
         {
             if(m_AttackTarget != null)
             {
-                m_Attck();
+                if (m_iNumberOfAttacks > 0)
+                {
+                    m_Attck();
 
-                m_bAttack = false;
+                    m_bAttack = false;
+
+                    m_iNumberOfAttacks--;
+                }
             }
             else
             {
@@ -89,6 +97,11 @@ public class Attack : MonoBehaviour
     public void m_SetAttack(bool newValue)
     {
         m_bAttack = newValue; 
+    }
+
+    public void m_ResetAttackPoints()
+    {
+        m_iNumberOfAttacks = 1; 
     }
 
 

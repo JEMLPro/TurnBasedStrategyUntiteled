@@ -1719,6 +1719,7 @@ MonoBehaviour:
   - {fileID: 498238172}
   - {fileID: 494198389}
   m_UnitMenu: {fileID: 1981783283}
+  m_GameManager: {fileID: 1487166857}
 --- !u!4 &1178966248
 Transform:
   m_ObjectHideFlags: 0
@@ -2010,6 +2011,7 @@ MonoBehaviour:
   - {fileID: 1195547838}
   - {fileID: 1441135770}
   m_UnitMenu: {fileID: 0}
+  m_GameManager: {fileID: 1487166857}
 --- !u!4 &1495420532
 Transform:
   m_ObjectHideFlags: 0

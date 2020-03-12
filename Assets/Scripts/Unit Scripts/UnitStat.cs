@@ -64,17 +64,22 @@ public class UnitStat : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            // Reset all selected units to prevent multiple units being selected at once. 
+            // Check the owner against the current turn. 
 
-            gameObject.GetComponentInParent<Unit_Manager>().m_ResetSelectedUnits();
+            if ((int)m_Owner == gameObject.GetComponentInParent<Unit_Manager>().m_GetCurrentTurn())
+            {
+                // Reset all selected units to prevent multiple units being selected at once. 
 
-            // Reset the cells on the game map to prevent movemnet outside of the unit's range. 
+                gameObject.GetComponentInParent<Unit_Manager>().m_ResetSelectedUnits();
 
-            gameObject.GetComponent<Unit_Movement>().m_ResetMapCells();
+                // Reset the cells on the game map to prevent movemnet outside of the unit's range. 
 
-            // Select this unit. 
+                gameObject.GetComponent<Unit_Movement>().m_ResetMapCells();
 
-            m_bSelected = true;
+                // Select this unit. 
+
+                m_bSelected = true;
+            }
         }
     }
 

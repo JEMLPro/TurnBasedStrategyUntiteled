@@ -8,7 +8,10 @@ public class Unit_Manager : MonoBehaviour
     List<GameObject> m_UnitList;
 
     [SerializeField]
-    GameObject m_UnitMenu; 
+    GameObject m_UnitMenu;
+
+    [SerializeField]
+    GameObject m_GameManager; 
 
     // Start is called before the first frame update
     void Start()
@@ -90,5 +93,10 @@ public class Unit_Manager : MonoBehaviour
                 m_UnitList[i].GetComponent<Unit_Movement>().m_ResetMovementPoints();
             }
         }
+    }
+
+    public int m_GetCurrentTurn()
+    {
+        return m_GameManager.GetComponent<Turn_Management>().m_GetTurn();
     }
 }
