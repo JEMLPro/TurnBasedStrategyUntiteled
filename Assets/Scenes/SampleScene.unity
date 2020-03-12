@@ -197,6 +197,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 2462662724564370298, guid: 1218e5644e77f5e4785c5bf20e038ca4,
+        type: 3}
+      propertyPath: m_TagString
+      value: OpponentUnit
+      objectReference: {fileID: 0}
     - target: {fileID: 2462662724564370299, guid: 1218e5644e77f5e4785c5bf20e038ca4,
         type: 3}
       propertyPath: m_Owner
@@ -460,6 +465,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UnitPrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462662724564370298, guid: 1218e5644e77f5e4785c5bf20e038ca4,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerUnit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1218e5644e77f5e4785c5bf20e038ca4, type: 3}
@@ -817,6 +827,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2462662725029052838}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &498238173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498238172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55aeadc9699ca2844851e57decc956ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bCheckRange: 0
 --- !u!4 &498238177 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2462662724564370247, guid: 1218e5644e77f5e4785c5bf20e038ca4,
@@ -1697,7 +1720,7 @@ GameObject:
   - component: {fileID: 1178966247}
   - component: {fileID: 1178966249}
   m_Layer: 0
-  m_Name: Unit Manager
+  m_Name: Unit Manager Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1911,6 +1934,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitPrefab (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2462662724564370298, guid: 1218e5644e77f5e4785c5bf20e038ca4,
+        type: 3}
+      propertyPath: m_TagString
+      value: OpponentUnit
+      objectReference: {fileID: 0}
     - target: {fileID: 2462662724564370299, guid: 1218e5644e77f5e4785c5bf20e038ca4,
         type: 3}
       propertyPath: m_Owner
@@ -1977,7 +2005,8 @@ MonoBehaviour:
   m_Turn: 0
   m_bEndTurn: 0
   m_TurnDisplay: {fileID: 720933949}
-  m_UnitManager: {fileID: 1178966246}
+  m_UnitManagerPlayer: {fileID: 1178966246}
+  m_UnitManagerOpponent: {fileID: 1495420530}
 --- !u!1 &1495420530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,7 +2018,7 @@ GameObject:
   - component: {fileID: 1495420532}
   - component: {fileID: 1495420531}
   m_Layer: 0
-  m_Name: Unit Manager (1)
+  m_Name: Unit Manager Opponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2616,6 +2645,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UnitPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462662724564370298, guid: 1218e5644e77f5e4785c5bf20e038ca4,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerUnit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1218e5644e77f5e4785c5bf20e038ca4, type: 3}

@@ -37,6 +37,10 @@ public class Attack : MonoBehaviour
 
                     m_iNumberOfAttacks--;
                 }
+                else
+                {
+                    m_bAttack = false;
+                }
             }
             else
             {
@@ -71,26 +75,31 @@ public class Attack : MonoBehaviour
             Debug.Log("No Damage"); 
         }
 
-        // Opponent counter attacks 
+        // If the opponent is killed, no counter attack
 
-        l_iDamage = m_AttackTarget.GetComponent<UnitStat>().m_GetAttack() - gameObject.GetComponent<UnitStat>().m_GetDefence();
-
-        if (l_iDamage > 0)
+        if (m_AttackTarget.GetComponent<UnitStat>().m_GetHP() > 0)
         {
-            l_iDamage = Random.Range(0, l_iDamage);
+            // Opponent counter attacks 
+
+            l_iDamage = m_AttackTarget.GetComponent<UnitStat>().m_GetAttack() - gameObject.GetComponent<UnitStat>().m_GetDefence();
 
             if (l_iDamage > 0)
             {
-                gameObject.GetComponent<UnitStat>().m_TakeHit(l_iDamage);
+                l_iDamage = Random.Range(0, l_iDamage);
+
+                if (l_iDamage > 0)
+                {
+                    gameObject.GetComponent<UnitStat>().m_TakeHit(l_iDamage);
+                }
+                else
+                {
+                    Debug.Log("Missed");
+                }
             }
             else
             {
-                Debug.Log("Missed");
+                Debug.Log("No Damage");
             }
-        }
-        else
-        {
-            Debug.Log("No Damage");
         }
     }
 

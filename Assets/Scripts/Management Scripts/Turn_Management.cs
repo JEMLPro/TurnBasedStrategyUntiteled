@@ -18,13 +18,16 @@ public class Turn_Management : MonoBehaviour
     currentPlayer m_Turn = currentPlayer.opponent;
 
     [SerializeField]
-    bool m_bEndTurn = false;
+    bool m_bEndTurn = true;
 
     [SerializeField]
     Text m_TurnDisplay;
 
     [SerializeField]
-    GameObject m_UnitManager;
+    GameObject m_UnitManagerPlayer;
+
+    [SerializeField]
+    GameObject m_UnitManagerOpponent;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +72,25 @@ public class Turn_Management : MonoBehaviour
             m_TurnDisplay.text = "Player's Turn\n" + "Turn : " + m_TurnCount;
         }
 
-        m_UnitManager.GetComponent<Unit_Manager>().m_ResetUnitMovementPoints();
+        // Reset Player Units 
+
+        m_UnitManagerPlayer.GetComponent<Unit_Manager>().m_ResetUnitMovementPoints();
+
+        m_UnitManagerPlayer.GetComponent<Unit_Manager>().m_ResetAttackPoints();
+
+        m_UnitManagerPlayer.GetComponent<Unit_Manager>().m_ResetWithinRange();
+
+        m_UnitManagerPlayer.GetComponent<Unit_Manager>().m_ResetSelectedUnits();
+
+        // Reset Opponent Units
+
+        m_UnitManagerOpponent.GetComponent<Unit_Manager>().m_ResetUnitMovementPoints();
+
+        m_UnitManagerOpponent.GetComponent<Unit_Manager>().m_ResetAttackPoints();
+
+        m_UnitManagerOpponent.GetComponent<Unit_Manager>().m_ResetWithinRange();
+
+        m_UnitManagerOpponent.GetComponent<Unit_Manager>().m_ResetSelectedUnits();
 
         m_TurnCount += 1;
     }

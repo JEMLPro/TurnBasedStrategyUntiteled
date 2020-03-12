@@ -45,6 +45,9 @@ public class UnitStat : MonoBehaviour
     [SerializeField]
     bool m_bSelected = false;
 
+    [SerializeField]
+    bool m_bWithinAttackRange = false; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +83,13 @@ public class UnitStat : MonoBehaviour
 
                 m_bSelected = true;
             }
+
+            if(m_bWithinAttackRange == true)
+            {
+                gameObject.GetComponentInParent<Unit_Manager>().m_ResetSelectedUnits();
+
+                m_bSelected = true;
+            }
         }
     }
 
@@ -94,11 +104,20 @@ public class UnitStat : MonoBehaviour
         m_bSelected = newValue;
     }
 
+    public bool m_GetWithinRange() => m_bWithinAttackRange;
+
+    public void m_SetWithinRange(bool newValue)
+    {
+        m_bWithinAttackRange = newValue;
+    }
+
     public int m_GetAttack() => m_Attack;
 
     public int m_GetAttackRange() => AttackRange; 
 
     public int m_GetDefence() => m_Defence;
+
+    public int m_GetHP() => m_HP; 
 
     public void m_TakeHit(int damage)
     {

@@ -47,6 +47,8 @@ public class Unit_Manager : MonoBehaviour
     {
         GameObject l_CurrentObj = m_GetSelectedUnit();
 
+        l_CurrentObj.GetComponent<Range_finder>().m_CheckEnemyRange(); 
+
         l_CurrentObj.GetComponent<Attack>().m_SetAttack(true); 
     }
 
@@ -91,6 +93,28 @@ public class Unit_Manager : MonoBehaviour
             if (m_UnitList[i] != null)
             {
                 m_UnitList[i].GetComponent<Unit_Movement>().m_ResetMovementPoints();
+            }
+        }
+    }
+
+    public void m_ResetAttackPoints()
+    {
+        for (int i = 0; i < m_UnitList.Count; i++)
+        {
+            if (m_UnitList[i] != null)
+            {
+                m_UnitList[i].GetComponent<Attack>().m_ResetAttackPoints();
+            }
+        }
+    }
+
+    public void m_ResetWithinRange()
+    {
+        for (int i = 0; i < m_UnitList.Count; i++)
+        {
+            if (m_UnitList[i] != null)
+            {
+                m_UnitList[i].GetComponent<UnitStat>().m_SetWithinRange(false);
             }
         }
     }

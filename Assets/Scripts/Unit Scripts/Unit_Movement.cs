@@ -88,6 +88,8 @@ public class Unit_Movement : MonoBehaviour
         m_UsedPoints = 0; 
     }
 
+    public GameObject m_GetCurrentCell() => m_CurrentCell; 
+
     private int m_CalculateUsedPoints(int xOne, int yOne, int xTwo, int yTwo)
     {
         int l_ReturnValue = 0;
