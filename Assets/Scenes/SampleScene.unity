@@ -827,19 +827,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2462662725029052838}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &498238173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 498238172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55aeadc9699ca2844851e57decc956ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_bCheckRange: 0
 --- !u!4 &498238177 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2462662724564370247, guid: 1218e5644e77f5e4785c5bf20e038ca4,
@@ -2571,11 +2558,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1178966248}
     m_Modifications:
-    - target: {fileID: 2462662724564370244, guid: 1218e5644e77f5e4785c5bf20e038ca4,
-        type: 3}
-      propertyPath: m_AttackRangeMat
-      value: 
-      objectReference: {fileID: 2100000, guid: f3ac8617e4dbd874c896fdf25f1969f7, type: 2}
     - target: {fileID: 2462662724564370245, guid: 1218e5644e77f5e4785c5bf20e038ca4,
         type: 3}
       propertyPath: m_GameMap
@@ -2645,11 +2627,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UnitPrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 2462662724564370298, guid: 1218e5644e77f5e4785c5bf20e038ca4,
-        type: 3}
-      propertyPath: m_TagString
-      value: PlayerUnit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1218e5644e77f5e4785c5bf20e038ca4, type: 3}

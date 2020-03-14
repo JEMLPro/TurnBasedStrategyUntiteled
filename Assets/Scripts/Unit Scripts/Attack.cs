@@ -108,6 +108,11 @@ public class Attack : MonoBehaviour
         m_bAttack = newValue; 
     }
 
+    public void m_ResetAttackTarget()
+    {
+        m_AttackTarget = null;
+    }
+
     public void m_ResetAttackPoints()
     {
         m_iNumberOfAttacks = 1; 

@@ -7,6 +7,9 @@ public class Range_finder : MonoBehaviour
     [SerializeField]
     bool m_bCheckRange = false;
 
+    [SerializeField]
+    Color m_WithinRangeColour;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +80,8 @@ public class Range_finder : MonoBehaviour
                         Debug.Log("Enemy Is In Cell " + l_Direction);
 
                         l_PotentialTargets[i].GetComponent<UnitStat>().m_SetWithinRange(true);
+
+                        l_PotentialTargets[i].GetComponent<Renderer>().material.color = m_WithinRangeColour;
                     }
                 }
             }

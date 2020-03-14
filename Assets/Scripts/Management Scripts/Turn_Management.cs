@@ -74,26 +74,25 @@ public class Turn_Management : MonoBehaviour
 
         // Reset Player Units 
 
-        m_UnitManagerPlayer.GetComponent<Unit_Manager>().m_ResetUnitMovementPoints();
-
-        m_UnitManagerPlayer.GetComponent<Unit_Manager>().m_ResetAttackPoints();
-
-        m_UnitManagerPlayer.GetComponent<Unit_Manager>().m_ResetWithinRange();
-
-        m_UnitManagerPlayer.GetComponent<Unit_Manager>().m_ResetSelectedUnits();
+        m_ResetUnitManager(m_UnitManagerPlayer);
 
         // Reset Opponent Units
 
-        m_UnitManagerOpponent.GetComponent<Unit_Manager>().m_ResetUnitMovementPoints();
-
-        m_UnitManagerOpponent.GetComponent<Unit_Manager>().m_ResetAttackPoints();
-
-        m_UnitManagerOpponent.GetComponent<Unit_Manager>().m_ResetWithinRange();
-
-        m_UnitManagerOpponent.GetComponent<Unit_Manager>().m_ResetSelectedUnits();
+        m_ResetUnitManager(m_UnitManagerOpponent);
 
         m_TurnCount += 1;
     }
 
     public int m_GetTurn() => (int)m_Turn;
+
+    void m_ResetUnitManager(GameObject unitManager)
+    {
+        unitManager.GetComponent<Unit_Manager>().m_ResetUnitMovementPoints();
+
+        unitManager.GetComponent<Unit_Manager>().m_ResetAttackPoints();
+
+        unitManager.GetComponent<Unit_Manager>().m_ResetWithinRange();
+
+        unitManager.GetComponent<Unit_Manager>().m_ResetSelectedUnits();
+    }
 }

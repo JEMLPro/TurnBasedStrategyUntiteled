@@ -104,6 +104,8 @@ public class Unit_Manager : MonoBehaviour
             if (m_UnitList[i] != null)
             {
                 m_UnitList[i].GetComponent<Attack>().m_ResetAttackPoints();
+
+                m_UnitList[i].GetComponent<Attack>().m_ResetAttackTarget(); 
             }
         }
     }
@@ -115,6 +117,8 @@ public class Unit_Manager : MonoBehaviour
             if (m_UnitList[i] != null)
             {
                 m_UnitList[i].GetComponent<UnitStat>().m_SetWithinRange(false);
+
+                m_UnitList[i].GetComponent<Renderer>().material.color = Color.white; 
             }
         }
     }
