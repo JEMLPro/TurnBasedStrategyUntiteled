@@ -9,7 +9,7 @@ public class AI_Attacker : MonoBehaviour
     GameObject m_AttackTarget;
 
     [SerializeField]
-    GameObject m_PlayerUnitManager;
+    public GameObject m_PlayerUnitManager;
 
     [SerializeField]
     Color m_WithinRangeColour;

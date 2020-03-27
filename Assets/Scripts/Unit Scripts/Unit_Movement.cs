@@ -88,6 +88,35 @@ public class Unit_Movement : MonoBehaviour
         m_UsedPoints = 0; 
     }
 
+    public int m_Distance(int x, int y)
+    {
+        int l_iTotalDist = 50;
+
+        int l_iScaledX, l_iScaledY; 
+
+        if(x > m_CurrentCell.GetComponent<Cell_Info>().m_GetGridPos().x)
+        {
+            l_iScaledX = x - m_CurrentCell.GetComponent<Cell_Info>().m_GetGridPos().x;
+        }
+        else
+        {
+            l_iScaledX = m_CurrentCell.GetComponent<Cell_Info>().m_GetGridPos().x - x;
+        }
+
+        if (y > m_CurrentCell.GetComponent<Cell_Info>().m_GetGridPos().y)
+        {
+            l_iScaledY = y - m_CurrentCell.GetComponent<Cell_Info>().m_GetGridPos().y;
+        }
+        else
+        {
+            l_iScaledY = m_CurrentCell.GetComponent<Cell_Info>().m_GetGridPos().y - y;
+        }
+
+        l_iTotalDist = l_iScaledX + l_iScaledY; 
+
+        return l_iTotalDist;
+    }
+
     public GameObject m_GetCurrentCell() => m_CurrentCell; 
 
     private int m_CalculateUsedPoints(int xOne, int yOne, int xTwo, int yTwo)

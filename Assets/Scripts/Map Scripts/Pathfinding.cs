@@ -59,6 +59,23 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    public void m_SetStartCell(GameObject newStartCell)
+    {
+        m_StartCell = newStartCell;
+    }
+
+    public void m_SetEndCell(GameObject newEndCell)
+    {
+        m_EndCell = newEndCell;
+    }
+
+    public void m_SetFoundPath(bool newValue)
+    {
+        m_FoundPath = newValue;
+
+        m_ResetPathfinding(); 
+    }
+
     // This will continue to look for the end point until it is found and will construct a path along the way. 
     void m_FindPath()
     {
@@ -128,6 +145,16 @@ public class Pathfinding : MonoBehaviour
             m_OpenSet.Clear();
             m_ClosedSet.Clear();
         }
+    }
+
+    void m_ResetPathfinding()
+    {
+        m_Path.Clear();
+
+        m_OpenSet.Clear();
+        m_ClosedSet.Clear();
+
+        m_CurrentCell = null; 
     }
 
     // Used to change the look of the affected cells. For Debugging. 

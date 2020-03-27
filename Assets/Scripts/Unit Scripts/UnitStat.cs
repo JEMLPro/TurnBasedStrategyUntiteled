@@ -137,4 +137,9 @@ public class UnitStat : MonoBehaviour
         }
     }
 
+    public int m_GetUnitCombatValue()
+    {
+        return (int)(m_HP + m_Attack + m_Defence); 
+    }
+
 }
