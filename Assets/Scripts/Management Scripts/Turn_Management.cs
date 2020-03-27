@@ -85,6 +85,18 @@ public class Turn_Management : MonoBehaviour
 
     public int m_GetTurn() => (int)m_Turn;
 
+    public void m_ResetOtherManager(GameObject unitManager)
+    {
+        if (unitManager == m_UnitManagerPlayer)
+        {
+            m_ResetUnitManager(m_UnitManagerOpponent);
+        }
+        else
+        {
+            m_ResetUnitManager(m_UnitManagerPlayer);
+        }
+    }
+
     void m_ResetUnitManager(GameObject unitManager)
     {
         unitManager.GetComponent<Unit_Manager>().m_ResetUnitMovementPoints();

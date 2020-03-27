@@ -2004,6 +2004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1495420532}
   - component: {fileID: 1495420531}
+  - component: {fileID: 1495420533}
   m_Layer: 0
   m_Name: Unit Manager Opponent
   m_TagString: Untagged
@@ -2044,6 +2045,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495420533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495420530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51cfd8764780f2342b6c516c92189c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AttackTarget: {fileID: 0}
+  m_PlayerUnitManager: {fileID: 0}
+  m_WithinRangeColour: {r: 1, g: 0, b: 0, a: 0}
 --- !u!1 &1534798045
 GameObject:
   m_ObjectHideFlags: 0

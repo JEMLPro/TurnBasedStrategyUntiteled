@@ -103,6 +103,65 @@ public class Attack : MonoBehaviour
         }
     }
 
+    public void m_Attck(GameObject attackTarget)
+    {
+        if (m_iNumberOfAttacks > 0)
+        {
+            int l_iDamage;
+
+            // User attacks opponent 
+
+            l_iDamage = gameObject.GetComponent<UnitStat>().m_GetAttack() - attackTarget.GetComponent<UnitStat>().m_GetDefence();
+
+            if (l_iDamage > 0)
+            {
+                l_iDamage = Random.Range(0, l_iDamage);
+
+                if (l_iDamage > 0)
+                {
+                    attackTarget.GetComponent<UnitStat>().m_TakeHit(l_iDamage);
+                }
+                else
+                {
+                    Debug.Log("Missed");
+                }
+            }
+            else
+            {
+                Debug.Log("No Damage");
+            }
+
+            // If the opponent is killed, no counter attack
+
+            if (attackTarget.GetComponent<UnitStat>().m_GetHP() > 0)
+            {
+                // Opponent counter attacks 
+
+                l_iDamage = attackTarget.GetComponent<UnitStat>().m_GetAttack() - gameObject.GetComponent<UnitStat>().m_GetDefence();
+
+                if (l_iDamage > 0)
+                {
+                    l_iDamage = Random.Range(0, l_iDamage);
+
+                    if (l_iDamage > 0)
+                    {
+                        gameObject.GetComponent<UnitStat>().m_TakeHit(l_iDamage);
+                    }
+                    else
+                    {
+                        Debug.Log("Missed");
+                    }
+                }
+                else
+                {
+                    Debug.Log("No Damage");
+                }
+            }
+
+            m_iNumberOfAttacks--;
+        }
+    }
+
     public void m_SetAttack(bool newValue)
     {
         m_bAttack = newValue; 
@@ -118,5 +177,6 @@ public class Attack : MonoBehaviour
         m_iNumberOfAttacks = 1; 
     }
 
+    public int m_GetAttackPoints() => m_iNumberOfAttacks; 
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Unit_Manager : MonoBehaviour
 {
     [SerializeField]
-    List<GameObject> m_UnitList;
+    public List<GameObject> m_UnitList;
 
     [SerializeField]
     GameObject m_UnitMenu;
@@ -50,6 +50,11 @@ public class Unit_Manager : MonoBehaviour
         l_CurrentObj.GetComponent<Range_finder>().m_CheckEnemyRange(); 
 
         l_CurrentObj.GetComponent<Attack>().m_SetAttack(true); 
+    }
+
+    public void m_ResetOtherManager()
+    {
+        m_GameManager.GetComponent<Turn_Management>().m_ResetOtherManager(gameObject);
     }
 
     public GameObject m_GetSelectedUnit()

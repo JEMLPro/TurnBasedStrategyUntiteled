@@ -79,6 +79,10 @@ public class UnitStat : MonoBehaviour
 
                 gameObject.GetComponent<Unit_Movement>().m_ResetMapCells();
 
+                // When a new unit is selected reset the other unit manager. 
+
+                gameObject.GetComponentInParent<Unit_Manager>().m_ResetOtherManager();
+
                 // Select this unit. 
 
                 m_bSelected = true;
