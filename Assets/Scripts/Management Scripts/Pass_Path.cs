@@ -65,10 +65,46 @@ public class Pass_Path : MonoBehaviour
             m_bGenerateNewPath = false;
 
         }
+        else
+        {
+            if (m_Pathfinder.GetComponent<Pathfinding>().m_GetPath().Count > 0 && m_Pathfinder.GetComponent<Pathfinding>().m_GetFoundPath() == true)
+            {
+                m_MoveUnit();
+            }
+        }
+    }
+
+    public void m_MoveUnit()
+    {
+        if (m_CurrentAIUnit.GetComponent<Unit_Movement>().m_GetMovementPoints() == 0)
+        {
+            m_CurrentAIUnit.GetComponent<Unit_Movement>().m_SetNewCell(m_GetPointInPath(m_CurrentAIUnit.GetComponent<UnitStat>().m_GetMoveRadius()));
+
+            m_CurrentAIUnit.GetComponent<Unit_Movement>().m_SetUsedPoints(m_CurrentAIUnit.GetComponent<UnitStat>().m_GetMoveRadius());
+        }
     }
 
     public void m_SetCurrentAIUnit(GameObject newObject)
     {
         m_CurrentAIUnit = newObject;
+    }
+
+    public GameObject m_GetPointInPath(int spacesToMove)
+    {
+        GameObject l_ReturnCell = null;
+
+        List<GameObject> l_CurrentPath = m_Pathfinder.GetComponent<Pathfinding>().m_GetPath();
+
+        if (l_CurrentPath.Count >= spacesToMove)
+        {
+            l_ReturnCell = l_CurrentPath[spacesToMove];
+        }
+        else
+        {
+            l_ReturnCell = l_CurrentPath[l_CurrentPath.Count - 1];
+        }
+
+
+        return l_ReturnCell;
     }
 }

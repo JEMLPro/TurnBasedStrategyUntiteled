@@ -69,6 +69,8 @@ public class Pathfinding : MonoBehaviour
         m_EndCell = newEndCell;
     }
 
+    public bool m_GetFoundPath() => m_FoundPath; 
+
     public void m_SetFoundPath(bool newValue)
     {
         m_FoundPath = newValue;
@@ -155,6 +157,11 @@ public class Pathfinding : MonoBehaviour
         m_ClosedSet.Clear();
 
         m_CurrentCell = null; 
+    }
+
+    public List<GameObject> m_GetPath()
+    {
+        return m_Path; 
     }
 
     // Used to change the look of the affected cells. For Debugging. 

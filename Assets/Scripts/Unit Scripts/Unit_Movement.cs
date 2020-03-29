@@ -73,6 +73,11 @@ public class Unit_Movement : MonoBehaviour
         }
     }
 
+    public void m_SetNewCell(GameObject newCell)
+    {
+        m_CurrentCell = newCell; 
+    }
+
     public void m_Wait()
     {
         m_UsedPoints = gameObject.GetComponent<UnitStat>().m_GetMoveRadius(); 
@@ -81,6 +86,13 @@ public class Unit_Movement : MonoBehaviour
     public void m_ResetMapCells()
     {
         m_GameMap.GetComponent<Create_Map>().m_ResetCells();
+    }
+
+    public int m_GetMovementPoints() => m_UsedPoints;
+
+    public void m_SetUsedPoints(int newValue)
+    {
+        m_UsedPoints = newValue; 
     }
 
     public void m_ResetMovementPoints()

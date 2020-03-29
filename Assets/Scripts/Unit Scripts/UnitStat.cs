@@ -99,6 +99,11 @@ public class UnitStat : MonoBehaviour
 
     public int m_GetMoveRadius() => m_MoveRadius;
 
+    public void m_SetMoveRadius(int newValue)
+    {
+        m_MoveRadius = newValue; 
+    }
+
     public int m_GetOwner() => (int)m_Owner;
 
     public bool m_GetSelected() => m_bSelected; 
