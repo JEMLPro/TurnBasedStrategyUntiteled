@@ -36,6 +36,12 @@ public class Unit_Movement : MonoBehaviour
             {
                 gameObject.transform.position = m_CurrentCell.GetComponent<Cell_Info>().m_GetCellPosition();
             }
+
+            if(m_CurrentCell.GetComponent<Cell_Info>().m_GetOccpied() != true)
+            {
+                m_CurrentCell.GetComponent<Cell_Info>().m_SetOccupied(true); 
+            }
+
         }
         else
         {
@@ -75,7 +81,9 @@ public class Unit_Movement : MonoBehaviour
 
     public void m_SetNewCell(GameObject newCell)
     {
-        m_CurrentCell = newCell; 
+        m_CurrentCell = newCell;
+
+        m_CurrentCell.GetComponent<Cell_Info>().m_SetOccupied(true); 
     }
 
     public void m_Wait()

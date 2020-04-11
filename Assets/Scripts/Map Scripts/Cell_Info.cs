@@ -27,7 +27,9 @@ public class Cell_Info : MonoBehaviour
     GameObject m_CellRight = null; // The cell right of this one (Null if none exists). 
 
     [SerializeField]
-    bool m_Obsticle = false; 
+    bool m_Obsticle = false;
+
+    bool m_Occupied = false; 
 
     [SerializeField]
     float m_HScore = 0; // The Cost to get from the currnt node to this one. 
@@ -209,6 +211,14 @@ public class Cell_Info : MonoBehaviour
     }
 
     public bool m_GetObsticle => m_Obsticle;
+
+
+    public void m_SetOccupied(bool newValue)
+    {
+        m_Occupied = newValue; 
+    }
+
+    public bool m_GetOccpied() => m_Occupied;
 
     //-----------------------------------------------------------------------------------------------------------------------
     //                                                      End Of File

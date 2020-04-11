@@ -24,6 +24,9 @@ public class Turn_Management : MonoBehaviour
     Text m_TurnDisplay;
 
     [SerializeField]
+    GameObject m_GameMap; 
+
+    [SerializeField]
     GameObject m_UnitManagerPlayer;
 
     [SerializeField]
@@ -100,6 +103,8 @@ public class Turn_Management : MonoBehaviour
     void m_ResetUnitManager(GameObject unitManager)
     {
         unitManager.GetComponent<Unit_Manager>().m_ResetUnitMovementPoints();
+
+        m_GameMap.GetComponent<Create_Map>().m_ResetCells(); 
 
         unitManager.GetComponent<Unit_Manager>().m_ResetAttackPoints();
 

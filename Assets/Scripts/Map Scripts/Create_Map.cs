@@ -156,6 +156,7 @@ public class Create_Map : MonoBehaviour
         {
             m_GridMap[i].GetComponent<Renderer>().material = m_CellMats[0];
             m_GridMap[i].GetComponent<Cell_Info>().m_SetWithinRange(false);
+            m_GridMap[i].GetComponent<Cell_Info>().m_SetOccupied(false);
         }
     }
 }

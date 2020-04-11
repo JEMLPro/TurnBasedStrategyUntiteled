@@ -78,9 +78,27 @@ public class Pass_Path : MonoBehaviour
     {
         if (m_CurrentAIUnit.GetComponent<Unit_Movement>().m_GetMovementPoints() == 0)
         {
-            m_CurrentAIUnit.GetComponent<Unit_Movement>().m_SetNewCell(m_GetPointInPath(m_CurrentAIUnit.GetComponent<UnitStat>().m_GetMoveRadius()));
+            int l_iPlaceTomove = 0;
 
-            m_CurrentAIUnit.GetComponent<Unit_Movement>().m_SetUsedPoints(m_CurrentAIUnit.GetComponent<UnitStat>().m_GetMoveRadius());
+            for(int i = m_CurrentAIUnit.GetComponent<UnitStat>().m_GetMoveRadius(); i > 0; i--)
+            {
+                if(m_GetPointInPath(i) != null)
+                {
+                    l_iPlaceTomove = i; 
+
+                    break;
+                }
+            }
+
+
+            Debug.Log("New Place To Move " + l_iPlaceTomove);
+
+            if (l_iPlaceTomove > 0)
+            {
+                m_CurrentAIUnit.GetComponent<Unit_Movement>().m_SetNewCell(m_GetPointInPath(l_iPlaceTomove));
+
+                m_CurrentAIUnit.GetComponent<Unit_Movement>().m_SetUsedPoints(m_CurrentAIUnit.GetComponent<UnitStat>().m_GetMoveRadius());
+            }
         }
     }
 
@@ -95,15 +113,23 @@ public class Pass_Path : MonoBehaviour
 
         List<GameObject> l_CurrentPath = m_Pathfinder.GetComponent<Pathfinding>().m_GetPath();
 
-        if (l_CurrentPath.Count >= spacesToMove)
+        Debug.Log("Possible Spaces to move " + spacesToMove + "\n Current Path Size " + l_CurrentPath.Count);
+
+        if(spacesToMove >= l_CurrentPath.Count)
         {
-            l_ReturnCell = l_CurrentPath[spacesToMove];
-        }
-        else
-        {
-            l_ReturnCell = l_CurrentPath[l_CurrentPath.Count - 1];
+            return null;
         }
 
+        if (l_CurrentPath != null)
+        {
+            if (l_CurrentPath[spacesToMove].GetComponent<Cell_Info>().m_GetOccpied() == false)
+            {
+                if (l_CurrentPath.Count >= spacesToMove)
+                {
+                    l_ReturnCell = l_CurrentPath[spacesToMove];
+                }
+            }
+        }
 
         return l_ReturnCell;
     }

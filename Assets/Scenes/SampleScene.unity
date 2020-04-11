@@ -1992,6 +1992,7 @@ MonoBehaviour:
   m_Turn: 0
   m_bEndTurn: 0
   m_TurnDisplay: {fileID: 720933949}
+  m_GameMap: {fileID: 464421125}
   m_UnitManagerPlayer: {fileID: 1178966246}
   m_UnitManagerOpponent: {fileID: 1495420530}
 --- !u!1 &1495420530
