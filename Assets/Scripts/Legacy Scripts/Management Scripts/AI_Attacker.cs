@@ -121,9 +121,8 @@ public class AI_Attacker : MonoBehaviour
                         l_Temp = l_OtherUnitManager[i];
                     }
 
-                    if (l_Temp.GetComponent<UnitStat>().m_GetHP() > l_OtherUnitManager[i].GetComponent<UnitStat>().m_GetHP())
+                    if (false)
                     {
-                        l_Temp = l_OtherUnitManager[i];
                     }
                 }
             }

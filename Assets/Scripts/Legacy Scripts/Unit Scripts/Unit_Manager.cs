@@ -59,36 +59,15 @@ public class Unit_Manager : MonoBehaviour
 
     public GameObject m_GetSelectedUnit()
     {
-        GameObject l_ReturnValue = null; 
+       
+        
 
-        for(int i = 0; i < m_UnitList.Count; i++)
-        {
-            if (m_UnitList[i] != null)
-            {
-                if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
-                {
-                    l_ReturnValue = m_UnitList[i];
-
-                    return l_ReturnValue;
-                }
-            }
-        }
-
-        return l_ReturnValue;
+        return null;
     }
 
     public void m_ResetSelectedUnits()
     {
-        for (int i = 0; i < m_UnitList.Count; i++)
-        {
-            if (m_UnitList[i] != null)
-            {
-                if (m_UnitList[i].GetComponent<UnitStat>().m_GetSelected())
-                {
-                    m_UnitList[i].GetComponent<UnitStat>().m_SetSelected(false);
-                }
-            }
-        }
+       
     }
 
     public void m_ResetUnitMovementPoints()

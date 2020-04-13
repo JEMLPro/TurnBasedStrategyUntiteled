@@ -63,7 +63,6 @@ public class Attack : MonoBehaviour
 
             if (l_iDamage > 0)
             {
-                m_AttackTarget.GetComponent<UnitStat>().m_TakeHit(l_iDamage);
             }
             else
             {
@@ -77,11 +76,9 @@ public class Attack : MonoBehaviour
 
         // If the opponent is killed, no counter attack
 
-        if (m_AttackTarget.GetComponent<UnitStat>().m_GetHP() > 0)
+        if (false)
         {
             // Opponent counter attacks 
-
-            l_iDamage = m_AttackTarget.GetComponent<UnitStat>().m_GetAttack() - gameObject.GetComponent<UnitStat>().m_GetDefence();
 
             if (l_iDamage > 0)
             {
@@ -89,7 +86,6 @@ public class Attack : MonoBehaviour
 
                 if (l_iDamage > 0)
                 {
-                    gameObject.GetComponent<UnitStat>().m_TakeHit(l_iDamage);
                 }
                 else
                 {
@@ -119,7 +115,7 @@ public class Attack : MonoBehaviour
 
                 if (l_iDamage > 0)
                 {
-                    attackTarget.GetComponent<UnitStat>().m_TakeHit(l_iDamage);
+
                 }
                 else
                 {
@@ -133,11 +129,9 @@ public class Attack : MonoBehaviour
 
             // If the opponent is killed, no counter attack
 
-            if (attackTarget.GetComponent<UnitStat>().m_GetHP() > 0)
+            if (false)
             {
                 // Opponent counter attacks 
-
-                l_iDamage = attackTarget.GetComponent<UnitStat>().m_GetAttack() - gameObject.GetComponent<UnitStat>().m_GetDefence();
 
                 if (l_iDamage > 0)
                 {
@@ -145,7 +139,6 @@ public class Attack : MonoBehaviour
 
                     if (l_iDamage > 0)
                     {
-                        gameObject.GetComponent<UnitStat>().m_TakeHit(l_iDamage);
                     }
                     else
                     {

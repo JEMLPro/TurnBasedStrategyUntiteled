@@ -40,15 +40,7 @@ public class Pass_Path : MonoBehaviour
                 {
                     int l_iNewTargetValue, l_iOldTargetValue;
 
-                    l_iNewTargetValue = l_PlayerUnitList[i].GetComponent<UnitStat>().m_GetUnitCombatValue() +
-                        l_PlayerUnitList[i].GetComponent<Unit_Movement>().m_Distance(m_CurrentAIUnit.GetComponent<Unit_Movement>().m_GetCurrentCell().GetComponent<Cell_Info>().m_GetGridPos().x,
-                        m_CurrentAIUnit.GetComponent<Unit_Movement>().m_GetCurrentCell().GetComponent<Cell_Info>().m_GetGridPos().y);
-
-                    l_iOldTargetValue = l_TargetUnit.GetComponent<UnitStat>().m_GetUnitCombatValue() +
-                        l_TargetUnit.GetComponent<Unit_Movement>().m_Distance(m_CurrentAIUnit.GetComponent<Unit_Movement>().m_GetCurrentCell().GetComponent<Cell_Info>().m_GetGridPos().x,
-                        m_CurrentAIUnit.GetComponent<Unit_Movement>().m_GetCurrentCell().GetComponent<Cell_Info>().m_GetGridPos().y);
-
-                    if (l_iNewTargetValue < l_iOldTargetValue)
+                    if (false)
                     {
                         l_TargetUnit = l_PlayerUnitList[i];
                     }

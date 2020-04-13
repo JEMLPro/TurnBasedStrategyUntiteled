@@ -48,7 +48,7 @@ public class Unit_Movement : MonoBehaviour
             m_CurrentCell = m_GameMap.GetComponent<Create_Map>().m_GetRandomCell();
         }
 
-        if (gameObject.GetComponent<UnitStat>().m_GetSelected() == true)
+        if (false)
         {
             if (gameObject.GetComponent<UnitStat>().m_GetOwner() == m_GameManager.GetComponent<Turn_Management>().m_GetTurn())
             {

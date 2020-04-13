@@ -19,9 +19,6 @@ public class UnitStat : MonoBehaviour
     currentPlayer m_Owner = currentPlayer.player; 
 
     [SerializeField]
-    int m_HP = 100;
-
-    [SerializeField]
     int m_Attack = 10;
 
     [SerializeField]
@@ -43,9 +40,6 @@ public class UnitStat : MonoBehaviour
     unitType Type = unitType.militia;
 
     [SerializeField]
-    bool m_bSelected = false;
-
-    [SerializeField]
     bool m_bWithinAttackRange = false; 
 
     // Start is called before the first frame update
@@ -57,10 +51,6 @@ public class UnitStat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            m_bSelected = false; 
-        }
     }
 
     private void OnMouseOver()
@@ -83,17 +73,9 @@ public class UnitStat : MonoBehaviour
 
                 gameObject.GetComponentInParent<Unit_Manager>().m_ResetOtherManager();
 
-                // Select this unit. 
-
-                m_bSelected = true;
             }
 
-            if(m_bWithinAttackRange == true)
-            {
-                gameObject.GetComponentInParent<Unit_Manager>().m_ResetSelectedUnits();
-
-                m_bSelected = true;
-            }
+           
         }
     }
 
@@ -105,13 +87,6 @@ public class UnitStat : MonoBehaviour
     }
 
     public int m_GetOwner() => (int)m_Owner;
-
-    public bool m_GetSelected() => m_bSelected; 
-
-    public void m_SetSelected(bool newValue)
-    {
-        m_bSelected = newValue;
-    }
 
     public bool m_GetWithinRange() => m_bWithinAttackRange;
 
@@ -125,26 +100,5 @@ public class UnitStat : MonoBehaviour
     public int m_GetAttackRange() => AttackRange; 
 
     public int m_GetDefence() => m_Defence;
-
-    public int m_GetHP() => m_HP; 
-
-    public void m_TakeHit(int damage)
-    {
-        m_HP -= damage;
-
-        Debug.Log("Unit Hp : " + m_HP); 
-
-        if(m_HP <= 0)
-        {
-            Debug.Log("Unit Killed");
-
-            Destroy(gameObject);
-        }
-    }
-
-    public int m_GetUnitCombatValue()
-    {
-        return (int)(m_HP + m_Attack + m_Defence); 
-    }
 
 }
