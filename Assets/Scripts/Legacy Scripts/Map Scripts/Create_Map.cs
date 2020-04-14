@@ -47,6 +47,8 @@ public class Create_Map : MonoBehaviour
 
                 // Add to the grid for easy access. 
                 m_GridMap.Add(l_TempCell); 
+
+                
             }
         }
 

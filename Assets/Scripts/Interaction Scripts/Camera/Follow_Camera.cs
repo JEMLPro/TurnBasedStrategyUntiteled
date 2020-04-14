@@ -5,26 +5,22 @@ using UnityEngine;
 public class Follow_Camera : MonoBehaviour
 {
     [SerializeField]
-    GameObject m_FollowObject = null;
+    GameObject m_FollowObject = null; /*!< This is the object the camera will follow. */ 
 
     [SerializeField]
-    float m_fXOffset = 0;
+    float m_fXOffset = 0; /*!< This is the offset for the X axis, will allow for camera positioning. */
 
     [SerializeField]
-    float m_fYOffset = 0;
+    float m_fYOffset = 0; /*!< This is the offset for the Y axis, will allow for camera positioning. */
 
     [SerializeField]
-    float m_fZOffset = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    float m_fZOffset = 0; /*!< This is the offset for the Z axis, will allow for camera positioning. */
 
     // Update is called once per frame
     void Update()
     {
+        // If this game object is not at the target location, move to target location. 
+
         if (gameObject.transform.position != m_FollowObject.transform.position + new Vector3(m_fXOffset, m_fYOffset, m_fZOffset))
         {
             gameObject.transform.position = m_FollowObject.transform.position + new Vector3(m_fXOffset, m_fYOffset, m_fZOffset);
