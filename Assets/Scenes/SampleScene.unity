@@ -867,6 +867,8 @@ MonoBehaviour:
   m_Tiles:
   - {fileID: 2100000, guid: 4e55ee731632d15469db31f1f5385d34, type: 2}
   - {fileID: 2100000, guid: d7a25686793bdab44958cacae5995a11, type: 2}
+  - {fileID: 2100000, guid: 7929ddda32e757748ab64db92657bc60, type: 2}
+  m_LevelManagerJson: {fileID: 4900000, guid: 8eb3f43048bcfd4448b4c51023f8514d, type: 3}
 --- !u!4 &576229144
 Transform:
   m_ObjectHideFlags: 0
@@ -1492,7 +1494,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f0143a34584480e4caf4501317fb3eff, type: 2}
+  - {fileID: 2100000, guid: 7929ddda32e757748ab64db92657bc60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1645,10 +1647,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf81644c7e235ba45b69b0506b92a3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fSpeed: 0.5
+  m_fSpeed: 10
   m_bXAsisMovement: 1
-  m_bYAxisMovement: 0
-  m_bZAxisMovement: 1
+  m_bYAxisMovement: 1
+  m_bZAxisMovement: 0
 --- !u!1 &1016316632
 GameObject:
   m_ObjectHideFlags: 0

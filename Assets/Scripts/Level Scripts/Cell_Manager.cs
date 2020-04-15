@@ -6,7 +6,7 @@ public enum  CellTile
 {
         none, 
         grass, 
-        forrest
+        water
 }
 
 public class Cell_Manager : MonoBehaviour
