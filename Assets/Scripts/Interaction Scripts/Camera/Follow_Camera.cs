@@ -25,6 +25,8 @@ public class Follow_Camera : MonoBehaviour
         {
             gameObject.transform.position = m_FollowObject.transform.position + new Vector3(m_fXOffset, m_fYOffset, m_fZOffset);
 
+            // This will make this gameobject look in the direction of the target object. 
+
             gameObject.transform.LookAt(m_FollowObject.transform.position); 
 
         }

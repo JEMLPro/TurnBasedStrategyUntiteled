@@ -50,12 +50,15 @@ public class Tile_Map_Manager : MonoBehaviour
 
     private void Start()
     {
-        m_LoadMapFromJSONFile(m_LevelManagerJson);
+        // At the start of the game load the maps into the game. 
 
+        m_LoadMapFromJSONFile(m_LevelManagerJson);
     }
 
     private void Update()
     {
+        // This will be used to check which level should be loaded, will reset the variable when a new level is loaded. 
+
         switch (m_iLevelLoaded)
         {
             case 0:
@@ -81,19 +84,33 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
+    // Used to reset the grid allowing for a new one to be built. 
     public void m_ResetGrid()
     {
+        // Loops through the current cells and removes them from the game.
+
         for (int i = 0; i < m_Grid.Count; i++)
         {
             Destroy(m_Grid[i]); 
         }
 
+        // Clear the list of all elements allowing for new ones to be assigned in an empty list. 
+
         m_Grid.Clear(); 
     }
 
+    // Used to create a grid with a set number of rows and columns. 
     public void m_CreateTileMap(int rows, int columns)
     {
+        // Reset grid for new level to be loaded. 
+
+        m_ResetGrid();
+
+        // Init variables. 
+
         float l_fSpacing = -1.0f; 
+
+        // Create grid with defined dimentions. 
 
         for(int i = 0; i < columns; i++)
         {
@@ -106,13 +123,24 @@ public class Tile_Map_Manager : MonoBehaviour
 
         for(int k = 0; k < m_Grid.Count; k++)
         {
+            // Assign all cells a parent for oroganisation purposes. 
+
             m_Grid[k].transform.parent = gameObject.transform;
         }
     }
 
+    // Used to form a grid with a set number of rows and columns, with the addes benefit of a configuration for the tiles, 
     public void m_CreateTileMap(int rows, int columns, string[] tileConfig)
     {
+        // Reset grid for new level to be loaded. 
+
+        m_ResetGrid();
+
+        // Init variables. 
+
         float l_fSpacing = -1.0f;
+
+        // Create grid with defined dimentions. 
 
         for (int i = 0; i < columns; i++)
         {
@@ -126,6 +154,8 @@ public class Tile_Map_Manager : MonoBehaviour
 
         for (int k = 0; k < m_Grid.Count; k++)
         {
+            // Assign all cells a parent for oroganisation purposes. 
+
             m_Grid[k].transform.parent = gameObject.transform;
 
             if (tileConfig.Length <= k)
@@ -149,6 +179,7 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
+    // Used to load a level using the Level Class. 
     public void m_CreateTileMap(Level levelToLoad)
     {
         // Reset the grid to it's default state.
@@ -245,12 +276,17 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
     
+    // Used to return a level class using a string used for a name. 
     public Level m_GetLevelFromName(string levelName)
     {
+        // This will loop through each element in the list of levels 
+
         foreach (var level in m_ListOfLevels.levels)
         {
             if(level.levelName == levelName)
             {
+                // When the level matches the desired level name it will return that level. 
+
                 Debug.Log("Level " + levelName + " has been found. \n" + level.description); 
 
                 return level; 
@@ -262,6 +298,7 @@ public class Tile_Map_Manager : MonoBehaviour
         return m_ListOfLevels.levels[0];
     }
 
+    // Used to load a list of levels from a JSON file. 
     public void m_LoadMapFromJSONFile(TextAsset m_LevelJson)
     {
         Debug.Log("Loading " + m_LevelJson.name + " from file");

@@ -18,6 +18,7 @@ public class Cell_Manager : MonoBehaviour
     [SerializeField]
     CellTile m_TileType; 
 
+    // This will be used to set a new tile to this cell, allowing for a tile map to be cretaed. 
     public void m_SetTile(CellTile newTile, Material newMaterial)
     {
         m_TileType = newTile; 
