@@ -118,6 +118,8 @@ public class Tile_Map_Manager : MonoBehaviour
             {
                 Vector3 l_Pos = new Vector3(i, j, 0) * l_fSpacing;
                 m_Grid.Add(Instantiate(m_Cell, l_Pos, Quaternion.identity));
+
+                m_Grid[m_Grid.Count - 1].GetComponent<Cell_Manager>().m_SetGridPos(i, j);
             }
         }
 
@@ -126,6 +128,8 @@ public class Tile_Map_Manager : MonoBehaviour
             // Assign all cells a parent for oroganisation purposes. 
 
             m_Grid[k].transform.parent = gameObject.transform;
+
+            m_AssignCellNeighbours(k);
         }
     }
 
@@ -149,6 +153,8 @@ public class Tile_Map_Manager : MonoBehaviour
                 Vector3 l_Pos = new Vector3(i, j, 0) * l_fSpacing;
 
                 m_Grid.Add(Instantiate(m_Cell, l_Pos, Quaternion.identity));
+
+                m_Grid[m_Grid.Count - 1].GetComponent<Cell_Manager>().m_SetGridPos(i, j);
             }
         }
 
@@ -157,6 +163,8 @@ public class Tile_Map_Manager : MonoBehaviour
             // Assign all cells a parent for oroganisation purposes. 
 
             m_Grid[k].transform.parent = gameObject.transform;
+
+            m_AssignCellNeighbours(k);
 
             if (tileConfig.Length <= k)
             {
@@ -216,6 +224,8 @@ public class Tile_Map_Manager : MonoBehaviour
                     Vector3 l_Pos = new Vector3(i, j, 0) * l_fSpacing;
 
                     m_Grid.Add(Instantiate(m_Cell, l_Pos, Quaternion.identity));
+
+                    m_Grid[m_Grid.Count - 1].GetComponent<Cell_Manager>().m_SetGridPos(i, j);
                 }
             }
 
@@ -226,6 +236,8 @@ public class Tile_Map_Manager : MonoBehaviour
                 // Assign a parent to the cells in the level heirarchy for organisation purposes. 
 
                 m_Grid[k].transform.parent = gameObject.transform;
+
+                m_AssignCellNeighbours(k); 
 
                 // Using tile config for level assign proper tiles. 
 
@@ -275,7 +287,94 @@ public class Tile_Map_Manager : MonoBehaviour
             Debug.LogError("Error Code 0000 : Unable to load level from file. "); 
         }
     }
-    
+   
+    // This will return a cell depending on the cell coordiantes provided. 
+    GameObject m_GetCellUsingGridPosition(int x, int y)
+    {
+        // This will loop through each object in the grid until the desired cell is found. 
+
+        foreach (var cell in m_Grid)
+        {
+            if((cell.GetComponent<Cell_Manager>().m_GetGridPos().x == x) && (cell.GetComponent<Cell_Manager>().m_GetGridPos().y == y))
+            {
+                return cell;
+            }
+        }
+
+        // If there is no cell of that value a null object will be outputted and will require handeling. 
+
+        return null;
+    }
+
+    // This will be used to assign the neighbours to a cell in the grid, a position in the grid will need to be provide. 
+    void m_AssignCellNeighbours(int numberInGrid)
+    {
+        // This will check that the number provided isn't out of the grid's range. 
+
+        if (m_Grid.Count < numberInGrid)
+        {
+            // Init variables. 
+
+            GameObject l_TempCell = null;
+
+            // Assign Cell in up position
+
+            if (m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().y - 1 >= 0)
+            {
+                l_TempCell = m_GetCellUsingGridPosition(m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().x, m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().y - 1);
+
+                if (l_TempCell != null)
+                {
+                    m_Grid[numberInGrid].GetComponent<Cell_Neighbours>().m_SetCellNeighbour(l_TempCell);
+                }
+            }
+
+            // Reset variable after each statement to ensure a leftover cell isn't provided. 
+
+            l_TempCell = null;
+
+            // Assign Cell in down position
+
+            if (m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().y + 1 >= 0)
+            {
+                l_TempCell = m_GetCellUsingGridPosition(m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().x, m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().y + 1);
+
+                if (l_TempCell != null)
+                {
+                    m_Grid[numberInGrid].GetComponent<Cell_Neighbours>().m_SetCellNeighbour(l_TempCell);
+                }
+            }
+
+            l_TempCell = null;
+
+            // Assign Cell in left position
+
+            if (m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().x - 1 >= 0)
+            {
+                l_TempCell = m_GetCellUsingGridPosition(m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().x - 1, m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().y);
+
+                if (l_TempCell != null)
+                {
+                    m_Grid[numberInGrid].GetComponent<Cell_Neighbours>().m_SetCellNeighbour(l_TempCell);
+                }
+            }
+
+            l_TempCell = null;
+
+            // Assign Cell in right position
+
+            if (m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().x + 1 >= 0)
+            {
+                l_TempCell = m_GetCellUsingGridPosition(m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().x + 1, m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().y);
+
+                if (l_TempCell != null)
+                {
+                    m_Grid[numberInGrid].GetComponent<Cell_Neighbours>().m_SetCellNeighbour(l_TempCell);
+                }
+            }
+        }
+    }
+
     // Used to return a level class using a string used for a name. 
     public Level m_GetLevelFromName(string levelName)
     {
