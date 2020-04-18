@@ -16,6 +16,20 @@ public class Move_Object : MonoBehaviour
     [SerializeField]
     bool m_bZAxisMovement = false; /*!< Used to make the object move Backwards and Forwards. */
 
+    [SerializeField]
+    Vector3 m_MinMoveValue;
+
+    [SerializeField]
+    Vector3 m_MaxMoveValue;
+
+    private void Start()
+    {
+        // Assign Min and max position values, May need tweeking depending upon map. 
+        m_MinMoveValue = new Vector3(-4f, -4f, 0);
+
+        m_MaxMoveValue = new Vector3(1.5f, 1.5f, 0); 
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -45,6 +59,16 @@ public class Move_Object : MonoBehaviour
         float l_xDirect = Input.GetAxis("Horizontal") * m_fSpeed * Time.deltaTime;
 
         transform.Translate(new Vector3(l_xDirect, 0, 0));
+
+        // Limits the movement to a min and maximum possible value. 
+        if (transform.position.x >= m_MaxMoveValue.x)
+        {
+            transform.position = new Vector3(m_MaxMoveValue.x, transform.position.y, transform.position.z);
+        }
+        else if(transform.position.x <= m_MinMoveValue.x)
+        {
+            transform.position = new Vector3(m_MinMoveValue.x, transform.position.y, transform.position.z);
+        }
     }
 
     // When added into update will allow for the player to move the object in the Y axis using the defined Vertical keys.
@@ -53,6 +77,15 @@ public class Move_Object : MonoBehaviour
         float l_yDirect = Input.GetAxis("Vertical") * m_fSpeed * Time.deltaTime;
 
         transform.Translate(new Vector3(0, l_yDirect, 0));
+
+        if (transform.position.y >= m_MaxMoveValue.y)
+        {
+            transform.position = new Vector3(transform.position.x, m_MaxMoveValue.y, transform.position.z);
+        }
+        else if (transform.position.y <= m_MinMoveValue.y)
+        {
+            transform.position = new Vector3(transform.position.x, m_MinMoveValue.y, transform.position.z);
+        }
     }
 
     // When added into update will allow for the player to move the object in the Z axis using the defined Vertical keys.
