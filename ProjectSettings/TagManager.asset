@@ -6,6 +6,7 @@ TagManager:
   tags:
   - OpponentUnit
   - PlayerUnit
+  - Map
   layers:
   - Default
   - TransparentFX
