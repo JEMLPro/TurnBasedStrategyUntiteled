@@ -20,7 +20,7 @@ public class Cell_Manager : MonoBehaviour
 {
     
     [SerializeField]
-    Material m_CellMaterial; /*! < \var This will hold the cells current material. */
+    Sprite m_CellMaterial; /*! < \var This will hold the cells current material. */
 
     [SerializeField]
     CellTile m_TileType; /*! < \var This is the type of tile the cell is, will allow for pathfinding/obsticle detection. */
@@ -29,13 +29,13 @@ public class Cell_Manager : MonoBehaviour
     GridPos m_GridPos; /*! < \var A pair of (X, Y) coordiantes for this cell's position on the grid. */
 
     // This will be used to set a new tile to this cell, allowing for a tile map to be cretaed. 
-    public void m_SetTile(CellTile newTile, Material newMaterial)
+    public void m_SetTile(CellTile newTile, Sprite newMaterial)
     {
         m_TileType = newTile; 
 
         m_CellMaterial = newMaterial;
 
-        gameObject.GetComponent<Renderer>().material = newMaterial; 
+        gameObject.GetComponent<SpriteRenderer>().sprite = newMaterial; 
     }
 
     // This will be used to update the cell's coordinates on the grid.

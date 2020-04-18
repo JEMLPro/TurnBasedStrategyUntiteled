@@ -38,7 +38,7 @@ public class Tile_Map_Manager : MonoBehaviour
     GameObject m_Cell;
 
     [SerializeField]
-    List<Material> m_Tiles;
+    List<Sprite> m_Tiles;
 
     Levels m_ListOfLevels = new Levels();
 
@@ -196,7 +196,7 @@ public class Tile_Map_Manager : MonoBehaviour
 
         // Init local variables.
 
-        float l_fSpacing = -1.0f;
+        float l_fSpacing = -0.33f;
 
         List<string> l_AdjustedTileConfig = new List<string>();
 
