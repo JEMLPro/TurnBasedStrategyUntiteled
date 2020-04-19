@@ -25,4 +25,6 @@ public class Unit_Movement : MonoBehaviour
     {
         m_CurrentCell = newCell; 
     }
+
+    public GameObject m_GetCurrentPosition() => m_CurrentCell; 
 }

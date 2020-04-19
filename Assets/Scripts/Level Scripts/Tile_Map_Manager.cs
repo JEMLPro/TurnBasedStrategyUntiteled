@@ -46,7 +46,7 @@ public class Tile_Map_Manager : MonoBehaviour
     }
 
     // Used to reset the grid allowing for a new one to be built. 
-    public void m_ResetGrid()
+    void m_ResetGrid()
     {
         // Loops through the current cells and removes them from the game.
 
@@ -61,7 +61,7 @@ public class Tile_Map_Manager : MonoBehaviour
     }
 
     // Used to create a grid with a set number of rows and columns. 
-    public void m_CreateTileMap(int rows, int columns)
+    void m_CreateTileMap(int rows, int columns)
     {
         // Reset grid for new level to be loaded. 
 
@@ -95,7 +95,7 @@ public class Tile_Map_Manager : MonoBehaviour
     }
 
     // Used to form a grid with a set number of rows and columns, with the addes benefit of a configuration for the tiles, 
-    public void m_CreateTileMap(int rows, int columns, string[] tileConfig)
+    void m_CreateTileMap(int rows, int columns, string[] tileConfig)
     {
         // Reset grid for new level to be loaded. 
 
@@ -149,7 +149,7 @@ public class Tile_Map_Manager : MonoBehaviour
     }
 
     // Used to load a level using the Level Class. 
-    public void m_CreateTileMap(Level levelToLoad)
+    void m_CreateTileMap(Level levelToLoad)
     {
         // Reset the grid to it's default state.
 
@@ -250,7 +250,7 @@ public class Tile_Map_Manager : MonoBehaviour
     }
    
     // This will return a cell depending on the cell coordiantes provided. 
-    GameObject m_GetCellUsingGridPosition(int x, int y)
+    public GameObject m_GetCellUsingGridPosition(int x, int y)
     {
         // This will loop through each object in the grid until the desired cell is found. 
 
