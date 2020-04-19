@@ -10,6 +10,12 @@ public class Unit_Movement : MonoBehaviour
     [SerializeField]
     Vector3 m_PlcementOffset = new Vector3(0, 0, -1);
 
+    [SerializeField]
+    int m_iMovementPoints = 4;
+
+    [SerializeField]
+    int m_iUsedPoints = 0;
+
     private void Update()
     {
         if (m_CurrentCell != null)
@@ -26,5 +32,20 @@ public class Unit_Movement : MonoBehaviour
         m_CurrentCell = newCell; 
     }
 
-    public GameObject m_GetCurrentPosition() => m_CurrentCell; 
+    public void m_SetPosition(GameObject newCell, int moveCost)
+    {
+        if ((moveCost <= m_iMovementPoints) && (m_iUsedPoints + moveCost <= m_iMovementPoints))
+        {
+            m_CurrentCell = newCell;
+
+            m_iUsedPoints += moveCost; 
+        }
+    }
+
+    public GameObject m_GetCurrentPosition() => m_CurrentCell;
+
+    public void m_ResetUsedPoints()
+    {
+        m_iUsedPoints = 0; 
+    }
 }

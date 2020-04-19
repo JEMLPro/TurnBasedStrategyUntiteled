@@ -34,7 +34,9 @@ public class Unit_Manager : MonoBehaviour
 
                     if (l_TempPosition != null)
                     {
-                        unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPosition);
+                        int l_DistToTarget = unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(l_TempPosition);
+
+                        unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPosition, l_DistToTarget);
                     }
                 }
 

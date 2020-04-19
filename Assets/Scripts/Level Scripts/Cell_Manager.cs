@@ -78,6 +78,40 @@ public class Cell_Manager : MonoBehaviour
         return l_iNewX + l_iNewY; 
     }
 
+    public int m_Distance(GameObject otherCell)
+    {
+        int l_iNewX, l_iNewY;
+
+        // This checks which value is bigger to ensure the end product is always positive. 
+
+        if (m_GridPos.x > otherCell.GetComponent<Cell_Manager>().m_GridPos.x)
+        {
+            l_iNewX = m_GridPos.x - otherCell.GetComponent<Cell_Manager>().m_GridPos.x;
+        }
+        else
+        {
+            // Minus the smaller from the larger to get the value between them, for example: 9 - 3 = 6, the distance from 3 to get to 9. 
+
+            l_iNewX = otherCell.GetComponent<Cell_Manager>().m_GridPos.x - m_GridPos.x;
+        }
+
+        if (m_GridPos.y > otherCell.GetComponent<Cell_Manager>().m_GridPos.y)
+        {
+            l_iNewY = m_GridPos.y - otherCell.GetComponent<Cell_Manager>().m_GridPos.y;
+        }
+        else
+        {
+            l_iNewY = otherCell.GetComponent<Cell_Manager>().m_GridPos.y - m_GridPos.y;
+        }
+
+        // Add the two values together and the final total distance is calculated. For example: (0, 3) and (1, 2) has a distance of 
+        // (1, 1) between them or a total of 2 steps. 
+
+        Debug.Log(l_iNewX + l_iNewY); 
+
+        return l_iNewX + l_iNewY;
+    }
+
     // This will allow for the access of the cells current coordinates. 
     public GridPos m_GetGridPos() => m_GridPos; 
 

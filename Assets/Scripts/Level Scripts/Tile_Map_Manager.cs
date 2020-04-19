@@ -273,6 +273,8 @@ public class Tile_Map_Manager : MonoBehaviour
         {
             if(cell.GetComponent<Object_Selection>().m_bGetObjectSelected() == true)
             {
+                cell.GetComponent<Object_Selection>().m_SetObjectSelected(false); 
+
                 return cell;
             }
         }
