@@ -8,40 +8,23 @@ using System.IO;
 public class Tile_Map_Manager : MonoBehaviour
 {
     [SerializeField]
-    List<GameObject> m_Grid = new List<GameObject>();
+    List<GameObject> m_Grid = new List<GameObject>(); /*!< \var This is the grid object in the game, it will hold all if the cells forming the map. */ 
 
     [SerializeField]
-    GameObject m_Cell;
+    GameObject m_Cell; /*!< /var This is the prefab object for the cell, used for cloning. */
 
     [SerializeField]
-    List<Sprite> m_Tiles;
+    List<Sprite> m_Tiles; /*!< \var This is a list of all the sprites used for tiles in the game. */
 
     private void Update()
     {
         // This will be used to check which level should be loaded, will reset the variable when a new level is loaded. 
 
-        switch (gameObject.GetComponent<Level_Loader>().m_GetLevelLoaded())
+        if(gameObject.GetComponent<Level_Loader>().m_GetLevelLoaded() > 0)
         {
-            case 0:
-                m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromName("Level Test"));
+            m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(gameObject.GetComponent<Level_Loader>().m_GetLevelLoaded()));
 
-                gameObject.GetComponent<Level_Loader>().m_SetLevelToLoad(-1);
-                break;
-
-            case 1:
-                m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromName("Level One"));
-
-                gameObject.GetComponent<Level_Loader>().m_SetLevelToLoad(-1);
-                break;
-
-            case 2:
-                m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromName("Level Two"));
-
-                gameObject.GetComponent<Level_Loader>().m_SetLevelToLoad(-1);
-                break;
-
-            default:
-                break;
+            gameObject.GetComponent<Level_Loader>().m_SetLevelToLoad(-1);
         }
     }
 
@@ -345,6 +328,36 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
-    
+    public void m_CheckCellRange(int dist, GameObject startCell)
+    {
+        if (startCell != null)
+        {
+            List<GameObject> l_CellsToCheck = new List<GameObject>();
+
+            l_CellsToCheck.AddRange(startCell.GetComponent<Cell_Neighbours>().m_GetCellNeighbours()); 
+
+            for (int i = 0; i < l_CellsToCheck.Count; i++)
+            {
+                if (l_CellsToCheck[i].GetComponent<Cell_Manager>().m_Distance(startCell) <= dist)
+                {
+                    l_CellsToCheck.AddRange(l_CellsToCheck[i].GetComponent<Cell_Neighbours>().m_GetCellNeighbours());
+
+                    l_CellsToCheck[i].GetComponent<Renderer>().material.color = Color.blue;
+                }
+                else
+                {
+                    break; 
+                }
+            }
+        }
+    }
+
+    public void m_ResetCellColours()
+    {
+        foreach (var cell in m_Grid)
+        {
+            cell.GetComponent<Renderer>().material.color = Color.white;
+        }
+    }
 
 }

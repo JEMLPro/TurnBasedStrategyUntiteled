@@ -42,6 +42,8 @@ public class Unit_Movement : MonoBehaviour
         }
     }
 
+    public int m_GetCurrentMoveRange() => m_iMovementPoints - m_iUsedPoints; 
+
     public GameObject m_GetCurrentPosition() => m_CurrentCell;
 
     public void m_ResetUsedPoints()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cell_Neighbours : MonoBehaviour
 {
     [SerializeField]
-    List<GameObject> m_CellNeighbours; /*! < /var This will hold all of the cells adjacent to this one. */
+    List<GameObject> m_CellNeighbours = new List<GameObject>(); /*! < /var This will hold all of the cells adjacent to this one. */
 
     // This will be used to add a new game obejct to it's list of neighbours. 
     public void m_SetCellNeighbour(GameObject newNeighbour)

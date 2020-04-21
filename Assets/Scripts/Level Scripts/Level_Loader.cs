@@ -73,7 +73,19 @@ public class Level_Loader : MonoBehaviour
 
         Debug.Log("Unable to find level in list, returning test level. ");
 
-        return m_ListOfLevels.levels[0];
+        return null;
+    }
+
+    public Level m_GetLevelFromList(int index)
+    {
+        if (index < m_ListOfLevels.levels.Count)
+        {
+            return m_ListOfLevels.levels[index];
+        }
+
+        Debug.Log("Unable to find level in list, returning test level. ");
+
+        return null;
     }
 
     // Used to load a list of levels from a JSON file. 
