@@ -280,7 +280,7 @@ public class Tile_Map_Manager : MonoBehaviour
 
             if (m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().y - 1 >= 0)
             {
-                Debug.Log("Added Cell as Neighbour"); 
+                // Debug.Log("Added Cell as Neighbour"); 
 
                 l_TempCell = m_GetCellUsingGridPosition(m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().x, m_Grid[numberInGrid].GetComponent<Cell_Manager>().m_GetGridPos().y - 1);
 

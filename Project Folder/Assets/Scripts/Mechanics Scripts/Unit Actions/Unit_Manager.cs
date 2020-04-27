@@ -44,6 +44,20 @@ public class Unit_Manager : MonoBehaviour
         // This will check if the over of the unit manager is the same as current turn player. 
         if (m_CheckTurn())
         {
+            GameObject l_SelectedUnit = m_GetSelectedUnit();
+
+            if (gameObject.GetComponent<Activate_Radial_Menu>() != null)
+            {
+                if (l_SelectedUnit != null)
+                {
+                    gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(l_SelectedUnit, true);
+                }
+                else
+                {
+                    gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(null, false);
+                }
+            }
+
             m_UpdateUnitPosition();
 
             m_bResetOnce = true; 
@@ -164,5 +178,18 @@ public class Unit_Manager : MonoBehaviour
         }
 
         return false; 
+    }
+
+    GameObject m_GetSelectedUnit()
+    {
+        foreach (var unit in m_UnitList)
+        {
+            if (unit.GetComponent<Unit_Active>().m_GetActiveUnit() == true)
+            {
+                return unit;
+            }
+        }
+
+        return null; 
     }
 }
