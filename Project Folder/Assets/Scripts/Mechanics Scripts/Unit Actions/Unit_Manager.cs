@@ -38,6 +38,9 @@ public class Unit_Manager : MonoBehaviour
     [SerializeField]
     Action m_Action;
 
+    [SerializeField]
+    GameObject m_AttackTarget;
+
     void Start()
     {
         // If the game objects are not set find the objects through a assigned tag. 
@@ -78,9 +81,18 @@ public class Unit_Manager : MonoBehaviour
                         switch (m_Action)
                         {
                             case Action.Wait:
+
+                                m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UnitWait();
+
+                                m_SetActionNull(); 
+
                                 break;
 
                             case Action.Attack:
+
+                                m_UnitAttack();
+                                m_SetActionNull(); 
+                                
                                 break;
 
                                 // Update Unit Position. 
@@ -198,7 +210,18 @@ public class Unit_Manager : MonoBehaviour
         }
 
     }
-    
+
+    void m_UnitAttack()
+    {
+        if (m_GetSelectedUnit() != null)
+        {
+            if (m_AttackTarget != null)
+            {
+                m_GetSelectedUnit().GetComponent<Unit_Attack>().m_AttackTarget(m_AttackTarget);
+            }
+        }
+    }
+
     void m_ResetUnits()
     {
         // Reset Map
@@ -236,9 +259,12 @@ public class Unit_Manager : MonoBehaviour
     {
         foreach (var unit in m_UnitList)
         {
-            if (unit.GetComponent<Unit_Active>().m_GetActiveUnit() == true)
+            if (unit != null)
             {
-                return unit;
+                if (unit.GetComponent<Unit_Active>().m_GetActiveUnit() == true)
+                {
+                    return unit;
+                }
             }
         }
 
@@ -259,6 +285,37 @@ public class Unit_Manager : MonoBehaviour
 
                 Debug.Log("Action Selected - Move");
             }
+        }
+    }
+
+    public void m_SetActionWait()
+    {
+        if (m_GetSelectedUnit() != null)
+        {
+            if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
+            {
+                m_Action = Action.Wait;
+
+                gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(null, false);
+
+                m_bActionSelected = true;
+
+                Debug.Log("Action Selected - Wait");
+            }
+        }
+    }
+
+    public void m_SetActionAttack()
+    {
+        if (m_GetSelectedUnit() != null)
+        {
+            m_Action = Action.Attack;
+
+            gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(null, false);
+
+            m_bActionSelected = true;
+
+            Debug.Log("Action Selected - Attack");
         }
     }
 

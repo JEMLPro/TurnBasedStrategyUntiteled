@@ -47,6 +47,11 @@ public class Health_Management : MonoBehaviour
         if(m_fHealth < 0)
         {
             m_fHealth = 0; 
+
+            if(m_fHealth == 0)
+            {
+                Destroy(gameObject); 
+            }
         }
     }
 

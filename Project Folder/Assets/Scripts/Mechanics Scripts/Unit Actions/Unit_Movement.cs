@@ -60,6 +60,11 @@ public class Unit_Movement : MonoBehaviour
         return false; 
     }
 
+    public void m_UnitWait()
+    {
+        m_iUsedPoints = m_iMovementPoints;
+    }
+
     public int m_GetCurrentMoveRange() => m_iMovementPoints - m_iUsedPoints; 
 
     public GameObject m_GetCurrentPosition() => m_CurrentCell;
