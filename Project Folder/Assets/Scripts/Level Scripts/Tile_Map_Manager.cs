@@ -16,6 +16,9 @@ public class Tile_Map_Manager : MonoBehaviour
     [SerializeField]
     List<Sprite> m_Tiles; /*!< \var This is a list of all the sprites used for tiles in the game. */
 
+    [SerializeField]
+    bool m_bAllowSelectable = false;
+
     private void Update()
     {
         // This will be used to check which level should be loaded, will reset the variable when a new level is loaded. 
@@ -360,4 +363,10 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
+    public void m_SetSelectable(bool newValue)
+    {
+        m_bAllowSelectable = newValue;
+    }
+
+    public bool m_GetAllowSelectable() => m_bAllowSelectable; 
 }

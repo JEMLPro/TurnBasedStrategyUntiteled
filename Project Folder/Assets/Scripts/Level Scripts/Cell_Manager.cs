@@ -107,7 +107,7 @@ public class Cell_Manager : MonoBehaviour
         // Add the two values together and the final total distance is calculated. For example: (0, 3) and (1, 2) has a distance of 
         // (1, 1) between them or a total of 2 steps. 
 
-        Debug.Log(l_iNewX + l_iNewY); 
+        // Debug.Log(l_iNewX + l_iNewY); 
 
         return l_iNewX + l_iNewY;
     }

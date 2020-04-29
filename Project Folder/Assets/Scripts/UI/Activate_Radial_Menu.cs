@@ -14,7 +14,12 @@ public class Activate_Radial_Menu : MonoBehaviour
     RectTransform m_Canvas = null; 
 
     [SerializeField]
-    GameObject m_AttachedObject; 
+    GameObject m_AttachedObject;
+
+    private void Start()
+    {
+        m_RadialMenu.SetActive(false);     
+    }
 
     public void m_ActivateMenu(GameObject attachedObject, bool menuState)
     {

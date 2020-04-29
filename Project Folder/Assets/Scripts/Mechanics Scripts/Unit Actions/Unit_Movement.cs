@@ -42,6 +42,24 @@ public class Unit_Movement : MonoBehaviour
         }
     }
 
+    public bool m_UpdateUnitPosition(GameObject newCell, int moveCost)
+    {
+        if ((moveCost <= m_iMovementPoints) && (m_iUsedPoints + moveCost <= m_iMovementPoints))
+        {
+            m_CurrentCell = newCell;
+
+            m_iUsedPoints += moveCost;
+
+            Debug.Log("New Position Acepted");
+
+            return true;
+        }
+
+        Debug.Log("New Position Rejected");
+
+        return false; 
+    }
+
     public int m_GetCurrentMoveRange() => m_iMovementPoints - m_iUsedPoints; 
 
     public GameObject m_GetCurrentPosition() => m_CurrentCell;

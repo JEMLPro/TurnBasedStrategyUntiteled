@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public enum Action
+{
+    Nothing,
+    Wait, 
+    Attack, 
+    Move,
+    Build
+}
+
 public class Unit_Manager : MonoBehaviour
 {
     [SerializeField]
@@ -10,6 +20,7 @@ public class Unit_Manager : MonoBehaviour
     [SerializeField]
     List<GameObject> m_UnitList;
 
+    [SerializeField]
     bool m_bCheckRange = false;
 
     [SerializeField]
@@ -19,7 +30,13 @@ public class Unit_Manager : MonoBehaviour
     CurrentTurn m_Owner = CurrentTurn.player;
 
     [SerializeField]
-    bool m_bResetOnce = false; 
+    bool m_bResetOnce = false;
+
+    [SerializeField]
+    bool m_bActionSelected = false; 
+
+    [SerializeField]
+    Action m_Action;
 
     void Start()
     {
@@ -50,15 +67,50 @@ public class Unit_Manager : MonoBehaviour
             {
                 if (l_SelectedUnit != null)
                 {
-                    gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(l_SelectedUnit, true);
+                    if (m_bActionSelected != true)
+                    {
+                        gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(l_SelectedUnit, true);
+
+                        m_GameMap.GetComponent<Tile_Map_Manager>().m_SetSelectable(false);
+                    }
+                    else
+                    {
+                        switch (m_Action)
+                        {
+                            case Action.Wait:
+                                break;
+
+                            case Action.Attack:
+                                break;
+
+                                // Update Unit Position. 
+                            case Action.Move:
+                                // Debug.Log("Move");
+                                
+                                m_UpdateUnitPosition();
+                                m_GameMap.GetComponent<Tile_Map_Manager>().m_SetSelectable(true); 
+
+                                break;
+
+                            case Action.Build:
+                                break;
+
+                            default:
+                                m_bActionSelected = false; 
+                                break;
+                        }
+                    }
                 }
                 else
                 {
+                    m_SetActionNull(); 
                     gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(null, false);
+
+                    m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
+                    m_bCheckRange = false; 
+
                 }
             }
-
-            m_UpdateUnitPosition();
 
             m_bResetOnce = true; 
         }
@@ -79,72 +131,72 @@ public class Unit_Manager : MonoBehaviour
     {
         int l_iResetLoop = 0;
 
-        // Loops through each unit in the list. 
-        foreach (var unit in m_UnitList)
+        // Update the position of the current selected unit. 
+        if (m_GetSelectedUnit() != null)
         {
-            if (unit != null)
+            if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition() != null)
             {
-                // Update the position of the current selected unit. 
-                if (unit.GetComponent<Unit_Active>().m_GetActiveUnit() == true)
+                // If the unit can still has movemet points they can still move. 
+                if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
                 {
-                    // If the unit can still has movemet points they can still move. 
-                    if (unit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
+                    // If the range hasn't been checked for this unit, check their movement range. 
+                    if (m_bCheckRange == false)
                     {
-                        // If the range hasn't been checked for this unit, check their movement range. 
-                        if (m_bCheckRange == false)
+                        m_GameMap.GetComponent<Tile_Map_Manager>().m_CheckCellRange(m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentMoveRange(),
+                            m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition());
+
+                        m_bCheckRange = true;
+                    }
+
+                    // Store the selected cell locally to check it exists. 
+                    GameObject l_TempPosition = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell();
+
+                    // If the cell exists. 
+                    if (l_TempPosition != null)
+                    {
+                        // Check the distance between the current cell and the new cell. 
+
+                        int l_DistToTarget = m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(l_TempPosition);
+
+                        // If the cell is within rage the unit will move towards it. 
+
+                        if(m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, l_DistToTarget) == true);
                         {
-                            m_GameMap.GetComponent<Tile_Map_Manager>().m_CheckCellRange(unit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange(),
-                                unit.GetComponent<Unit_Movement>().m_GetCurrentPosition());
-
-                            m_bCheckRange = true;
-                        }
-
-                        // Store the selected cell locally to check it exists. 
-                        GameObject l_TempPosition = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell();
-
-                        // If the cell exists. 
-                        if (l_TempPosition != null)
-                        {
-                            // Check the distance between the current cell and the new cell. 
-
-                            int l_DistToTarget = unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(l_TempPosition);
-
-                            // If the cell is within rage the unit will move towards it. 
-
-                            unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPosition, l_DistToTarget);
-
                             // If the unit has moved reset the cells back to their origional state. 
 
                             m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
 
                             m_bCheckRange = false;
-                        }
-                        else
-                        {
-                            l_iResetLoop++;
 
-                            if(l_iResetLoop >= 100)
-                            {
-                                m_bCheckRange = true;
-
-                                l_iResetLoop = 0; 
-                            }
+                            m_SetActionNull();
                         }
                     }
-                }
-
-                // Assign a new position to a unit without a current position. 
-                if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition() == null)
-                {
-                    GameObject l_TempPos = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetCellUsingGridPosition(0, 0);
-
-                    if (l_TempPos != null)
+                    else
                     {
-                        unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPos);
+                        l_iResetLoop++;
+
+                        if (l_iResetLoop >= 100)
+                        {
+                            m_bCheckRange = true;
+
+                            l_iResetLoop = 0;
+                        }
                     }
                 }
             }
         }
+
+        // Assign a new position to a unit without a current position. 
+        if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition() == null)
+        {
+            GameObject l_TempPos = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetCellUsingGridPosition(0, 0);
+
+            if (l_TempPos != null)
+            {
+                m_GetSelectedUnit().GetComponent<Unit_Movement>().m_SetPosition(l_TempPos);
+            }
+        }
+
     }
     
     void m_ResetUnits()
@@ -191,5 +243,31 @@ public class Unit_Manager : MonoBehaviour
         }
 
         return null; 
+    }
+
+    public void m_SetActionMove()
+    {
+        if (m_GetSelectedUnit() != null)
+        {
+            if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
+            {
+                m_Action = Action.Move;
+
+                gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(null, false);
+
+                m_bActionSelected = true;
+
+                Debug.Log("Action Selected - Move");
+            }
+        }
+    }
+
+    public void m_SetActionNull()
+    {
+        m_Action = Action.Nothing;
+
+        m_bActionSelected = false;
+
+        Debug.Log("Action Selected - Nothing");
     }
 }

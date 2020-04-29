@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Object_Selection : MonoBehaviour
 {
@@ -12,12 +13,19 @@ public class Object_Selection : MonoBehaviour
     {
         // If the mouse is over this object and the mouse button is pressed this object becomes selected. 
 
-        if(Input.GetMouseButtonDown(0))
+        if (GetComponentInParent<Tile_Map_Manager>().m_GetAllowSelectable() == true)
         {
-            m_bObjectSelected = true;
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    m_bObjectSelected = true;
+                }
+            }
         }
-
     }
+
+    
 
     private void OnMouseExit()
     {
