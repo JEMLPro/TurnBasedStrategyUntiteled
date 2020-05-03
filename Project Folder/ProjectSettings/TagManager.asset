@@ -4,11 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - OpponentUnit
-  - PlayerUnit
   - Map
   - Turn_Manager
-  - Unit_Manager
+  - Unit_Manager_Player
+  - Unit_Manager_AI
   layers:
   - Default
   - TransparentFX

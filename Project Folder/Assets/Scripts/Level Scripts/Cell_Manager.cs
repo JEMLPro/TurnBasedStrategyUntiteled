@@ -80,6 +80,11 @@ public class Cell_Manager : MonoBehaviour
 
     public int m_Distance(GameObject otherCell)
     {
+        if(otherCell.GetComponent<Cell_Manager>() == null)
+        {
+            return -1; 
+        }
+
         int l_iNewX, l_iNewY;
 
         // This checks which value is bigger to ensure the end product is always positive. 

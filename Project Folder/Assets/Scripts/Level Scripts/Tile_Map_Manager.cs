@@ -19,6 +19,11 @@ public class Tile_Map_Manager : MonoBehaviour
     [SerializeField]
     bool m_bAllowSelectable = false;
 
+    private void Start()
+    {
+        // Todo -> load tiles into the game in order so that it will always have tiles inside. Posibly lead from file. 
+    }
+
     private void Update()
     {
         // This will be used to check which level should be loaded, will reset the variable when a new level is loaded. 
@@ -143,7 +148,7 @@ public class Tile_Map_Manager : MonoBehaviour
 
         // Init local variables.
 
-        float l_fSpacing = -0.33f;
+        float l_fSpacing = -1.0f;
 
         List<string> l_AdjustedTileConfig = new List<string>();
 
@@ -266,6 +271,11 @@ public class Tile_Map_Manager : MonoBehaviour
         }
 
         return null; 
+    }
+
+    public GameObject m_GetRandomCell()
+    {
+        return m_Grid[Random.Range(0, m_Grid.Count - 1)];
     }
 
     // This will be used to assign the neighbours to a cell in the grid, a position in the grid will need to be provide. 

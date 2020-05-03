@@ -767,6 +767,8 @@ MonoBehaviour:
   m_fHit: 100
   m_fSpeed: 16
   m_fAttackRange: 1
+  m_bWithinRange: 0
+  m_bSelectedForAttack: 0
   m_UnitType: 0
 --- !u!114 &556782466
 MonoBehaviour:
@@ -978,9 +980,10 @@ GameObject:
   - component: {fileID: 961833536}
   - component: {fileID: 961833535}
   - component: {fileID: 961833537}
+  - component: {fileID: 961833538}
   m_Layer: 0
   m_Name: Unit Manager (Player)
-  m_TagString: Unit_Manager
+  m_TagString: Unit_Manager_Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1006,7 +1009,6 @@ MonoBehaviour:
   m_bResetOnce: 0
   m_bActionSelected: 0
   m_Action: 0
-  m_AttackTarget: {fileID: 556782459}
 --- !u!4 &961833536
 Transform:
   m_ObjectHideFlags: 0
@@ -1038,6 +1040,20 @@ MonoBehaviour:
   m_PieMenu: {fileID: 1189208644}
   m_Canvas: {fileID: 463612287}
   m_AttachedObject: {fileID: 0}
+--- !u!114 &961833538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961833534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ddbd0c02bb69c47a77bbd77ddf8d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AtTarget: {fileID: 0}
+  m_OtherUnitManager: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1456,7 @@ GameObject:
   - component: {fileID: 1612868270}
   m_Layer: 0
   m_Name: Unit Manager (AI)
-  m_TagString: Unit_Manager
+  m_TagString: Unit_Manager_AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1466,7 +1482,6 @@ MonoBehaviour:
   m_bResetOnce: 0
   m_bActionSelected: 0
   m_Action: 0
-  m_AttackTarget: {fileID: 0}
 --- !u!4 &1612868271
 Transform:
   m_ObjectHideFlags: 0
@@ -1639,6 +1654,8 @@ MonoBehaviour:
   m_fHit: 100
   m_fSpeed: 12
   m_fAttackRange: 1
+  m_bWithinRange: 0
+  m_bSelectedForAttack: 0
   m_UnitType: 0
 --- !u!114 &1842354679
 MonoBehaviour:
@@ -1781,6 +1798,12 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Map
       objectReference: {fileID: 0}
+    - target: {fileID: 7433200465018048693, guid: df0490bfb7072ec45b6eb9abe6af0b27,
+        type: 3}
+      propertyPath: m_Tiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: ef3e33543f9d711409817045345be0df,
+        type: 3}
     - target: {fileID: 7433200465018048698, guid: df0490bfb7072ec45b6eb9abe6af0b27,
         type: 3}
       propertyPath: m_LocalPosition.x

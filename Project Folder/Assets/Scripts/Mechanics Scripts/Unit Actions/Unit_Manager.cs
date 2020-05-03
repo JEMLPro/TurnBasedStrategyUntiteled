@@ -38,9 +38,6 @@ public class Unit_Manager : MonoBehaviour
     [SerializeField]
     Action m_Action;
 
-    [SerializeField]
-    GameObject m_AttackTarget;
-
     void Start()
     {
         // If the game objects are not set find the objects through a assigned tag. 
@@ -61,6 +58,23 @@ public class Unit_Manager : MonoBehaviour
 
     private void Update()
     {
+        // Init temp locations for units.
+        foreach (var unit in m_UnitList)
+        {
+            if (unit != null)
+            {
+                if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition() == null)
+                {
+                    GameObject l_TempPos = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetRandomCell();
+
+                    if (l_TempPos != null)
+                    {
+                        unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPos);
+                    }
+                }
+            }
+        }
+
         // This will check if the over of the unit manager is the same as current turn player. 
         if (m_CheckTurn())
         {
@@ -90,9 +104,16 @@ public class Unit_Manager : MonoBehaviour
 
                             case Action.Attack:
 
-                                m_UnitAttack();
-                                m_SetActionNull(); 
-                                
+                                gameObject.GetComponent<Unit_Find_AtTarget1>().m_AtRangeFinder();
+
+                                gameObject.GetComponent<Unit_Find_AtTarget1>().m_SelectAttackTarget(); 
+
+                                if (gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget() != null)
+                                {
+                                    m_UnitAttack();
+                                    m_SetActionNull();
+                                }
+
                                 break;
 
                                 // Update Unit Position. 
@@ -201,7 +222,7 @@ public class Unit_Manager : MonoBehaviour
         // Assign a new position to a unit without a current position. 
         if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition() == null)
         {
-            GameObject l_TempPos = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetCellUsingGridPosition(0, 0);
+            GameObject l_TempPos = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetRandomCell();
 
             if (l_TempPos != null)
             {
@@ -215,10 +236,7 @@ public class Unit_Manager : MonoBehaviour
     {
         if (m_GetSelectedUnit() != null)
         {
-            if (m_AttackTarget != null)
-            {
-                m_GetSelectedUnit().GetComponent<Unit_Attack>().m_AttackTarget(m_AttackTarget);
-            }
+            m_GetSelectedUnit().GetComponent<Unit_Attack>().m_AttackTarget(gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget());
         }
     }
 
@@ -255,7 +273,7 @@ public class Unit_Manager : MonoBehaviour
         return false; 
     }
 
-    GameObject m_GetSelectedUnit()
+    public GameObject m_GetSelectedUnit()
     {
         foreach (var unit in m_UnitList)
         {
@@ -270,6 +288,8 @@ public class Unit_Manager : MonoBehaviour
 
         return null; 
     }
+
+    public List<GameObject> m_GetUnitList() => m_UnitList;
 
     public void m_SetActionMove()
     {

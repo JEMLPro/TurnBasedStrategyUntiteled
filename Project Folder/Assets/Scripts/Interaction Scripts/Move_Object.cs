@@ -25,9 +25,9 @@ public class Move_Object : MonoBehaviour
     private void Start()
     {
         // Assign Min and max position values, May need tweeking depending upon map. 
-        m_MinMoveValue = new Vector3(-4f, -4f, 0);
+        m_MinMoveValue = new Vector3(-10f, -10f, 0);
 
-        m_MaxMoveValue = new Vector3(1.5f, 1.5f, 0); 
+        m_MaxMoveValue = new Vector3(0, 0, 0); 
     }
 
     // Update is called once per frame
