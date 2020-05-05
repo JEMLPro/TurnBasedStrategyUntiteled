@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*! /class This class will allow for an object to be assigned a health value, it will also manage the updates needed for that health value.  */
 public class Health_Management : MonoBehaviour
 {
     [SerializeField]
-    float m_fHealth = 0;
+    float m_fHealth = 0; /*!< \var This will be used to keep track of the object's current health value. */
 
     [SerializeField]
-    float m_fMaxHealth = 0; 
+    float m_fMaxHealth = 0; /*!< \var This will store the object's maximum health value, this will prevent the health from reaching greater than this. */
 
+    // This will change the maimum health value.
     public void m_SetMaxHealth(float newMaxHealth)
     {
         // Used to assign a new max health for this game object. 
@@ -17,6 +19,7 @@ public class Health_Management : MonoBehaviour
         m_fMaxHealth = newMaxHealth; 
     }
 
+    // This will set the new current health. 
     public void m_SetCurrentHealth(float newHealth)
     {
         if(newHealth <= m_fMaxHealth)
@@ -36,6 +39,7 @@ public class Health_Management : MonoBehaviour
     // Allows access to the current health value. 
     public float m_GetCurrentHealth() => m_fHealth; 
 
+    // This will reduce the object's health by the value provided into this function. 
     public void m_TakeHit(float damage)
     {
         // This will take an amount off the health value. 
@@ -55,6 +59,7 @@ public class Health_Management : MonoBehaviour
         }
     }
 
+    // This will be used to check if this object's health value is at 0 or not. 
     public bool m_CheckForDeath()
     {
         // If the object's health has reached 0 (or less) this will return true for it being dead. 

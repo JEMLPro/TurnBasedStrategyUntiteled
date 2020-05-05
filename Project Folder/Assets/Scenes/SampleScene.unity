@@ -762,14 +762,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5923f9badd08b4040afa0ea522bbd22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fAttack: 10
-  m_fDefence: 8
-  m_fHit: 100
-  m_fSpeed: 16
+  m_fAttack: 16
+  m_fDefence: 6
+  m_fHit: 90
+  m_fSpeed: 10
   m_fAttackRange: 1
+  m_fNumberOfAttacks: 1
   m_bWithinRange: 0
   m_bSelectedForAttack: 0
-  m_UnitType: 0
+  m_UnitType: 3
 --- !u!114 &556782466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,9 +1002,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GameMap: {fileID: 576229142}
+  m_bCheckRange: 0
   m_UnitList:
   - {fileID: 1842354672}
-  m_bCheckRange: 0
   m_TurnManager: {fileID: 1475465367}
   m_Owner: 16
   m_bResetOnce: 0
@@ -1474,9 +1475,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GameMap: {fileID: 576229142}
+  m_bCheckRange: 0
   m_UnitList:
   - {fileID: 556782459}
-  m_bCheckRange: 0
   m_TurnManager: {fileID: 1475465367}
   m_Owner: 17
   m_bResetOnce: 0
@@ -1650,13 +1651,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_fAttack: 10
-  m_fDefence: 6
-  m_fHit: 100
-  m_fSpeed: 12
+  m_fDefence: 7
+  m_fHit: 110
+  m_fSpeed: 18
   m_fAttackRange: 1
+  m_fNumberOfAttacks: 1
   m_bWithinRange: 0
   m_bSelectedForAttack: 0
-  m_UnitType: 0
+  m_UnitType: 2
 --- !u!114 &1842354679
 MonoBehaviour:
   m_ObjectHideFlags: 0

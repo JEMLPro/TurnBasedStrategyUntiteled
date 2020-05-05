@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*! \enum This is an action in the game, one whcih will be controlled by a radial menu. */
 [System.Serializable]
 public enum Action
 {
@@ -12,31 +13,46 @@ public enum Action
     Build
 }
 
+/*! \class This will be used to manage a list of units. */ 
 public class Unit_Manager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject m_GameMap;
+    //----------------------------------------------------------------------------------------------------------------------------
+    //  Data Members Start 
+    //----------------------------------------------------------------------------------------------------------------------------
+
+    // Movement Management.
 
     [SerializeField]
-    List<GameObject> m_UnitList;
+    GameObject m_GameMap; /*!< \var This will be the game object holding the game's map. */
 
     [SerializeField]
-    bool m_bCheckRange = false;
+    bool m_bCheckRange = false; /*!< \var This will be used to check the movement range of the selected unit. */
+
+    // Unit Management.
 
     [SerializeField]
-    GameObject m_TurnManager;
+    List<GameObject> m_UnitList; /*!< \var This will hold all of the controlled units. */
 
     [SerializeField]
-    CurrentTurn m_Owner = CurrentTurn.player;
+    GameObject m_TurnManager; /*!< \var The turn manager for the game, used to check the current turn. */
 
     [SerializeField]
-    bool m_bResetOnce = false;
+    CurrentTurn m_Owner = CurrentTurn.player; /*!< \var The owner ofthis set of units. */
 
     [SerializeField]
-    bool m_bActionSelected = false; 
+    bool m_bResetOnce = false; /*!< \var Used to reset the list of units at the end of the turn. */
+
+    // Action Management. 
 
     [SerializeField]
-    Action m_Action;
+    bool m_bActionSelected = false; /*!< \var Used to stop another action from being selected before the action is finished. */
+
+    [SerializeField]
+    Action m_Action; /*!< \var The current action which has been selected. */
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    //  Member Functions Start 
+    //----------------------------------------------------------------------------------------------------------------------------
 
     void Start()
     {
@@ -104,14 +120,24 @@ public class Unit_Manager : MonoBehaviour
 
                             case Action.Attack:
 
-                                gameObject.GetComponent<Unit_Find_AtTarget1>().m_AtRangeFinder();
-
-                                gameObject.GetComponent<Unit_Find_AtTarget1>().m_SelectAttackTarget(); 
-
-                                if (gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget() != null)
+                                if (m_GetSelectedUnit().GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
                                 {
-                                    m_UnitAttack();
-                                    m_SetActionNull();
+                                    gameObject.GetComponent<Unit_Find_AtTarget1>().m_AtRangeFinder();
+
+                                    gameObject.GetComponent<Unit_Find_AtTarget1>().m_SelectAttackTarget();
+
+                                    if (gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget() != null)
+                                    {
+                                        m_UnitAttack();
+
+                                        m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0); 
+
+                                        m_SetActionNull();
+                                    }
+                                }
+                                else
+                                {
+                                    m_SetActionNull(); 
                                 }
 
                                 break;
@@ -160,6 +186,20 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    // This will be ued to check which trun it is. If the turn is the owners.
+    public bool m_CheckTurn()
+    {
+        if(m_Owner == m_TurnManager.GetComponent<Turn_Manager>().m_GetCurrentTurn())
+        {
+            return true;
+        }
+
+        return false; 
+    }
+
+    // Unit Management. 
+
+    // This will be used to update the position of the selected unit. 
     void m_UpdateUnitPosition()
     {
         int l_iResetLoop = 0;
@@ -193,7 +233,7 @@ public class Unit_Manager : MonoBehaviour
 
                         // If the cell is within rage the unit will move towards it. 
 
-                        if(m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, l_DistToTarget) == true);
+                        if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, l_DistToTarget) == true) ;
                         {
                             // If the unit has moved reset the cells back to their origional state. 
 
@@ -232,6 +272,7 @@ public class Unit_Manager : MonoBehaviour
 
     }
 
+    // This will be used to allow for the selected unit to attack a selected target. 
     void m_UnitAttack()
     {
         if (m_GetSelectedUnit() != null)
@@ -240,6 +281,7 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    // This will be used to reset the selected units at the end of the turn. 
     void m_ResetUnits()
     {
         // Reset Map
@@ -247,32 +289,37 @@ public class Unit_Manager : MonoBehaviour
         // Reset the map cells allowing for proper move representation. 
         m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
 
+        // Reset Actions
+
+        m_SetActionNull();
+
+        // Reset Attack Target; 
+
+        if (gameObject.GetComponent<Unit_Find_AtTarget1>() != null)
+        {
+            gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null);
+        }
+
         foreach (var unit in m_UnitList)
         {
-            if(unit != null)
+            if (unit != null)
             {
-                // Reset Units
+                // Reset Unit
 
                 // Deselect Unit
-                unit.GetComponent<Unit_Active>().m_SetUnitActive(false); 
+                unit.GetComponent<Unit_Active>().m_SetUnitActive(false);
 
                 // Reset Unit's Movememt points allowing for new movement.
                 unit.GetComponent<Unit_Movement>().m_ResetUsedPoints();
+
+                // Reset number of attacks
+                unit.GetComponent<Unit_Attack>().m_SetNumberOfAttacks(1);
 
             }
         }
     }
 
-    public bool m_CheckTurn()
-    {
-        if(m_Owner == m_TurnManager.GetComponent<Turn_Manager>().m_GetCurrentTurn())
-        {
-            return true;
-        }
-
-        return false; 
-    }
-
+    // This will be used to get the current unit which is selected. 
     public GameObject m_GetSelectedUnit()
     {
         foreach (var unit in m_UnitList)
@@ -289,8 +336,12 @@ public class Unit_Manager : MonoBehaviour
         return null; 
     }
 
+    // This will be used to get the list of units. 
     public List<GameObject> m_GetUnitList() => m_UnitList;
 
+    // Action Management. 
+
+    // This will be ued to set the new action.
     public void m_SetActionMove()
     {
         if (m_GetSelectedUnit() != null)
@@ -308,6 +359,7 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    // This will be ued to set the new action.
     public void m_SetActionWait()
     {
         if (m_GetSelectedUnit() != null)
@@ -325,6 +377,7 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    // This will be ued to set the new action.
     public void m_SetActionAttack()
     {
         if (m_GetSelectedUnit() != null)
@@ -339,12 +392,13 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    // This will be ued to set the new action.
     public void m_SetActionNull()
     {
         m_Action = Action.Nothing;
 
         m_bActionSelected = false;
 
-        Debug.Log("Action Selected - Nothing");
+        // Debug.Log("Action Selected - Nothing");
     }
 }

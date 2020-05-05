@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*! \class This will be used to move a connected object. */
 public class Move_Object : MonoBehaviour
 {
     [SerializeField]
@@ -17,10 +18,10 @@ public class Move_Object : MonoBehaviour
     bool m_bZAxisMovement = false; /*!< Used to make the object move Backwards and Forwards. */
 
     [SerializeField]
-    Vector3 m_MinMoveValue;
+    Vector3 m_MinMoveValue; /*!< \var This is the minimum value the connected object can be moved. */
 
     [SerializeField]
-    Vector3 m_MaxMoveValue;
+    Vector3 m_MaxMoveValue; /*!< \var This is the maximum value the connected object can be moved. */
 
     private void Start()
     {

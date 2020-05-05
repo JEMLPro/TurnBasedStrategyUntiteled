@@ -23,16 +23,19 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
         {
             foreach (var unit in m_OtherUnitManager.GetComponent<Unit_Manager>().m_GetUnitList())
             {
-                if(l_SelectedUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unit.GetComponent<Unit_Movement>().m_GetCurrentPosition()) ==
-                    l_SelectedUnit.GetComponent<Unit_Attack>().m_GetAttackRange())
+                if (unit != null)
                 {
-                    Debug.Log("Theres a unit within range");
+                    if (l_SelectedUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unit.GetComponent<Unit_Movement>().m_GetCurrentPosition()) ==
+                        l_SelectedUnit.GetComponent<Unit_Attack>().m_GetAttackRange())
+                    {
+                        Debug.Log("Theres a unit within range");
 
-                    unit.GetComponent<Unit_Attack>().m_SetWithinAtRange(true);
-                }
-                else
-                {
-                    unit.GetComponent<Unit_Attack>().m_SetWithinAtRange(false);
+                        unit.GetComponent<Unit_Attack>().m_SetWithinAtRange(true);
+                    }
+                    else
+                    {
+                        unit.GetComponent<Unit_Attack>().m_SetWithinAtRange(false);
+                    }
                 }
             }
         }
@@ -47,6 +50,11 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
                 m_AtTarget = unit;
             }
         }
+    }
+
+    public void m_SetAtTarget(GameObject newObject)
+    {
+        m_AtTarget = newObject; 
     }
 
     public GameObject m_GetAtTarget() => m_AtTarget;

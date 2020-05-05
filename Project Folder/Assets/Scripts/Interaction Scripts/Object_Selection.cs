@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/*! \class This will allow for the attached object to be selectable using the mouse. */
 public class Object_Selection : MonoBehaviour
 {
     [SerializeField]
     bool m_bObjectSelected = false; /*!< /var This will be used to check if the player has selected this object. */
-
 
     private void OnMouseOver()
     {
@@ -17,6 +17,8 @@ public class Object_Selection : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                // THis will prevent the object from being selected while under the user interface. 
+
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
                     m_bObjectSelected = true;
@@ -24,8 +26,6 @@ public class Object_Selection : MonoBehaviour
             }
         }
     }
-
-    
 
     private void OnMouseExit()
     {
@@ -40,6 +40,7 @@ public class Object_Selection : MonoBehaviour
     // This will return the current value of our selected variable. 
     public bool m_bGetObjectSelected() => m_bObjectSelected;
 
+    // This will be used to set the selected value for this object, this will mainly be used to reset the value. 
     public void m_SetObjectSelected(bool selectedValue)
     {
         // This will be used to assign a new value to the selected variable. 
