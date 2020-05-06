@@ -21,7 +21,7 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
 
         if (l_SelectedUnit != null)
         {
-            foreach (var unit in m_OtherUnitManager.GetComponent<Unit_Manager>().m_GetUnitList())
+            foreach (var unit in m_OtherUnitManager.GetComponent<AI_Unit_Manager>().m_GetUnitList())
             {
                 if (unit != null)
                 {
@@ -43,7 +43,7 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
 
     public void m_SelectAttackTarget()
     {
-        foreach (var unit in m_OtherUnitManager.GetComponent<Unit_Manager>().m_GetUnitList())
+        foreach (var unit in m_OtherUnitManager.GetComponent<AI_Unit_Manager>().m_GetUnitList())
         {
             if(unit.GetComponent<Unit_Attack>().m_GetSelectedForAttack() == true)
             {

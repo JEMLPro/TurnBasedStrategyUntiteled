@@ -17,11 +17,26 @@ public class Unit_Active : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (GetComponentInParent<Unit_Manager>().m_CheckTurn() == true)
+        if (GetComponentInParent<Unit_Manager>() != null)
         {
-            if (Input.GetMouseButton(0))
+            // Player Turn Manager 
+            if (GetComponentInParent<Unit_Manager>().m_CheckTurn() == true)
             {
-                m_bUnitActive = true;
+                if (Input.GetMouseButton(0))
+                {
+                    m_bUnitActive = true;
+                }
+            }
+        }
+        else
+        {
+            // Ai Turn Manager
+            if (GetComponentInParent<AI_Unit_Manager>().m_CheckTurn() == true)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    m_bUnitActive = true;
+                }
             }
         }
     }

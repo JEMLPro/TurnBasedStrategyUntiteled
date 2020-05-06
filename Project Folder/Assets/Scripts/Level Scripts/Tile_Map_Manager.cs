@@ -275,6 +275,11 @@ public class Tile_Map_Manager : MonoBehaviour
 
     public GameObject m_GetRandomCell()
     {
+        if(m_Grid.Count <= 0)
+        {
+            return null; 
+        }
+
         return m_Grid[Random.Range(0, m_Grid.Count - 1)];
     }
 
