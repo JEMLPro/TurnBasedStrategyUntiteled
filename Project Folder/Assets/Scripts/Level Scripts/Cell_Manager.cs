@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum  CellTile /*! < \enum This will be the tile assigned to this cell, will be used for obsticle detection. */
+public enum  CellTile /*!< \enum This will be the tile assigned to this cell, will be used for obsticle detection. */
 {
         none = 0x00, 
         grass = 0x01, 
@@ -10,10 +10,10 @@ public enum  CellTile /*! < \enum This will be the tile assigned to this cell, w
 }
 
 [System.Serializable]
-public struct GridPos /*! < \struct This will hold a pair of ints which represent the cells coords in a grid. */
+public struct GridPos /*!< \struct This will hold a pair of ints which represent the cells coords in a grid. */
 {
     [SerializeField]
-    public int x, y; /*! < \ var A pair of coords. */
+    public int x, y; /*!< \ var A pair of coords. */
 }
 
 public class Cell_Manager : MonoBehaviour
@@ -28,10 +28,23 @@ public class Cell_Manager : MonoBehaviour
     [SerializeField]
     GridPos m_GridPos; /*! < \var A pair of (X, Y) coordiantes for this cell's position on the grid. */
 
+    [SerializeField]
+    bool m_bOccupied = false;
+
+    [SerializeField]
+    bool m_bObsticle = false; 
+
     // This will be used to set a new tile to this cell, allowing for a tile map to be cretaed. 
     public void m_SetTile(CellTile newTile, Sprite newMaterial)
     {
         m_TileType = newTile; 
+
+        if(m_TileType == CellTile.water)
+        {
+            // If the tile is a select few types then they will be an obsticle. 
+
+            m_bObsticle = true; 
+        }
 
         m_CellMaterial = newMaterial;
 
@@ -44,6 +57,12 @@ public class Cell_Manager : MonoBehaviour
         m_GridPos.x = x;
         m_GridPos.y = y; 
     }
+
+    public bool m_bcheckForObsticle() => m_bObsticle;
+
+    public bool m_bCheckForOccupied() => m_bOccupied;
+
+    public void m_bSetOccupied(bool value) { m_bOccupied = value; }
 
     // This will return the distance between two coordinates as a single integer. 
     public int m_Distance(int x, int y)

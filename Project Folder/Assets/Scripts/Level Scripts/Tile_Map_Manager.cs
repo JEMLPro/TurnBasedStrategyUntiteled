@@ -352,13 +352,36 @@ public class Tile_Map_Manager : MonoBehaviour
         {
             List<GameObject> l_CellsToCheck = new List<GameObject>();
 
-            l_CellsToCheck.AddRange(startCell.GetComponent<Cell_Neighbours>().m_GetCellNeighbours()); 
+            // Check each of the starting cell's neighbours, if they can be moved to add into the list to check. 
+
+            foreach (var cell in startCell.GetComponent<Cell_Neighbours>().m_GetCellNeighbours())
+            {
+                if (cell.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && cell.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                {
+                    l_CellsToCheck.Add(cell);
+                }
+            }
+
+            // Begin looping through the list of cells to check. 
 
             for (int i = 0; i < l_CellsToCheck.Count; i++)
             {
+                // If this cell is within the movement radius. 
+
                 if (l_CellsToCheck[i].GetComponent<Cell_Manager>().m_Distance(startCell) <= dist)
                 {
-                    l_CellsToCheck.AddRange(l_CellsToCheck[i].GetComponent<Cell_Neighbours>().m_GetCellNeighbours());
+
+                    foreach (var cell in l_CellsToCheck[i].GetComponent<Cell_Neighbours>().m_GetCellNeighbours())
+                    {
+                        // Loop through all of this cells neighbours checking they can be moved to. 
+
+                        if (cell.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && cell.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                        {
+                            l_CellsToCheck.Add(cell);
+                        }
+                    }
+
+                    // Change the colour of the cells to display the can be moved to. 
 
                     l_CellsToCheck[i].GetComponent<Renderer>().material.color = Color.blue;
                 }
