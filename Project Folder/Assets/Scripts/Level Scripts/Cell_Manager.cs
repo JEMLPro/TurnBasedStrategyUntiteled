@@ -78,10 +78,15 @@ public class Cell_Manager : MonoBehaviour
         return l_iNewX + l_iNewY; 
     }
 
+    /*! \fn This will be used to find the distance between two cell objects, the object passed into this function needs to be a cell or things won't work. */
     public int m_Distance(GameObject otherCell)
     {
         if(otherCell.GetComponent<Cell_Manager>() == null)
         {
+            // Check the object passed into this function is a cell. 
+
+            Debug.LogError("Unable to find cell: " + otherCell.name);
+
             return -1; 
         }
 
@@ -112,7 +117,7 @@ public class Cell_Manager : MonoBehaviour
         // Add the two values together and the final total distance is calculated. For example: (0, 3) and (1, 2) has a distance of 
         // (1, 1) between them or a total of 2 steps. 
 
-        // Debug.Log(l_iNewX + l_iNewY); 
+        // Debug.Log("Distance = " + l_iNewX + l_iNewY); 
 
         return l_iNewX + l_iNewY;
     }

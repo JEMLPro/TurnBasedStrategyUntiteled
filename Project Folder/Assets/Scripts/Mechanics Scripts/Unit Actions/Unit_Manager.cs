@@ -339,6 +339,51 @@ public class Unit_Manager : MonoBehaviour
     // This will be used to get the list of units. 
     public List<GameObject> m_GetUnitList() => m_UnitList;
 
+    public GameObject m_GetLowestCombatRating(GameObject unitOfFocus)
+    {
+        if (unitOfFocus != null)
+        {
+            GameObject l_TargetUnit = null;
+
+            l_TargetUnit = m_UnitList[0];
+
+            l_TargetUnit.GetComponent<Unit_Attack>().m_CalculateCombatRating();
+
+            float l_fPrevRating, l_fNewRating;
+
+            float l_fCurrDist = l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition());
+
+            l_fPrevRating = l_TargetUnit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10); 
+
+            foreach (var unit in m_UnitList)
+            {
+                if(unit != null)
+                {
+                    unit.GetComponent<Unit_Attack>().m_CalculateCombatRating();
+
+                    l_fCurrDist = unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition()); 
+
+                    l_fNewRating = unit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10);
+
+                    Debug.Log(unit.name + " has a combat rating of " + l_fNewRating);
+
+                    if (l_fNewRating < l_fPrevRating)
+                    {
+                        l_fPrevRating = l_fNewRating;
+
+                        l_TargetUnit = unit;
+
+                        Debug.Log("New Unit Selected"); 
+                    }
+                }
+            }
+
+            return l_TargetUnit;
+        }
+
+        return null; 
+    }
+
     // Action Management. 
 
     // This will be ued to set the new action.
