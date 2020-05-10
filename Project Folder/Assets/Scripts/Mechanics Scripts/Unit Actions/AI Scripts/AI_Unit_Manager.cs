@@ -72,9 +72,11 @@ public class AI_Unit_Manager : MonoBehaviour
 
                 // Find enemy target.
 
-                m_OtherUnitManger.GetComponent<Unit_Manager>().m_GetLowestCombatRating(unit); 
-                
-                // Move as close #to target as possible. 
+                GameObject l_TargetUnit = m_OtherUnitManger.GetComponent<Unit_Manager>().m_GetLowestCombatRating(unit);
+
+                Debug.Log("This Target : " + l_TargetUnit.name); 
+
+                // Move as close to target as possible. 
                 //------------------------------------------------------
                 // Unit Attack. 
                 //-------------------------------------------------------
