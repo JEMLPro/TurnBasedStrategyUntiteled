@@ -91,12 +91,10 @@ public class Unit_Manager : MonoBehaviour
                         }
                     }
                 }
-
-                if(unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                else if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
                 {
-                    unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bSetOccupied(true); 
+                    unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bSetOccupied(true);
                 }
-
             }
         }
 
@@ -363,7 +361,15 @@ public class Unit_Manager : MonoBehaviour
         {
             GameObject l_TargetUnit = null;
 
-            l_TargetUnit = m_UnitList[0];
+            foreach (var unit in m_UnitList)
+            {
+                if(unit != null)
+                {
+                    l_TargetUnit = unit;
+
+                    break;
+                }
+            }
 
             l_TargetUnit.GetComponent<Unit_Attack>().m_CalculateCombatRating();
 
@@ -383,7 +389,7 @@ public class Unit_Manager : MonoBehaviour
 
                     l_fNewRating = unit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10);
 
-                    Debug.Log(unit.name + " has a combat rating of " + l_fNewRating);
+                    // Debug.Log(unit.name + " has a combat rating of " + l_fNewRating);
 
                     if (l_fNewRating < l_fPrevRating)
                     {
@@ -391,7 +397,7 @@ public class Unit_Manager : MonoBehaviour
 
                         l_TargetUnit = unit;
 
-                        Debug.Log("New Unit Selected"); 
+                        // Debug.Log("New Unit Selected"); 
                     }
                 }
             }
