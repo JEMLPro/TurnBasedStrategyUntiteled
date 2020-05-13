@@ -212,6 +212,9 @@ public class AI_Unit_Manager : MonoBehaviour
                 // Reset number of attacks
                 unit.GetComponent<Unit_Attack>().m_SetNumberOfAttacks(1);
 
+                unit.GetComponent<Unit_Attack>().m_SetWithinAtRange(false);
+
+                unit.GetComponent<Unit_Attack>().m_SetSelectedForAttack(false);
             }
         }
     }

@@ -187,6 +187,11 @@ public class Unit_Attack : MonoBehaviour
         return false;
     }
 
+    public void m_SetSelectedForAttack(bool newValue)
+    {
+        m_bSelectedForAttack = newValue; 
+    }
+
     public void m_CalculateCombatRating()
     {
         m_fCombatRating = gameObject.GetComponent<Health_Management>().m_GetCurrentHealth() + m_fAttack + m_fDefence;

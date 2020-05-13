@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 /*! /class This class will allow for an object to be assigned a health value, it will also manage the updates needed for that health value.  */
 public class Health_Management : MonoBehaviour
@@ -11,12 +12,20 @@ public class Health_Management : MonoBehaviour
     [SerializeField]
     float m_fMaxHealth = 0; /*!< \var This will store the object's maximum health value, this will prevent the health from reaching greater than this. */
 
+    [SerializeField]
+    Slider m_HealthBar = null;
+
     // This will change the maimum health value.
     public void m_SetMaxHealth(float newMaxHealth)
     {
         // Used to assign a new max health for this game object. 
 
         m_fMaxHealth = newMaxHealth; 
+
+        if(m_HealthBar != null)
+        {
+            m_HealthBar.maxValue = newMaxHealth; 
+        }
     }
 
     // This will set the new current health. 
@@ -33,6 +42,11 @@ public class Health_Management : MonoBehaviour
             // If the new health is greater than the max health the new health becomes the max. 
 
             m_fHealth = m_fMaxHealth;
+        }
+
+        if (m_HealthBar != null)
+        {
+            m_HealthBar.value = m_fHealth;
         }
     }
 
@@ -56,6 +70,11 @@ public class Health_Management : MonoBehaviour
             {
                 Destroy(gameObject); 
             }
+        }
+
+        if (m_HealthBar != null)
+        {
+            m_HealthBar.value = m_fHealth;
         }
     }
 

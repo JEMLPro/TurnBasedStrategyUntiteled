@@ -45,9 +45,12 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
     {
         foreach (var unit in m_OtherUnitManager.GetComponent<AI_Unit_Manager>().m_GetUnitList())
         {
-            if(unit.GetComponent<Unit_Attack>().m_GetSelectedForAttack() == true)
+            if (unit != null)
             {
-                m_AtTarget = unit;
+                if (unit.GetComponent<Unit_Attack>().m_GetSelectedForAttack() == true)
+                {
+                    m_AtTarget = unit;
+                }
             }
         }
     }

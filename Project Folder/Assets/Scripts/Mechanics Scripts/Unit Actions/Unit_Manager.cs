@@ -311,10 +311,8 @@ public class Unit_Manager : MonoBehaviour
 
         // Reset Attack Target; 
 
-        if (gameObject.GetComponent<Unit_Find_AtTarget1>() != null)
-        {
-            gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null);
-        }
+        gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null);
+        
 
         foreach (var unit in m_UnitList)
         {

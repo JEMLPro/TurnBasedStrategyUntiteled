@@ -26,7 +26,7 @@ public class Move_Object : MonoBehaviour
     private void Start()
     {
         // Assign Min and max position values, May need tweeking depending upon map. 
-        m_MinMoveValue = new Vector3(-10f, -10f, 0);
+        m_MinMoveValue = new Vector3(-15f, -10f, 0);
 
         m_MaxMoveValue = new Vector3(0, 0, 0); 
     }
