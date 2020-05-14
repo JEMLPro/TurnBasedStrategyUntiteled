@@ -21,7 +21,7 @@ public class Tile_Map_Manager : MonoBehaviour
 
     private void Start()
     {
-        // Todo -> load tiles into the game in order so that it will always have tiles inside. Posibly lead from file. 
+        // Todo -> load tiles into the game in order so that it will always have tiles inside. Posibly load from file. 
     }
 
     private void Update()
@@ -398,6 +398,14 @@ public class Tile_Map_Manager : MonoBehaviour
         foreach (var cell in m_Grid)
         {
             cell.GetComponent<Renderer>().material.color = Color.white;
+        }
+    }
+
+    public void m_ResetOccupied()
+    {
+        foreach (var cell in m_Grid)
+        {
+            cell.GetComponent<Cell_Manager>().m_bSetOccupied(false); 
         }
     }
 

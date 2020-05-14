@@ -72,21 +72,24 @@ public class Find_Path : MonoBehaviour
     {
         foreach (var neighbour in cellsToAdd)
         {
-            bool l_bAddNeighbour = true; 
+
+            bool l_bAddNeighbour = true;
 
             foreach (var cell in m_ClosedSet)
             {
-                if(neighbour == cell)
+                if (neighbour == cell)
                 {
-                    l_bAddNeighbour = false; 
+                    l_bAddNeighbour = false;
                 }
             }
 
-            if(l_bAddNeighbour == true)
+            if (l_bAddNeighbour == true)
             {
-                m_OpenSet.Add(neighbour); 
+                m_OpenSet.Add(neighbour);
+                
             }
         }
+
     }
 
     /*! \fn This will add a cell into the closed set, it will also remove it from the open set at the same time. */
@@ -106,7 +109,10 @@ public class Find_Path : MonoBehaviour
         {
             if(cell.GetComponent<Pathfinding_Info>().m_GetFScore() < l_NextCell.GetComponent<Pathfinding_Info>().m_GetFScore())
             {
-                l_NextCell = cell;
+                if (cell.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false)
+                {
+                    l_NextCell = cell;
+                }
             }
         }
 

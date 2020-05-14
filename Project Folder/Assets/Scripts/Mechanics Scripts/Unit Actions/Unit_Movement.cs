@@ -29,6 +29,8 @@ public class Unit_Movement : MonoBehaviour
     {
         if (m_CurrentCell != null)
         {
+            // Update position 
+
             if (m_PreveousCell != null)
             {
                 if (transform.position != m_CurrentCell.transform.position + m_PlcementOffset)

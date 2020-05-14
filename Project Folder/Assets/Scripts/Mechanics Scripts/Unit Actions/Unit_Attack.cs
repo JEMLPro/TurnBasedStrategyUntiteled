@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*! \enum This is the type of attacks the unit will use and there are advantages and disadvantages to each.  */
-enum UnitType
+[System.Serializable]
+public enum UnitType
 {
     Militia, // Doesn't gain any advantages during combat. 
     Spear, // Has high defence low speed and attack. 
     Sword, // has high speed and hit chance but low defence and attack power. 
     Axe, // Has high attack power yet low hit chance and defence. 
+    Bow, // Has low stats but has an attack range of two allowing for it to attack at a distance. 
 }
 
 /*! \class This will manage the attacking and combat resolution during the player's turn. */
@@ -198,6 +200,16 @@ public class Unit_Attack : MonoBehaviour
     }
 
     public float m_GetCombatRating() => m_fCombatRating; 
+
+    public void m_SetUnitStats(float attack, float defence, float hitChance, float speed, float attackRange, UnitType type)
+    {
+        m_fAttack = attack;
+        m_fDefence = defence;
+        m_fHit = hitChance;
+        m_fSpeed = speed;
+        m_fAttackRange = attackRange;
+        m_UnitType = type; 
+    }
 
     private void OnMouseOver()
     {

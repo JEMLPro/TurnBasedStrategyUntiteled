@@ -70,6 +70,21 @@ public class Unit_Manager : MonoBehaviour
         {
             Debug.LogError("Error code 0010 - Unable to assign game object in game: " + "Turn Manager. ");
         }
+
+        // Spawn a set number of units to begin with
+
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject l_tempUnit = gameObject.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(m_GameMap.GetComponent<Tile_Map_Manager>().m_GetCellUsingGridPosition(1, i + 1));
+
+            l_tempUnit.transform.parent = gameObject.transform;
+
+            l_tempUnit.name += i; 
+
+            m_UnitList.Add(l_tempUnit);
+
+            Debug.Log("Unit Spawned, unit manager at " + m_UnitList.Count); 
+        }
     }
 
     private void Update()
@@ -304,6 +319,7 @@ public class Unit_Manager : MonoBehaviour
 
         // Reset the map cells allowing for proper move representation. 
         m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
+        m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetOccupied(); 
 
         // Reset Actions
 
@@ -369,38 +385,41 @@ public class Unit_Manager : MonoBehaviour
                 }
             }
 
-            l_TargetUnit.GetComponent<Unit_Attack>().m_CalculateCombatRating();
-
-            float l_fPrevRating, l_fNewRating;
-
-            float l_fCurrDist = l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition());
-
-            l_fPrevRating = l_TargetUnit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10); 
-
-            foreach (var unit in m_UnitList)
+            if (l_TargetUnit != null)
             {
-                if(unit != null)
+                l_TargetUnit.GetComponent<Unit_Attack>().m_CalculateCombatRating();
+
+                float l_fPrevRating, l_fNewRating;
+
+                float l_fCurrDist = l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition());
+
+                l_fPrevRating = l_TargetUnit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10);
+
+                foreach (var unit in m_UnitList)
                 {
-                    unit.GetComponent<Unit_Attack>().m_CalculateCombatRating();
-
-                    l_fCurrDist = unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition()); 
-
-                    l_fNewRating = unit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10);
-
-                    // Debug.Log(unit.name + " has a combat rating of " + l_fNewRating);
-
-                    if (l_fNewRating < l_fPrevRating)
+                    if (unit != null)
                     {
-                        l_fPrevRating = l_fNewRating;
+                        unit.GetComponent<Unit_Attack>().m_CalculateCombatRating();
 
-                        l_TargetUnit = unit;
+                        l_fCurrDist = unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition());
 
-                        // Debug.Log("New Unit Selected"); 
+                        l_fNewRating = unit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10);
+
+                        // Debug.Log(unit.name + " has a combat rating of " + l_fNewRating);
+
+                        if (l_fNewRating < l_fPrevRating)
+                        {
+                            l_fPrevRating = l_fNewRating;
+
+                            l_TargetUnit = unit;
+
+                            // Debug.Log("New Unit Selected"); 
+                        }
                     }
                 }
-            }
 
-            return l_TargetUnit;
+                return l_TargetUnit;
+            }
         }
 
         return null; 

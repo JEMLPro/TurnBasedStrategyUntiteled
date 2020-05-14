@@ -26,6 +26,7 @@ public class AI_Unit_Manager : MonoBehaviour
     [SerializeField]
     bool m_bResetOnce = false; /*!< \var Used to reset the list of units at the end of the turn. */
 
+    [SerializeField]
     GameObject m_ActiveUnit = null; 
 
     //----------------------------------------------------------------------------------------------------------------------------
@@ -37,6 +38,17 @@ public class AI_Unit_Manager : MonoBehaviour
         m_GameMap = GameObject.FindGameObjectWithTag("Map");
         m_TurnManager = GameObject.FindGameObjectWithTag("Turn_Manager");
         m_OtherUnitManger = GameObject.FindGameObjectWithTag("Unit_Manager_Player");
+
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject l_tempUnit = gameObject.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(m_GameMap.GetComponent<Tile_Map_Manager>().m_GetCellUsingGridPosition(1, i + 1));
+
+            l_tempUnit.transform.parent = gameObject.transform;
+
+            l_tempUnit.name += i;
+
+            m_UnitList.Add(l_tempUnit);
+        }
     }
 
     private void Update()
@@ -56,6 +68,10 @@ public class AI_Unit_Manager : MonoBehaviour
                     {
                         unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPos);
                     }
+                }
+                else if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                {
+                    unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bSetOccupied(true);
                 }
             }
         }
@@ -90,35 +106,66 @@ public class AI_Unit_Manager : MonoBehaviour
                             gameObject.GetComponent<Find_Path>().m_SetStartCell(m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition());
                         }
 
-                        // Update Pathfinding. 
+                        bool l_bGeneratePath = m_CheckToGeneratePath(l_TargetUnit);
 
-                        gameObject.GetComponent<Find_Path>().m_FindPath();
-
-                        // If path is found begin moving. 
-
-                        if (gameObject.GetComponent<Find_Path>().m_CheckStateOfPath() == true)
+                        if (l_bGeneratePath)
                         {
-                            List<GameObject> l_PathToTarget = gameObject.GetComponent<Find_Path>().m_GetFinalPath();
+                            // Update Pathfinding. 
 
-                            if (l_PathToTarget.Count > 0)
+                            do
                             {
-                                // Move as close to target as possible. 
+                                gameObject.GetComponent<Find_Path>().m_FindPath();
 
-                                if (l_PathToTarget.Count > m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange())
+                                // Loop until a path is found;                           
+                            }
+                            while (gameObject.GetComponent<Find_Path>().m_CheckStateOfPath() == false);
+
+                            if (gameObject.GetComponent<Find_Path>().m_CheckStateOfPath() == true)
+                            {
+                                List<GameObject> l_PathToTarget = gameObject.GetComponent<Find_Path>().m_GetFinalPath();
+
+                                if (l_PathToTarget.Count > 0)
                                 {
-                                    // If the target is farther than this unit can move. 
+                                    // Move as close to target as possible. 
 
-                                    m_ActiveUnit.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_PathToTarget[m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange()], 0);
+                                    if (l_PathToTarget.Count > m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange())
+                                    {
+                                        // If the target is farther than this unit can move. 
 
-                                    m_ActiveUnit.GetComponent<Unit_Movement>().m_UnitWait();
-                                }
-                                else
-                                {
-                                    // If the target is closer than the full movement points required. 
+                                        for (int i = m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange(); i > 0; i--)
+                                        {
+                                            GameObject l_TempPosition = l_PathToTarget[i];
 
-                                    m_ActiveUnit.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_PathToTarget[l_PathToTarget.Count - 1], 0);
+                                            if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                                            {
+                                                m_ActiveUnit.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, i);
 
-                                    m_ActiveUnit.GetComponent<Unit_Movement>().m_UnitWait();
+                                                m_ActiveUnit.GetComponent<Unit_Movement>().m_UnitWait();
+                                            }
+                                        }
+                                    }
+                                    else if (l_PathToTarget.Count > 1)
+                                    {
+                                        // If the target is closer than the full movement points required. 
+
+                                        for (int i = l_PathToTarget.Count - 1; i > 0; i--)
+                                        {
+                                            GameObject l_TempPosition = l_PathToTarget[i];
+
+                                            if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                                            {
+                                                m_ActiveUnit.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, i);
+
+                                                m_ActiveUnit.GetComponent<Unit_Movement>().m_UnitWait();
+
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        m_ActiveUnit.GetComponent<Unit_Movement>().m_UnitWait();
+                                    }
                                 }
                             }
                         }
@@ -151,6 +198,8 @@ public class AI_Unit_Manager : MonoBehaviour
 
 
                 // Spawn new items/Update objects. 
+
+                m_ActiveUnit = null; 
 
                 // End Turn. 
 
@@ -190,12 +239,26 @@ public class AI_Unit_Manager : MonoBehaviour
         return false;
     }
 
+    bool m_CheckToGeneratePath(GameObject targetUnit)
+    {
+        foreach (var cell in m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Neighbours>().m_GetCellNeighbours())
+        {
+            if(cell == targetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition())
+            {
+                return false; 
+            }
+        }
+
+        return true; 
+    }
+
     void m_ResetUnits()
     {
         // Reset Map
 
         // Reset the map cells allowing for proper move representation. 
         m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
+        m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetOccupied();
 
         foreach (var unit in m_UnitList)
         {
@@ -247,6 +310,8 @@ public class AI_Unit_Manager : MonoBehaviour
             {
                 if (unit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0 && unit.GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
                 {
+                    Debug.Log("Found Unit " + unit.name + " they are now active"); 
+
                     return unit;
                 }
             }
