@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*! \class This will be used to generate a path between two cells on a grid based map. */
+[System.Serializable]
 public class Find_Path : MonoBehaviour
 {
     [SerializeField]
@@ -12,10 +13,10 @@ public class Find_Path : MonoBehaviour
     GameObject m_EndCell = null; /*! \var This is the target location for the pathfinding. */
 
     [SerializeField]
-    List<GameObject> m_OpenSet; /*!< \var This is the list of objects which still need to be checked. */ 
+    List<GameObject> m_OpenSet = new List<GameObject>(); /*!< \var This is the list of objects which still need to be checked. */ 
 
     [SerializeField]
-    List<GameObject> m_ClosedSet; /*!< \var This is the list of objects which have already been checked. */
+    List<GameObject> m_ClosedSet = new List<GameObject>(); /*!< \var This is the list of objects which have already been checked. */
 
     [SerializeField]
     GameObject m_CurrentCell = null; 
@@ -23,7 +24,8 @@ public class Find_Path : MonoBehaviour
     [SerializeField]
     bool m_bReachdEnd = false;
 
-    List<GameObject> m_FinalPath; 
+    [SerializeField]
+    List<GameObject> m_FinalPath = new List<GameObject>(); 
 
     public void m_FindPath()
     {
@@ -38,6 +40,7 @@ public class Find_Path : MonoBehaviour
 
             m_StartCell = null;
             m_EndCell = null;
+
         }
         else
         {
@@ -109,7 +112,7 @@ public class Find_Path : MonoBehaviour
         {
             if(cell.GetComponent<Pathfinding_Info>().m_GetFScore() < l_NextCell.GetComponent<Pathfinding_Info>().m_GetFScore())
             {
-                if (cell.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false)
+                if (cell.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false) 
                 {
                     l_NextCell = cell;
                 }
@@ -126,9 +129,15 @@ public class Find_Path : MonoBehaviour
 
         m_CurrentCell = startCell;
 
-        m_OpenSet.Clear();
+        if (m_OpenSet.Count > 0)
+        {
+            m_OpenSet.Clear();
+        }
 
-        m_ClosedSet.Clear();
+        if (m_ClosedSet.Count > 0)
+        {
+            m_ClosedSet.Clear();
+        }
     }
 
     /*! \fn Used to assign the target cell for the pathfinding. */
@@ -137,6 +146,12 @@ public class Find_Path : MonoBehaviour
         m_EndCell = endCell;
 
         m_bReachdEnd = false; 
+    }
+
+    public void m_ResetPathfinding()
+    {
+        m_SetStartCell(null);
+        m_SetEndCell(null);
     }
 
     public bool m_CheckRequirements()

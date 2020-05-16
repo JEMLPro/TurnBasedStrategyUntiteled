@@ -25,7 +25,7 @@ public class Unit_Movement : MonoBehaviour
 
     float m_fStartTime; 
 
-    private void Update()
+    public virtual void Update()
     {
         if (m_CurrentCell != null)
         {
@@ -37,10 +37,13 @@ public class Unit_Movement : MonoBehaviour
                 {
                     float l_fDistCovered = (Time.time - m_fStartTime) * m_fMoveSpeed;
 
-                    float l_fFractionOfJourney = l_fDistCovered / m_fJourneyLength;
+                    if (l_fDistCovered != 0)
+                    {
+                        float l_fFractionOfJourney = l_fDistCovered / m_fJourneyLength;
 
-                    transform.position = Vector3.Lerp(m_PreveousCell.transform.position + m_PlcementOffset, 
-                        m_CurrentCell.transform.position + m_PlcementOffset, l_fFractionOfJourney);
+                        transform.position = Vector3.Lerp(m_PreveousCell.transform.position + m_PlcementOffset,
+                            m_CurrentCell.transform.position + m_PlcementOffset, l_fFractionOfJourney);
+                    }
                 }
             }
             else if (transform.position != m_CurrentCell.transform.position + m_PlcementOffset)

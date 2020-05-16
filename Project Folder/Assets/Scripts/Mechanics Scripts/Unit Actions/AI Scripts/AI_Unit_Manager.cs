@@ -69,6 +69,17 @@ public class AI_Unit_Manager : MonoBehaviour
                         unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPos);
                     }
                 }
+                else if(unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bcheckForObsticle())
+                {
+                    Debug.Log("Set Random Pos");
+
+                    GameObject l_TempPos = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetRandomCell();
+
+                    if (l_TempPos != null)
+                    {
+                        unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPos);
+                    }
+                }
                 else if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
                 {
                     unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bSetOccupied(true);
@@ -88,6 +99,8 @@ public class AI_Unit_Manager : MonoBehaviour
 
                 GameObject l_TargetUnit = m_OtherUnitManger.GetComponent<Unit_Manager>().m_GetLowestCombatRating(m_ActiveUnit);
 
+                m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_bCheckForTurn = true; 
+
                 //-------------------------------------------------------
                 // Unit Move.
 
@@ -99,74 +112,13 @@ public class AI_Unit_Manager : MonoBehaviour
                     {
                         // Set path finding requirements. 
 
-                        if (gameObject.GetComponent<Find_Path>().m_CheckRequirements() == false)
+                        if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckRequirements() == false)
                         {
-                            gameObject.GetComponent<Find_Path>().m_SetEndCell(l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition());
-
-                            gameObject.GetComponent<Find_Path>().m_SetStartCell(m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition());
-                        }
-
-                        bool l_bGeneratePath = m_CheckToGeneratePath(l_TargetUnit);
-
-                        if (l_bGeneratePath)
-                        {
-                            // Update Pathfinding. 
-
-                            do
+                            if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckStateOfPath() == false)
                             {
-                                gameObject.GetComponent<Find_Path>().m_FindPath();
+                                Debug.Log("Setting variables");
 
-                                // Loop until a path is found;                           
-                            }
-                            while (gameObject.GetComponent<Find_Path>().m_CheckStateOfPath() == false);
-
-                            if (gameObject.GetComponent<Find_Path>().m_CheckStateOfPath() == true)
-                            {
-                                List<GameObject> l_PathToTarget = gameObject.GetComponent<Find_Path>().m_GetFinalPath();
-
-                                if (l_PathToTarget.Count > 0)
-                                {
-                                    // Move as close to target as possible. 
-
-                                    if (l_PathToTarget.Count > m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange())
-                                    {
-                                        // If the target is farther than this unit can move. 
-
-                                        for (int i = m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange(); i > 0; i--)
-                                        {
-                                            GameObject l_TempPosition = l_PathToTarget[i];
-
-                                            if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
-                                            {
-                                                m_ActiveUnit.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, i);
-
-                                                m_ActiveUnit.GetComponent<Unit_Movement>().m_UnitWait();
-                                            }
-                                        }
-                                    }
-                                    else if (l_PathToTarget.Count > 1)
-                                    {
-                                        // If the target is closer than the full movement points required. 
-
-                                        for (int i = l_PathToTarget.Count - 1; i > 0; i--)
-                                        {
-                                            GameObject l_TempPosition = l_PathToTarget[i];
-
-                                            if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
-                                            {
-                                                m_ActiveUnit.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, i);
-
-                                                m_ActiveUnit.GetComponent<Unit_Movement>().m_UnitWait();
-
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        m_ActiveUnit.GetComponent<Unit_Movement>().m_UnitWait();
-                                    }
-                                }
+                                m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_SetStartandEndPoints(l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition());
                             }
                         }
                     }
@@ -239,19 +191,6 @@ public class AI_Unit_Manager : MonoBehaviour
         return false;
     }
 
-    bool m_CheckToGeneratePath(GameObject targetUnit)
-    {
-        foreach (var cell in m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Neighbours>().m_GetCellNeighbours())
-        {
-            if(cell == targetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition())
-            {
-                return false; 
-            }
-        }
-
-        return true; 
-    }
-
     void m_ResetUnits()
     {
         // Reset Map
@@ -278,6 +217,8 @@ public class AI_Unit_Manager : MonoBehaviour
                 unit.GetComponent<Unit_Attack>().m_SetWithinAtRange(false);
 
                 unit.GetComponent<Unit_Attack>().m_SetSelectedForAttack(false);
+
+                unit.GetComponent<AI_Unit_Movement>().m_bCheckForTurn = false;
             }
         }
     }
@@ -308,7 +249,7 @@ public class AI_Unit_Manager : MonoBehaviour
         {
             if (unit != null)
             {
-                if (unit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0 && unit.GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
+                if (unit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0 || unit.GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
                 {
                     Debug.Log("Found Unit " + unit.name + " they are now active"); 
 
