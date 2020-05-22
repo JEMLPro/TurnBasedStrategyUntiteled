@@ -27,64 +27,54 @@ public class AI_Unit_Movement : Unit_Movement
 
                 if (l_PathToTarget.Count > 0)
                 {
-                    if (l_PathToTarget.Count >= gameObject.GetComponent<Unit_Movement>().m_GetCurrentMoveRange())
+
+                    Debug.Log(l_PathToTarget.Count);
+
+                    // Move as close to target as possible. 
+
+                    if (l_PathToTarget.Count > gameObject.GetComponent<Unit_Movement>().m_GetCurrentMoveRange())
                     {
-                        Debug.Log(l_PathToTarget.Count);
+                        // If the target is farther than this unit can move. 
 
-                        // Move as close to target as possible. 
-
-                        if (l_PathToTarget.Count > gameObject.GetComponent<Unit_Movement>().m_GetCurrentMoveRange())
+                        for (int i = gameObject.GetComponent<Unit_Movement>().m_GetCurrentMoveRange(); i > 0; i--)
                         {
-                            // If the target is farther than this unit can move. 
+                            GameObject l_TempPosition = l_PathToTarget[i];
 
-                            for (int i = gameObject.GetComponent<Unit_Movement>().m_GetCurrentMoveRange(); i > 0; i--)
+                            if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
                             {
-                                GameObject l_TempPosition = l_PathToTarget[i];
+                                gameObject.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, i);
 
-                                if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
-                                {
-                                    gameObject.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, i);
-
-                                    break; 
-                                }
+                                break;
                             }
-
-                            gameObject.GetComponent<Unit_Movement>().m_UnitWait();
-
-                            gameObject.GetComponent<Find_Path>().m_ResetPathfinding();
                         }
-                        else if (l_PathToTarget.Count < gameObject.GetComponent<Unit_Movement>().m_GetCurrentMoveRange())
-                        {
-                            Debug.Log(l_PathToTarget.Count);
-
-                            // If the target is closer than the full movement points required. 
-
-                            for (int i = l_PathToTarget.Count - 1; i > 0; i--)
-                            {
-                                GameObject l_TempPosition = l_PathToTarget[i];
-
-                                if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
-                                {
-                                    gameObject.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, i);
-
-                                    break;
-                                }
-                            }
-
-                            gameObject.GetComponent<Unit_Movement>().m_UnitWait();
-
-                            gameObject.GetComponent<Find_Path>().m_ResetPathfinding();
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log(l_PathToTarget.Count);
 
                         gameObject.GetComponent<Unit_Movement>().m_UnitWait();
 
                         gameObject.GetComponent<Find_Path>().m_ResetPathfinding();
                     }
-                    
+                    else if (l_PathToTarget.Count <= gameObject.GetComponent<Unit_Movement>().m_GetCurrentMoveRange())
+                    {
+                        Debug.Log(l_PathToTarget.Count);
+
+                        // If the target is closer than the full movement points required. 
+
+                        for (int i = l_PathToTarget.Count - 1; i > 0; i--)
+                        {
+                            GameObject l_TempPosition = l_PathToTarget[i];
+
+                            if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                            {
+                                gameObject.GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, i);
+
+                                break;
+                            }
+                        }
+
+                        gameObject.GetComponent<Unit_Movement>().m_UnitWait();
+
+                        gameObject.GetComponent<Find_Path>().m_ResetPathfinding();
+                    }
+
                 }
             }
             else

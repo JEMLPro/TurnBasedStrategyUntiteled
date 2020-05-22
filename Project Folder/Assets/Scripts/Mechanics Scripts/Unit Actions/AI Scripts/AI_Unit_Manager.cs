@@ -251,7 +251,7 @@ public class AI_Unit_Manager : MonoBehaviour
             {
                 if (unit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0 || unit.GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
                 {
-                    Debug.Log("Found Unit " + unit.name + " they are now active"); 
+                    // Debug.Log("Found Unit " + unit.name + " they are now active"); 
 
                     return unit;
                 }
