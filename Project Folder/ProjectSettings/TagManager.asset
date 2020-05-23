@@ -8,6 +8,7 @@ TagManager:
   - Turn_Manager
   - Unit_Manager_Player
   - Unit_Manager_AI
+  - Turn_Text
   layers:
   - Default
   - TransparentFX

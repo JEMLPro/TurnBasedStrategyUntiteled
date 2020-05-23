@@ -107,9 +107,9 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &5759563300985394512
 MonoBehaviour:
@@ -171,3 +171,4 @@ MonoBehaviour:
   m_fGScore: 0
   m_fHScore: 0
   m_fFScore: 0
+  m_fMovementCost: 10
