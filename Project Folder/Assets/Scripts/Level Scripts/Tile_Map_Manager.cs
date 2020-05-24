@@ -8,7 +8,7 @@ using System.IO;
 public class Tile_Map_Manager : MonoBehaviour
 {
     [SerializeField]
-    List<GameObject> m_Grid = new List<GameObject>(); /*!< \var This is the grid object in the game, it will hold all if the cells forming the map. */ 
+    List<GameObject> m_Grid = new List<GameObject>(); /*!< \var This is the grid object in the game, it will hold all if the cells forming the map. */
 
     [SerializeField]
     GameObject m_Cell; /*!< /var This is the prefab object for the cell, used for cloning. */
@@ -19,20 +19,29 @@ public class Tile_Map_Manager : MonoBehaviour
     [SerializeField]
     bool m_bAllowSelectable = false;
 
+    [SerializeField]
+    int l_iCurrentLevel = 1;
+
+    [SerializeField]
+    GridPos m_HQPosOne;
+
+    [SerializeField]
+    GridPos m_HQPosTwo;
+
     private void Start()
     {
         // Todo -> load tiles into the game in order so that it will always have tiles inside. Posibly load from file. 
+
+        
     }
 
     private void Update()
     {
         // This will be used to check which level should be loaded, will reset the variable when a new level is loaded. 
 
-        if(gameObject.GetComponent<Level_Loader>().m_GetLevelLoaded() > 0)
+        if(gameObject.GetComponent<Level_Loader>().m_GetLevelLoaded() != l_iCurrentLevel)
         {
-            m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(gameObject.GetComponent<Level_Loader>().m_GetLevelLoaded()));
-
-            gameObject.GetComponent<Level_Loader>().m_SetLevelToLoad(-1);
+            m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(l_iCurrentLevel));
         }
     }
 
@@ -189,11 +198,11 @@ public class Tile_Map_Manager : MonoBehaviour
 
                 m_Grid[k].transform.parent = gameObject.transform;
 
-                m_AssignCellNeighbours(k); 
+                m_AssignCellNeighbours(k);
 
                 // Using tile config for level assign proper tiles. 
 
-                if (l_AdjustedTileConfig.Count >= k)
+                if (levelToLoad.tileConfig.Length >= k)
                 {
                     // Debug.Log("Cell " + k + " Has been assigned tile : " + int.Parse(l_AdjustedTileConfig[k]));
 
@@ -228,6 +237,14 @@ public class Tile_Map_Manager : MonoBehaviour
                 }
             }
 
+            // Store the positions for the two bases on th map. 
+
+            m_HQPosOne.x = levelToLoad.hqPosOne[0];
+            m_HQPosOne.y = levelToLoad.hqPosOne[1];
+
+            m_HQPosTwo.x = levelToLoad.hqPosTwo[0];
+            m_HQPosTwo.y = levelToLoad.hqPosTwo[1];
+
             // Debugging - Output when level finished loading. 
 
             Debug.Log("Level: " + levelToLoad.levelName + " has been loaded. ");
@@ -249,9 +266,13 @@ public class Tile_Map_Manager : MonoBehaviour
         {
             if((cell.GetComponent<Cell_Manager>().m_GetGridPos().x == x) && (cell.GetComponent<Cell_Manager>().m_GetGridPos().y == y))
             {
+                // Debug.Log("Cell " + x + ", " + y + " has been found.");
+
                 return cell;
             }
         }
+
+        // Debug.Log("Cell " + x + ", " + y + " has not been found.");
 
         // If there is no cell of that value a null object will be outputted and will require handeling. 
 
@@ -281,6 +302,21 @@ public class Tile_Map_Manager : MonoBehaviour
         }
 
         return m_Grid[Random.Range(0, m_Grid.Count - 1)];
+    }
+
+    public GameObject m_GetHQSpawnPoint(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return m_GetCellUsingGridPosition(m_HQPosOne.x, m_HQPosOne.y);
+
+            case 1:
+                return m_GetCellUsingGridPosition(m_HQPosTwo.x, m_HQPosTwo.y);
+
+            default:
+                return null;
+        }
     }
 
     // This will be used to assign the neighbours to a cell in the grid, a position in the grid will need to be provide. 

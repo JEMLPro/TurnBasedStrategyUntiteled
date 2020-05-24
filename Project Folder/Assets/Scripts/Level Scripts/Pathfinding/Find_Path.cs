@@ -32,6 +32,8 @@ public class Find_Path : MonoBehaviour
         // At the start of the path finding algorithm check if you have reached the end. 
         if(m_CurrentCell == m_EndCell)
         {
+            m_AddIntoClosedSet(m_CurrentCell);
+
             m_bReachdEnd = true;
 
             m_FinalPath = m_ClosedSet; 
@@ -84,6 +86,11 @@ public class Find_Path : MonoBehaviour
                 {
                     l_bAddNeighbour = false;
                 }
+            }
+
+            if (neighbour.GetComponent<Cell_Manager>().m_bcheckForObsticle() == true)
+            {
+                l_bAddNeighbour = false;
             }
 
             if (l_bAddNeighbour == true)

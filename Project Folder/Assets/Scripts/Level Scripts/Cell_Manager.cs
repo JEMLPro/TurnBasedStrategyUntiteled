@@ -60,9 +60,21 @@ public class Cell_Manager : MonoBehaviour
 
     public bool m_bcheckForObsticle() => m_bObsticle;
 
+    public void m_bSetObsticle(bool value) { m_bObsticle = value; }
+
     public bool m_bCheckForOccupied() => m_bOccupied;
 
     public void m_bSetOccupied(bool value) { m_bOccupied = value; }
+
+    public bool m_CanBeMovedTo()
+    {
+        if(m_bObsticle == true || m_bOccupied == true)
+        {
+            return false;
+        }
+
+        return true; 
+    }
 
     // This will return the distance between two coordinates as a single integer. 
     public int m_Distance(int x, int y)

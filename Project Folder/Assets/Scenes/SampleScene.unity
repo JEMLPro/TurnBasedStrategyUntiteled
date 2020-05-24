@@ -167,6 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 78055101}
+  - component: {fileID: 78055102}
   m_Layer: 0
   m_Name: Building Manager (Player)
   m_TagString: Untagged
@@ -188,6 +189,24 @@ Transform:
   m_Father: {fileID: 1279182092}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &78055102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78055100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7158b1b0cc6cb4140b58750469fdf8b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BasicBuilding: {fileID: 2426503827271849061, guid: 62594a1a317fcdc40b4dede253b43537,
+    type: 3}
+  m_GameMap: {fileID: 0}
+  m_Owner: 16
+  m_BuildingList: []
+  l_SpawnPoint: {fileID: 0}
 --- !u!1 &132845189
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,7 +915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &621285877
@@ -919,7 +938,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 18
+    m_FontSize: 26
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2221,7 +2240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1975915425
@@ -2346,6 +2365,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: ef3e33543f9d711409817045345be0df,
         type: 3}
+    - target: {fileID: 7433200465018048693, guid: df0490bfb7072ec45b6eb9abe6af0b27,
+        type: 3}
+      propertyPath: l_iCurrentLevel
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7433200465018048698, guid: df0490bfb7072ec45b6eb9abe6af0b27,
         type: 3}
       propertyPath: m_LocalPosition.x

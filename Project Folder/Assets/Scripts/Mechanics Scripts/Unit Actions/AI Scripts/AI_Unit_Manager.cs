@@ -118,7 +118,20 @@ public class AI_Unit_Manager : MonoBehaviour
                             {
                                 Debug.Log("Setting variables");
 
-                                m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_SetStartandEndPoints(l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition());
+                                // Check the target unit's position for a free space next to it. 
+
+                                GameObject l_TargetPosition = l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Neighbours>().m_GetClosestNeighbour(m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetCurrentPosition());
+
+                                if (l_TargetPosition != null)
+                                {
+                                    m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_SetStartandEndPoints(l_TargetPosition);
+                                }
+                                else
+                                {
+                                    // If a target position cannot be found (if the target is surrounded for example), wait for this turn. 
+
+                                    m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_UnitWait(); 
+                                }
                             }
                         }
                     }

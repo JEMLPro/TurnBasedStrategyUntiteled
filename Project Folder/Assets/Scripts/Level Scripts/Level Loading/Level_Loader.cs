@@ -19,6 +19,12 @@ public class Level
 
     /*! /var The configuation of tiles on the map. */
     public string[] tileConfig;
+
+    /*! \var The position for the first base on the map. */
+    public int[] hqPosOne;
+
+    /*! \var The position for the second base on the map. */
+    public int[] hqPosTwo;
 }
 
 [System.Serializable]
@@ -37,7 +43,7 @@ public class Level_Loader : MonoBehaviour
     TextAsset m_LevelManagerJson;
 
     [SerializeField]
-    int m_iLevelLoaded = 1;
+    int m_iLevelLoaded = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -80,6 +86,8 @@ public class Level_Loader : MonoBehaviour
     {
         if (index < m_ListOfLevels.levels.Count)
         {
+            m_iLevelLoaded = index; 
+
             return m_ListOfLevels.levels[index];
         }
 
