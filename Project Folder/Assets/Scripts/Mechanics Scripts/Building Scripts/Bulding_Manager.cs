@@ -28,7 +28,7 @@ public class Bulding_Manager : MonoBehaviour
     {
         if(m_BuildingList.Count == 0)
         {
-            l_SpawnPoint = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetHQSpawnPoint(0);
+            // l_SpawnPoint = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetHQSpawnPoint(0);
 
             m_SpawnHQ(l_SpawnPoint); 
         }

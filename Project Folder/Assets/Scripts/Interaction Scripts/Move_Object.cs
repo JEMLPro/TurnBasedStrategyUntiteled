@@ -97,4 +97,8 @@ public class Move_Object : MonoBehaviour
         transform.Translate(new Vector3(0, 0, l_zDirect));
     }
 
+    public void m_SetMinBounds(Vector3 newbound) { m_MinMoveValue = newbound; }
+
+    public void m_SetMaxBounds(Vector3 newbound) { m_MaxMoveValue = newbound; }
+
 }

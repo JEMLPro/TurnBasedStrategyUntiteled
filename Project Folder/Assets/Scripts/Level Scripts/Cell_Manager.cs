@@ -37,6 +37,8 @@ public class Cell_Manager : MonoBehaviour
     // This will be used to set a new tile to this cell, allowing for a tile map to be cretaed. 
     public void m_SetTile(CellTile newTile, Sprite newMaterial)
     {
+        // Debug.Log("This cell recived sprite " + newMaterial.name); 
+
         m_TileType = newTile; 
 
         if(m_TileType == CellTile.water)

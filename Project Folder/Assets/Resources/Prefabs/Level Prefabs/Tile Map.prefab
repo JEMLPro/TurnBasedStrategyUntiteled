@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7433200465018048698}
   - component: {fileID: 7433200465018048693}
   - component: {fileID: 407485684815930211}
+  - component: {fileID: 5592437051778320004}
   m_Layer: 0
   m_Name: Tile Map
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7433200465018048692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.269648, y: -1.6264515, z: 4.657587}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -45,11 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Grid: []
+  m_MinBounds: {x: 0, y: 0}
+  m_MaxBounds: {x: 0, y: 0}
   m_Cell: {fileID: 5759563300985394516, guid: ca0298caac486e246a776da759d4cdbe, type: 3}
-  m_Tiles:
-  - {fileID: 21300000, guid: eb8e3d3292ceb22479fe8ae75d0d57f7, type: 3}
-  - {fileID: 21300000, guid: 3acae8ee391220a4cbd29df6d4eb6e74, type: 3}
-  - {fileID: 21300000, guid: 3f6ec04063e59f9418e4f78ce726753d, type: 3}
   m_bAllowSelectable: 0
   m_iCurrentLevel: 1
   m_HQPosOne:
@@ -74,3 +73,18 @@ MonoBehaviour:
     levels: []
   m_LevelManagerJson: {fileID: 4900000, guid: 8eb3f43048bcfd4448b4c51023f8514d, type: 3}
   m_iLevelLoaded: 2
+--- !u!114 &5592437051778320004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7433200465018048692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bc09d9d9e1366f488b68441c37745df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TileSpriteManager: {fileID: 4900000, guid: b0997483f2da7bb408267e5c541fb524, type: 3}
+  m_ListOfTiles:
+    sprites: []

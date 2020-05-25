@@ -1,0 +1,12 @@
+{
+  "sprites": [
+    {
+      "spriteName": "Untiled",
+      "filePath": "Textures/Environment/Temp/Temp Cell"
+    },
+    {
+      "spriteName": "grass",
+      "filePath": "Textures/Environment/Grass/grass_tile_1_ex_day_"
+    }
+  ]
+}
