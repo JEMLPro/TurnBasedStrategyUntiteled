@@ -24,20 +24,22 @@ public class Update_Turn_Display : MonoBehaviour
 
     private void Update()
     {
-        if(m_TurnManager.GetComponent<Turn_Manager>().m_GetCurrentTurn() == CurrentTurn.player)
+        if (m_TurnManager != null)
         {
-            if(m_TurnText.text != m_sPlayerTurnText)
+            if (m_TurnManager.GetComponent<Turn_Manager>().m_GetCurrentTurn() == CurrentTurn.player)
             {
-                m_TurnText.text = m_sPlayerTurnText;
+                if (m_TurnText.text != m_sPlayerTurnText)
+                {
+                    m_TurnText.text = m_sPlayerTurnText;
+                }
+            }
+            else
+            {
+                if (m_TurnText.text != m_sAITurnText)
+                {
+                    m_TurnText.text = m_sAITurnText;
+                }
             }
         }
-        else
-        {
-            if (m_TurnText.text != m_sAITurnText)
-            {
-                m_TurnText.text = m_sAITurnText;
-            }
-        }
-
     }
 }

@@ -45,14 +45,6 @@ public class Level_Loader : MonoBehaviour
     [SerializeField]
     int m_iLevelLoaded = 2;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // At the start of the game load the maps into the game. 
-
-        m_LoadMapFromJSONFile(m_LevelManagerJson);
-    }
-
     public void m_SetLevelToLoad(int levelSelecton)
     {
         m_iLevelLoaded = levelSelecton; 
@@ -97,7 +89,7 @@ public class Level_Loader : MonoBehaviour
     }
 
     // Used to load a list of levels from a JSON file. 
-    public void m_LoadMapFromJSONFile(TextAsset m_LevelJson)
+    public bool m_LoadMapFromJSONFile(TextAsset m_LevelJson)
     {
         Debug.Log("Loading " + m_LevelJson.name + " from file");
 
@@ -112,7 +104,34 @@ public class Level_Loader : MonoBehaviour
         if (m_ListOfLevels.levels.Count <= 0)
         {
             Debug.LogError("Error Code 0002 : Unable to load file into game. ");
+
+            return false;
         }
+
+        return true; 
+
+    }
+
+    public bool m_LoadMapFromJSONFile()
+    {
+        Debug.Log("Loading " + m_LevelManagerJson.name + " from file");
+
+        // Override the new object to have the data from the json file. 
+
+        m_ListOfLevels = JsonUtility.FromJson<Levels>(m_LevelManagerJson.text);
+
+        // Debugging - Output the number of levels loaded from file 
+
+        Debug.Log("Number of levels loaded : " + m_ListOfLevels.levels.Count);
+
+        if (m_ListOfLevels.levels.Count <= 0)
+        {
+            Debug.LogError("Error Code 0002 : Unable to load Json file into game. ");
+
+            return false;
+        }
+
+        return true; 
 
     }
 }

@@ -20,7 +20,7 @@ public class Tile_Map_Manager : MonoBehaviour
     bool m_bAllowSelectable = false;
 
     [SerializeField]
-    int l_iCurrentLevel = 1;
+    int m_iCurrentLevel = 1;
 
     [SerializeField]
     GridPos m_HQPosOne;
@@ -28,20 +28,19 @@ public class Tile_Map_Manager : MonoBehaviour
     [SerializeField]
     GridPos m_HQPosTwo;
 
-    private void Start()
+    public void m_SetupMaps()
     {
-        // Todo -> load tiles into the game in order so that it will always have tiles inside. Posibly load from file. 
+        Debug.Log("Attempting to load levels into game.");
 
-        
-    }
-
-    private void Update()
-    {
-        // This will be used to check which level should be loaded, will reset the variable when a new level is loaded. 
-
-        if(gameObject.GetComponent<Level_Loader>().m_GetLevelLoaded() != l_iCurrentLevel)
+        if (gameObject.GetComponent<Level_Loader>().m_LoadMapFromJSONFile())
         {
-            m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(l_iCurrentLevel));
+
+            Debug.Log("Loading Tiles into the game");
+
+            Debug.Log("Loading level " + m_iCurrentLevel);
+
+            m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(m_iCurrentLevel));
+
         }
     }
 

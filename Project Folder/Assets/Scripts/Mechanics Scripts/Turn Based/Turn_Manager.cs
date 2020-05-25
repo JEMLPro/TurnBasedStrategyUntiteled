@@ -14,8 +14,6 @@ public class Turn_Manager : MonoBehaviour
     [SerializeField]
     CurrentTurn m_ThisTurn = CurrentTurn.player;
 
-
-
     public void m_SwitchTurn()
     {
         if(m_ThisTurn == CurrentTurn.player)
@@ -29,4 +27,9 @@ public class Turn_Manager : MonoBehaviour
     }
 
     public CurrentTurn m_GetCurrentTurn() => m_ThisTurn;
+
+    public void m_Startup()
+    {
+        m_ThisTurn = CurrentTurn.player; 
+    }
 }
