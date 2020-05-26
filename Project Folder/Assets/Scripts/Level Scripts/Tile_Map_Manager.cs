@@ -270,6 +270,40 @@ public class Tile_Map_Manager : MonoBehaviour
                 }
             }
 
+            if(levelToLoad.hqPosOne.Length > 0)
+            {
+                foreach (var point in levelToLoad.hqPosOne)
+                {
+                    Debug.Log(point);
+                }
+
+                m_HQPosOne.x = levelToLoad.hqPosOne.First<int>();
+                m_HQPosOne.y = levelToLoad.hqPosOne.Last<int>();
+
+                Debug.Log("First Hq spawn point found");
+            }
+            else
+            {
+                Debug.LogError("Unable to get spawn positions");
+            }
+
+            if (levelToLoad.hqPosTwo.Length > 0)
+            {
+                foreach (var point in levelToLoad.hqPosTwo)
+                {
+                    Debug.Log(point); 
+                }
+
+                m_HQPosTwo.x = levelToLoad.hqPosTwo.First<int>();
+                m_HQPosTwo.y = levelToLoad.hqPosTwo.Last<int>();
+
+                Debug.Log("Second Hq spawn point found");
+            }
+            else
+            {
+                Debug.LogError("Unable to get spawn positions");
+            }
+
             // Debugging - Output when level finished loading. 
 
             Debug.Log("Level: " + levelToLoad.levelName + " has been loaded. ");

@@ -20,10 +20,15 @@ public class Unit_Manager : MonoBehaviour
     //  Data Members Start 
     //----------------------------------------------------------------------------------------------------------------------------
 
-    // Movement Management.
+    // Other Managers
 
     [SerializeField]
     GameObject m_GameMap; /*!< \var This will be the game object holding the game's map. */
+
+    [SerializeField]
+    GameObject m_TurnManager; /*!< \var The turn manager for the game, used to check the current turn. */
+
+    // Movement Management.
 
     [SerializeField]
     bool m_bCheckRange = false; /*!< \var This will be used to check the movement range of the selected unit. */
@@ -31,10 +36,7 @@ public class Unit_Manager : MonoBehaviour
     // Unit Management.
 
     [SerializeField]
-    List<GameObject> m_UnitList; /*!< \var This will hold all of the controlled units. */
-
-    [SerializeField]
-    GameObject m_TurnManager; /*!< \var The turn manager for the game, used to check the current turn. */
+    List<GameObject> m_UnitList = new List<GameObject>(); /*!< \var This will hold all of the controlled units. */
 
     [SerializeField]
     CurrentTurn m_Owner = CurrentTurn.player; /*!< \var The owner ofthis set of units. */
@@ -70,140 +72,130 @@ public class Unit_Manager : MonoBehaviour
         {
             Debug.LogError("Error code 0010 - Unable to assign game object in game: " + "Turn Manager. ");
         }
-
-        // Spawn a set number of units to begin with
-
-        for (int i = 0; i < 4; i++)
-        {
-            GameObject l_tempUnit = gameObject.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(m_GameMap.GetComponent<Tile_Map_Manager>().m_GetCellUsingGridPosition(1, i + 1));
-
-            l_tempUnit.transform.parent = gameObject.transform;
-
-            l_tempUnit.name += i; 
-
-            m_UnitList.Add(l_tempUnit);
-
-            Debug.Log("Unit Spawned, unit manager at " + m_UnitList.Count); 
-        }
     }
 
     private void Update()
     {
-        // Init temp locations for units.
-        foreach (var unit in m_UnitList)
+        if (m_UnitList.Count > 0)
         {
-            if (unit != null)
+            // Init temp locations for units.
+            foreach (var unit in m_UnitList)
             {
-                if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition() == null)
+                if (unit != null)
                 {
-                    GameObject l_TempPos = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetRandomCell();
-
-                    if (l_TempPos != null)
+                    if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition() == null)
                     {
-                        if (l_TempPos.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPos.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                        GameObject l_TempPos = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetRandomCell();
+
+                        if (l_TempPos != null)
                         {
-                            unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPos);
+                            if (l_TempPos.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPos.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                            {
+                                unit.GetComponent<Unit_Movement>().m_SetPosition(l_TempPos);
+                            }
                         }
                     }
-                }
-                else if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
-                {
-                    unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bSetOccupied(true);
+                    else if (unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+                    {
+                        unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_bSetOccupied(true);
+                    }
                 }
             }
-        }
 
-        // This will check if the over of the unit manager is the same as current turn player. 
-        if (m_CheckTurn())
-        {
-            GameObject l_SelectedUnit = m_GetSelectedUnit();
-
-            if (gameObject.GetComponent<Activate_Radial_Menu>() != null)
+            // This will check if the over of the unit manager is the same as current turn player. 
+            if (m_CheckTurn())
             {
-                if (l_SelectedUnit != null)
-                {
-                    if (m_bActionSelected != true)
-                    {
-                        gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(l_SelectedUnit, true);
+                // Debug.Log("Player's Turn"); 
 
-                        m_GameMap.GetComponent<Tile_Map_Manager>().m_SetSelectable(false);
+                GameObject l_SelectedUnit = m_GetSelectedUnit();
+
+                if (gameObject.GetComponent<Activate_Radial_Menu>() != null)
+                {
+                    if (l_SelectedUnit != null)
+                    {
+                        if (m_bActionSelected != true)
+                        {
+                            gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(l_SelectedUnit, true);
+
+                            m_GameMap.GetComponent<Tile_Map_Manager>().m_SetSelectable(false);
+                        }
+                        else
+                        {
+                            switch (m_Action)
+                            {
+                                case Action.Wait:
+
+                                    m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UnitWait();
+
+                                    m_SetActionNull();
+
+                                    break;
+
+                                case Action.Attack:
+
+                                    if (m_GetSelectedUnit().GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
+                                    {
+                                        gameObject.GetComponent<Unit_Find_AtTarget1>().m_AtRangeFinder();
+
+                                        gameObject.GetComponent<Unit_Find_AtTarget1>().m_SelectAttackTarget();
+
+                                        if (gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget() != null)
+                                        {
+                                            m_UnitAttack();
+
+                                            m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0);
+
+                                            m_SetActionNull();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        m_SetActionNull();
+                                    }
+
+                                    break;
+
+                                // Update Unit Position. 
+                                case Action.Move:
+                                    // Debug.Log("Move");
+
+                                    m_UpdateUnitPosition();
+                                    m_GameMap.GetComponent<Tile_Map_Manager>().m_SetSelectable(true);
+
+                                    break;
+
+                                case Action.Build:
+                                    break;
+
+                                default:
+                                    m_bActionSelected = false;
+                                    break;
+                            }
+                        }
                     }
                     else
                     {
-                        switch (m_Action)
-                        {
-                            case Action.Wait:
+                        m_SetActionNull();
+                        gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(null, false);
 
-                                m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UnitWait();
+                        m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
+                        m_bCheckRange = false;
 
-                                m_SetActionNull(); 
-
-                                break;
-
-                            case Action.Attack:
-
-                                if (m_GetSelectedUnit().GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
-                                {
-                                    gameObject.GetComponent<Unit_Find_AtTarget1>().m_AtRangeFinder();
-
-                                    gameObject.GetComponent<Unit_Find_AtTarget1>().m_SelectAttackTarget();
-
-                                    if (gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget() != null)
-                                    {
-                                        m_UnitAttack();
-
-                                        m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0); 
-
-                                        m_SetActionNull();
-                                    }
-                                }
-                                else
-                                {
-                                    m_SetActionNull(); 
-                                }
-
-                                break;
-
-                                // Update Unit Position. 
-                            case Action.Move:
-                                // Debug.Log("Move");
-                                
-                                m_UpdateUnitPosition();
-                                m_GameMap.GetComponent<Tile_Map_Manager>().m_SetSelectable(true); 
-
-                                break;
-
-                            case Action.Build:
-                                break;
-
-                            default:
-                                m_bActionSelected = false; 
-                                break;
-                        }
                     }
                 }
-                else
-                {
-                    m_SetActionNull(); 
-                    gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(null, false);
 
-                    m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
-                    m_bCheckRange = false; 
-
-                }
+                m_bResetOnce = true;
             }
-
-            m_bResetOnce = true; 
-        }
-        else
-        {
-            // If it is not the owner's turn reset the units once. 
-
-            if(m_bResetOnce == true)
+            else
             {
-                m_ResetUnits();
+                // If it is not the owner's turn reset the units once. 
 
-                m_bResetOnce = false; 
+                if (m_bResetOnce == true)
+                {
+                    m_ResetUnits();
+
+                    m_bResetOnce = false;
+                }
             }
         }
     }
@@ -326,9 +318,10 @@ public class Unit_Manager : MonoBehaviour
         m_SetActionNull();
 
         // Reset Attack Target; 
-
-        gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null);
-        
+        if (gameObject.GetComponent<Unit_Find_AtTarget1>())
+        {
+            gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null);
+        }
 
         foreach (var unit in m_UnitList)
         {
@@ -423,6 +416,18 @@ public class Unit_Manager : MonoBehaviour
         }
 
         return null; 
+    }
+
+    public void m_AddUnitIntoList(GameObject newUnit)
+    {
+        if(newUnit != null)
+        {
+            newUnit.transform.parent = gameObject.transform;
+
+            m_UnitList.Add(newUnit);
+
+            Debug.Log("Unit '" + newUnit.name + "' has been added into this manager");
+        }
     }
 
     // Action Management. 

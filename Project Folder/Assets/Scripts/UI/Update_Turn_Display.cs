@@ -15,12 +15,6 @@ public class Update_Turn_Display : MonoBehaviour
     [SerializeField]
     GameObject m_TurnManager = null;
 
-    private void Start()
-    {
-        m_TurnManager = GameObject.FindGameObjectWithTag("Turn_Manager");
-
-        m_TurnText = GameObject.FindGameObjectWithTag("Turn_Text").GetComponent<Text>();
-    }
 
     private void Update()
     {
@@ -39,6 +33,15 @@ public class Update_Turn_Display : MonoBehaviour
                 {
                     m_TurnText.text = m_sAITurnText;
                 }
+            }
+        }
+        else
+        {
+            m_TurnManager = GameObject.FindGameObjectWithTag("Turn_Manager");
+
+            if(m_TurnText == null)
+            {
+                m_TurnText = GameObject.FindGameObjectWithTag("Turn_Text").GetComponent<Text>();
             }
         }
     }

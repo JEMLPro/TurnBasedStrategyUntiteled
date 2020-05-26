@@ -97,86 +97,89 @@ public class AI_Unit_Manager : MonoBehaviour
             {
                 // Find enemy target.
 
-                GameObject l_TargetUnit = m_OtherUnitManger.GetComponent<Unit_Manager>().m_GetLowestCombatRating(m_ActiveUnit);
-
-                m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_bCheckForTurn = true; 
-
-                //-------------------------------------------------------
-                // Unit Move.
-
-                if (l_TargetUnit != null)
+                if (m_OtherUnitManger != null)
                 {
-                    // Debug.Log("This Target : " + l_TargetUnit.name);
+                    GameObject l_TargetUnit = m_OtherUnitManger.GetComponent<Unit_Manager>().m_GetLowestCombatRating(m_ActiveUnit);
 
-                    if (m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
+                    m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_bCheckForTurn = true;
+
+                    //-------------------------------------------------------
+                    // Unit Move.
+
+                    if (l_TargetUnit != null)
                     {
-                        // Set path finding requirements. 
+                        // Debug.Log("This Target : " + l_TargetUnit.name);
 
-                        if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckRequirements() == false)
+                        if (m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
                         {
-                            if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckStateOfPath() == false)
+                            // Set path finding requirements. 
+
+                            if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckRequirements() == false)
                             {
-                                Debug.Log("Setting variables");
-
-                                // Check the target unit's position for a free space next to it. 
-
-                                GameObject l_TargetPosition = l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Neighbours>().m_GetClosestNeighbour(m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetCurrentPosition());
-
-                                if (l_TargetPosition != null)
+                                if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckStateOfPath() == false)
                                 {
-                                    m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_SetStartandEndPoints(l_TargetPosition);
-                                }
-                                else
-                                {
-                                    // If a target position cannot be found (if the target is surrounded for example), wait for this turn. 
+                                    Debug.Log("Setting variables");
 
-                                    m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_UnitWait(); 
+                                    // Check the target unit's position for a free space next to it. 
+
+                                    GameObject l_TargetPosition = l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Neighbours>().m_GetClosestNeighbour(m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetCurrentPosition());
+
+                                    if (l_TargetPosition != null)
+                                    {
+                                        m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_SetStartandEndPoints(l_TargetPosition);
+                                    }
+                                    else
+                                    {
+                                        // If a target position cannot be found (if the target is surrounded for example), wait for this turn. 
+
+                                        m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_UnitWait();
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                //------------------------------------------------------
-                // Unit Attack. 
+                    //------------------------------------------------------
+                    // Unit Attack. 
 
-                if(l_TargetUnit != null)
-                {
-                    // Check the unit can attack
-                    if(m_ActiveUnit.GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
+                    if (l_TargetUnit != null)
                     {
-                        // If the target unit is within range attack them. 
-                        if(l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition()) 
-                            == m_ActiveUnit.GetComponent<Unit_Attack>().m_GetAttackRange())
+                        // Check the unit can attack
+                        if (m_ActiveUnit.GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
                         {
-                            m_ActiveUnit.GetComponent<Unit_Attack>().m_AttackTarget(l_TargetUnit); 
+                            // If the target unit is within range attack them. 
+                            if (l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition())
+                                == m_ActiveUnit.GetComponent<Unit_Attack>().m_GetAttackRange())
+                            {
+                                m_ActiveUnit.GetComponent<Unit_Attack>().m_AttackTarget(l_TargetUnit);
+                            }
+
+                            // End of combat set the number of attacks to 0. 
+                            m_ActiveUnit.GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0);
                         }
-
-                        // End of combat set the number of attacks to 0. 
-                        m_ActiveUnit.GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0); 
                     }
+
+                    //-------------------------------------------------------
+                    // Unit Build.
+                    //-------------------------------------------------------
+
+
+                    // Spawn new items/Update objects. 
+
+                    m_ActiveUnit = null;
+
+                    // End Turn. 
+
+                    m_bResetOnce = true;
                 }
-
-                //-------------------------------------------------------
-                // Unit Build.
-                //-------------------------------------------------------
-
-
-                // Spawn new items/Update objects. 
-
-                m_ActiveUnit = null; 
-
-                // End Turn. 
-
-                m_bResetOnce = true;
-            }
-            else
-            {
-                m_ActiveUnit = m_ActivateUnit(); 
-
-                if(m_ActiveUnit == null)
+                else
                 {
-                    m_TurnManager.GetComponent<Turn_Manager>().m_SwitchTurn(); 
+                    m_ActiveUnit = m_ActivateUnit();
+
+                    if (m_ActiveUnit == null)
+                    {
+                        m_TurnManager.GetComponent<Turn_Manager>().m_SwitchTurn();
+                    }
                 }
             }
         }

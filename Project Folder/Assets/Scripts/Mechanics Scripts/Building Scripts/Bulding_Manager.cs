@@ -8,31 +8,15 @@ public class Bulding_Manager : MonoBehaviour
     GameObject m_BasicBuilding = null;
 
     [SerializeField]
-    GameObject m_GameMap = null; 
-
-    [SerializeField]
     CurrentTurn m_Owner = CurrentTurn.player;
 
     [SerializeField]
-    List<GameObject> m_BuildingList;
+    List<GameObject> m_BuildingList = new List<GameObject>();
 
-    private void Start()
-    {
-        m_GameMap = GameObject.FindGameObjectWithTag("Map");
-    }
+    
+    public void m_SetBasicBuilding(GameObject newPrefab) { m_BasicBuilding = newPrefab; }
 
-    [SerializeField]
-    GameObject l_SpawnPoint = null;
-
-    private void Update()
-    {
-        if(m_BuildingList.Count == 0)
-        {
-            // l_SpawnPoint = m_GameMap.GetComponent<Tile_Map_Manager>().m_GetHQSpawnPoint(0);
-
-            m_SpawnHQ(l_SpawnPoint); 
-        }
-    }
+    public void m_SetOwner(CurrentTurn newOwner) { m_Owner = newOwner; }
 
     public void m_SpawnHQ(GameObject cellToSpawn)
     {
@@ -46,7 +30,11 @@ public class Bulding_Manager : MonoBehaviour
                 {
                     l_TempHQ.GetComponent<Building_Positioning>().m_SetPosition(cellToSpawn);
 
-                    l_TempHQ.transform.parent = gameObject.transform; 
+                    l_TempHQ.transform.parent = gameObject.transform;
+
+                    l_TempHQ.name = "HQ Building";
+
+                    l_TempHQ.tag = "HQ"; 
 
                     m_BuildingList.Add(l_TempHQ);
 
@@ -66,6 +54,21 @@ public class Bulding_Manager : MonoBehaviour
         {
             Debug.LogError("Unable to spawn HQ - Basic building not found."); 
         }
+    }
+
+    public GameObject m_GetHQObject()
+    {
+        foreach (var building in m_BuildingList)
+        {
+            if(building.tag == "HQ")
+            {
+                return building;
+            }
+        }
+
+        Debug.LogWarning("Unable to find HQ item, check the list to see if it exists and contains the tag 'HQ'.");
+
+        return null;
     }
 
 }

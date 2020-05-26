@@ -9,6 +9,15 @@ TagManager:
   - Unit_Manager_Player
   - Unit_Manager_AI
   - Turn_Text
+  - HQ
+  - User_Interface
+  - End_Turn_Button
+  - Action_Radial_Menu
+  - Main_Canvas
+  - Wait_Button
+  - Attack_Button
+  - Move_Button
+  - Build_button
   layers:
   - Default
   - TransparentFX
@@ -18,7 +27,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Background
   - 
   - 
   - 
@@ -43,6 +52,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2742483149
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

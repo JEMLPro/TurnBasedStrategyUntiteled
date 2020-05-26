@@ -34,4 +34,6 @@ public class Building_Positioning : MonoBehaviour
         m_CurrentCell = newCellPos; 
     }
 
+    public GameObject m_GetPosition() => m_CurrentCell; 
+
 }

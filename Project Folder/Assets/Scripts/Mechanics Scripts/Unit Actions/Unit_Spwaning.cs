@@ -7,6 +7,8 @@ public class Unit_Spwaning : MonoBehaviour
     [SerializeField]
     GameObject m_BaseUnit = null;
     
+    public void m_SetBaseUnit(GameObject newPrefab) { m_BaseUnit = newPrefab; }
+
     public GameObject m_SpawnMilitiaUnit(GameObject spawnCell)
     {
         GameObject l_NewMilitiaUnit = Instantiate(m_BaseUnit);
@@ -19,7 +21,9 @@ public class Unit_Spwaning : MonoBehaviour
         UnitType l_NewType = UnitType.Militia; 
 
         l_NewMilitiaUnit.GetComponent<Unit_Attack>().m_SetUnitStats(l_fNewAttack, l_fNewDefence, l_fNewHitChance, l_fNewSpeed, l_fNewAttackRange, l_NewType);
-        l_NewMilitiaUnit.GetComponent<Unit_Movement>().m_SetPosition(spawnCell); 
+        l_NewMilitiaUnit.GetComponent<Unit_Movement>().m_SetPosition(spawnCell);
+
+        l_NewMilitiaUnit.name = "Militia";
 
         return l_NewMilitiaUnit; 
     }

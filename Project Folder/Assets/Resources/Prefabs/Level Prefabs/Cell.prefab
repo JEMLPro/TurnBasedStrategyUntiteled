@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5759563300985394513}
   - component: {fileID: 9160718466546838944}
   - component: {fileID: 5491225898380294379}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1552484147
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: eb8e3d3292ceb22479fe8ae75d0d57f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

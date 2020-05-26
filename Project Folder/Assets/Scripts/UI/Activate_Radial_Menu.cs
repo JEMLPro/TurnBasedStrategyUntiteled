@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class Activate_Radial_Menu : MonoBehaviour
 {
@@ -18,8 +19,35 @@ public class Activate_Radial_Menu : MonoBehaviour
 
     private void Start()
     {
-        m_RadialMenu.SetActive(false);     
+        if(m_RadialMenu.activeSelf == true)
+        {
+            m_RadialMenu.SetActive(false);
+        }
     }
+
+    public void m_SetRadialMenuObject(GameObject radialMenu, RectTransform pieMenu, RectTransform canvas)
+    {
+        m_RadialMenu = radialMenu;
+        m_PieMenu = pieMenu;
+        m_Canvas = canvas;
+
+        foreach (var button in m_PieMenu.GetComponent<RMF_RadialMenu>().elements)
+        {
+            switch (button.tag)
+            {
+                case "Wait_Button":
+                    break;
+
+                default:
+                    break;
+            }
+
+            button.GetComponentInChildren<Button>();
+
+            
+        }
+    }
+
 
     public void m_ActivateMenu(GameObject attachedObject, bool menuState)
     {

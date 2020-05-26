@@ -5,10 +5,8 @@ using UnityEditor;
 
 public class Prefab_Loader : MonoBehaviour
 {
-    [SerializeField]
     GameObject m_LoadedObject = null;
 
-    [SerializeField]
     string m_sObjectName = null;
 
     public bool m_LoadPrefabObject(string filePath, string objName)
@@ -46,7 +44,7 @@ public class Prefab_Loader : MonoBehaviour
         {
             Debug.Log(objName + " prefab found.");
 
-            GameObject l_ReturnObj = (GameObject)GameObject.Instantiate(l_Prefab, gameObject.transform);
+            GameObject l_ReturnObj = (GameObject)l_Prefab;
 
             if (l_ReturnObj != null)
             {
