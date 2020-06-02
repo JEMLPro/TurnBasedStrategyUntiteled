@@ -17,14 +17,30 @@ public class Start_Up_Script : Prefab_Loader
     [SerializeField]
     GameObject m_Player;
 
-    [SerializeField]
-    GameObject m_AI;
+    // [SerializeField]
+    // GameObject m_AI;
 
     private void Start()
     {
         // This will be the start of the game and will initate all of the other items in the game. 
 
-        // Start with the Turn manager. 
+        Debug.Log("Locating interface manger in game."); 
+
+        if(m_UserInterfaceManager == null)
+        {
+            m_UserInterfaceManager = GameObject.FindGameObjectWithTag("User_Interface");
+        }
+
+        if(m_UserInterfaceManager != null)
+        {
+            Debug.Log("Interface manger found and connected.");
+        }
+        else
+        {
+            Debug.LogError("Error code 0001-4 - Unable to load Interface");
+        }
+
+        // The Turn manager. 
 
         GameObject l_TurnManagerReference = m_ExportPrefabObject("Prefabs/Management_Prefabs/Turn Manager", "Turn Manager");
 
@@ -129,6 +145,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_UnitManager.AddComponent<Unit_Spwaning>();
 
+                l_UnitManager.AddComponent<Unit_Find_AtTarget1>(); 
+
                 l_UnitManager.AddComponent<Activate_Radial_Menu>(); 
 
                 Debug.Log("Unit Manager Created and added to player");
@@ -176,10 +194,12 @@ public class Start_Up_Script : Prefab_Loader
 
                 GameObject l_RadialMenuObj = m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetRadialMenu();
 
-                m_Player.GetComponentInChildren<Activate_Radial_Menu>().m_SetRadialMenuObject(l_RadialMenuObj, l_RadialMenuObj.GetComponentInChildren<RectTransform>(),
-                   m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetMainCanvas()); 
+                // Assign functions to the radial menu. 
 
-                // Assign functions to the buttons on the radial menu. 
+                m_Player.GetComponentInChildren<Activate_Radial_Menu>().m_SetRadialMenuObject(l_RadialMenuObj, l_RadialMenuObj.GetComponentInChildren<RectTransform>(),
+                   m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetMainCanvas(), l_UnitManager); 
+
+
             }
 
         }

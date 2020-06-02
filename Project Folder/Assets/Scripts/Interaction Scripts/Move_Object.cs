@@ -25,10 +25,7 @@ public class Move_Object : MonoBehaviour
 
     private void Start()
     {
-        // Assign Min and max position values, May need tweeking depending upon map. 
-        m_MinMoveValue = new Vector3(-15f, -10f, 0);
-
-        m_MaxMoveValue = new Vector3(0, 0, 0); 
+        gameObject.transform.position = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
@@ -61,14 +58,16 @@ public class Move_Object : MonoBehaviour
 
         transform.Translate(new Vector3(l_xDirect, 0, 0));
 
+
         // Limits the movement to a min and maximum possible value. 
-        if (transform.position.x >= m_MaxMoveValue.x)
-        {
-            transform.position = new Vector3(m_MaxMoveValue.x, transform.position.y, transform.position.z);
-        }
-        else if(transform.position.x <= m_MinMoveValue.x)
+
+        if (transform.position.x >= m_MinMoveValue.x)
         {
             transform.position = new Vector3(m_MinMoveValue.x, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x <= m_MaxMoveValue.x)
+        {
+            transform.position = new Vector3(m_MaxMoveValue.x, transform.position.y, transform.position.z);
         }
     }
 
@@ -79,13 +78,13 @@ public class Move_Object : MonoBehaviour
 
         transform.Translate(new Vector3(0, l_yDirect, 0));
 
-        if (transform.position.y >= m_MaxMoveValue.y)
-        {
-            transform.position = new Vector3(transform.position.x, m_MaxMoveValue.y, transform.position.z);
-        }
-        else if (transform.position.y <= m_MinMoveValue.y)
+        if (transform.position.y >= m_MinMoveValue.y)
         {
             transform.position = new Vector3(transform.position.x, m_MinMoveValue.y, transform.position.z);
+        }
+        else if (transform.position.y <= m_MaxMoveValue.y)
+        {
+            transform.position = new Vector3(transform.position.x, m_MaxMoveValue.y, transform.position.z);
         }
     }
 

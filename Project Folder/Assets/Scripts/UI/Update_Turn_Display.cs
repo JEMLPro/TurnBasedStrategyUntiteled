@@ -8,9 +8,9 @@ public class Update_Turn_Display : MonoBehaviour
     [SerializeField]
     Text m_TurnText;
 
-    string m_sPlayerTurnText = "Player's Turn";
+    const string m_sPlayerTurnText = "Player's Turn";
 
-    string m_sAITurnText = "Opponent's Turn";
+    const string m_sAITurnText = "Opponent's Turn";
 
     [SerializeField]
     GameObject m_TurnManager = null;

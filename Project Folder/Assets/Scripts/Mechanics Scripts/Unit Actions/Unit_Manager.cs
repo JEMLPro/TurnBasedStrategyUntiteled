@@ -183,6 +183,10 @@ public class Unit_Manager : MonoBehaviour
 
                     }
                 }
+                else
+                {
+                    m_SetActionNull(); 
+                }
 
                 m_bResetOnce = true;
             }
@@ -274,8 +278,6 @@ public class Unit_Manager : MonoBehaviour
                         if (l_iResetLoop >= 100)
                         {
                             m_bCheckRange = true;
-
-                            l_iResetLoop = 0;
                         }
                     }
                 }
@@ -489,6 +491,9 @@ public class Unit_Manager : MonoBehaviour
         m_Action = Action.Nothing;
 
         m_bActionSelected = false;
+
+        // Resets the target for attact allowing for a new target to be selected. 
+        gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null); 
 
         // Debug.Log("Action Selected - Nothing");
     }

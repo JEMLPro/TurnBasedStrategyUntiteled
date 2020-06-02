@@ -79,94 +79,6 @@ public class Tile_Map_Manager : MonoBehaviour
         m_Grid.Clear(); 
     }
 
-    // Used to create a grid with a set number of rows and columns. 
-    void m_CreateTileMap(int rows, int columns)
-    {
-        // Reset grid for new level to be loaded. 
-
-        m_ResetGrid();
-
-        // Init variables. 
-
-        float l_fSpacing = -1.0f; 
-
-        // Create grid with defined dimentions. 
-
-        for(int i = 0; i < columns; i++)
-        {
-            for(int j = 0; j < rows; j++)
-            {
-                Vector3 l_Pos = new Vector3(i, j, 0) * l_fSpacing;
-                m_Grid.Add(Instantiate(m_Cell, l_Pos, Quaternion.identity));
-
-                m_Grid[m_Grid.Count - 1].GetComponent<Cell_Manager>().m_SetGridPos(i, j);
-            }
-        }
-
-        for(int k = 0; k < m_Grid.Count; k++)
-        {
-            // Assign all cells a parent for oroganisation purposes. 
-
-            m_Grid[k].transform.parent = gameObject.transform;
-
-            m_AssignCellNeighbours(k);
-        }
-    }
-
-    // Used to form a grid with a set number of rows and columns, with the addes benefit of a configuration for the tiles, 
-    void m_CreateTileMap(int rows, int columns, string[] tileConfig)
-    {
-        // Reset grid for new level to be loaded. 
-
-        m_ResetGrid();
-
-        // Init variables. 
-
-        float l_fSpacing = -1.0f;
-
-        // Create grid with defined dimentions. 
-
-        for (int i = 0; i < columns; i++)
-        {
-            for (int j = 0; j < rows; j++)
-            {
-                Vector3 l_Pos = new Vector3(i, j, 0) * l_fSpacing;
-
-                m_Grid.Add(Instantiate(m_Cell, l_Pos, Quaternion.identity));
-
-                m_Grid[m_Grid.Count - 1].GetComponent<Cell_Manager>().m_SetGridPos(i, j);
-            }
-        }
-
-        for (int k = 0; k < m_Grid.Count; k++)
-        {
-            // Assign all cells a parent for oroganisation purposes. 
-
-            m_Grid[k].transform.parent = gameObject.transform;
-
-            m_AssignCellNeighbours(k);
-
-            if (tileConfig.Length <= k)
-            {
-                // Look through the tile config and assign the tiles depending upon its number. 
-                switch (tileConfig[k])
-                {
-                    case "1":
-                        m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.grass, gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites[1].loadedSprite);
-                        break;
-
-                    default:
-                        m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.none, gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites[1].loadedSprite);
-                        break;
-                }
-            }
-            else
-            {
-                m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.none, gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites[1].loadedSprite);
-            }
-        }
-    }
-
     // Used to load a level using the Level Class. 
     void m_CreateTileMap(Level levelToLoad)
     {
@@ -325,8 +237,6 @@ public class Tile_Map_Manager : MonoBehaviour
         m_MinBounds = m_Grid.First<GameObject>().transform.position;
 
         m_MaxBounds = m_Grid.Last<GameObject>().transform.position;
-
-        Vector2 l_MapSize = m_MaxBounds - m_MinBounds;
     }
 
     public Vector2 m_GetMinBounds() => m_MinBounds;
@@ -386,17 +296,25 @@ public class Tile_Map_Manager : MonoBehaviour
 
     public GameObject m_GetHQSpawnPoint(int index)
     {
-        switch (index)
+        switch(index)
         {
             case 0:
+                Debug.Log("HQ spawn point one found");
+
                 return m_GetCellUsingGridPosition(m_HQPosOne.x, m_HQPosOne.y);
 
             case 1:
+                Debug.Log("HQ spawn point two found");
+
                 return m_GetCellUsingGridPosition(m_HQPosTwo.x, m_HQPosTwo.y);
 
             default:
-                return null;
-        }
+                break;
+        };
+
+        Debug.Log("HQ spawn point not found");
+
+        return null;
     }
 
     // This will be used to assign the neighbours to a cell in the grid, a position in the grid will need to be provide. 

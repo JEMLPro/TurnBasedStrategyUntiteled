@@ -14,9 +14,6 @@ public class Activate_Radial_Menu : MonoBehaviour
     [SerializeField]
     RectTransform m_Canvas = null; 
 
-    [SerializeField]
-    GameObject m_AttachedObject;
-
     private void Start()
     {
         if(m_RadialMenu.activeSelf == true)
@@ -25,26 +22,61 @@ public class Activate_Radial_Menu : MonoBehaviour
         }
     }
 
-    public void m_SetRadialMenuObject(GameObject radialMenu, RectTransform pieMenu, RectTransform canvas)
+    public void m_SetRadialMenuObject(GameObject radialMenu, RectTransform pieMenu, RectTransform canvas, GameObject unitManager)
     {
         m_RadialMenu = radialMenu;
         m_PieMenu = pieMenu;
         m_Canvas = canvas;
 
-        foreach (var button in m_PieMenu.GetComponent<RMF_RadialMenu>().elements)
+        foreach (var button in radialMenu.GetComponentInChildren<RMF_RadialMenu>().elements)
         {
             switch (button.tag)
             {
                 case "Wait_Button":
+
+                    Debug.Log(button.tag + " Found");
+
+                    if (button.GetComponentInChildren<Button>())
+                    {
+                        button.GetComponentInChildren<Button>().onClick.AddListener(delegate { unitManager.GetComponent<Unit_Manager>().m_SetActionWait(); });
+
+                        Debug.Log("Button functionality assiggned");
+                    }
+
+                    break;
+
+                case "Move_Button":
+
+                    Debug.Log(button.tag + " Found");
+
+                    if (button.GetComponentInChildren<Button>())
+                    {
+                        button.GetComponentInChildren<Button>().onClick.AddListener(delegate { unitManager.GetComponent<Unit_Manager>().m_SetActionMove(); });
+
+                        Debug.Log("Button functionality assiggned");
+                    }
+
+                    break;
+
+                case "Attack_Button":
+
+                    Debug.Log(button.tag + " Found");
+
+                    if(button.GetComponentInChildren<Button>())
+                    {
+                        button.GetComponentInChildren<Button>().onClick.AddListener(delegate { unitManager.GetComponent<Unit_Manager>().m_SetActionAttack(); });
+
+                        Debug.Log("Button functionality assiggned");
+                    }
+
                     break;
 
                 default:
+
+                    Debug.Log(button.tag + " Found - Undefined functionality. ");
+
                     break;
             }
-
-            button.GetComponentInChildren<Button>();
-
-            
         }
     }
 
@@ -55,8 +87,6 @@ public class Activate_Radial_Menu : MonoBehaviour
 
         if (menuState != false)
         {
-            m_AttachedObject = attachedObject;
-
             Vector2 l_NewPos = WorldToCanvasPosition(m_Canvas, Camera.main, attachedObject.transform.position); 
 
             m_PieMenu.anchoredPosition = l_NewPos;
