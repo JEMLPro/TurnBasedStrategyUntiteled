@@ -23,10 +23,10 @@ public class Unit_Manager : MonoBehaviour
     // Other Managers
 
     [SerializeField]
-    GameObject m_GameMap; /*!< \var This will be the game object holding the game's map. */
+    protected GameObject m_GameMap; /*!< \var This will be the game object holding the game's map. */
 
     [SerializeField]
-    GameObject m_TurnManager; /*!< \var The turn manager for the game, used to check the current turn. */
+    protected GameObject m_TurnManager; /*!< \var The turn manager for the game, used to check the current turn. */
 
     // Movement Management.
 
@@ -36,13 +36,13 @@ public class Unit_Manager : MonoBehaviour
     // Unit Management.
 
     [SerializeField]
-    List<GameObject> m_UnitList = new List<GameObject>(); /*!< \var This will hold all of the controlled units. */
+    protected List<GameObject> m_UnitList = new List<GameObject>(); /*!< \var This will hold all of the controlled units. */
 
     [SerializeField]
-    CurrentTurn m_Owner = CurrentTurn.player; /*!< \var The owner ofthis set of units. */
+    protected CurrentTurn m_Owner = CurrentTurn.player; /*!< \var The owner ofthis set of units. */
 
     [SerializeField]
-    bool m_bResetOnce = false; /*!< \var Used to reset the list of units at the end of the turn. */
+    protected bool m_bResetOnce = false; /*!< \var Used to reset the list of units at the end of the turn. */
 
     // Action Management. 
 
@@ -63,14 +63,14 @@ public class Unit_Manager : MonoBehaviour
 
         if(m_GameMap == null)
         {
-            Debug.LogError("Error code 0010 - Unable to assign game object in game: " + "Game Map. ");
+            Debug.LogError("Error code 0100-3 - Unable to assign game object in game: " + "Game Map. ");
         }
 
         m_TurnManager = GameObject.FindGameObjectWithTag("Turn_Manager"); 
 
         if(m_TurnManager == null)
         {
-            Debug.LogError("Error code 0010 - Unable to assign game object in game: " + "Turn Manager. ");
+            Debug.LogError("Error code 0100-0 - Unable to assign game object in game: " + "Turn Manager. ");
         }
     }
 

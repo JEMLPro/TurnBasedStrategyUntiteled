@@ -1,0 +1,10 @@
+0001 - Problem loading a resource manager, variations include -0; Turn manager, -1; Level Manager, -2; Interface manager. 
+
+0002 - Problem loading data from a Json file, variations include -0; Levels faild to load, -1; Tile sprites not loaded. 
+
+0003 - Problem initilizing level into the game. 
+
+0004 - Unable to assign a material to a tile, this could be either due to an error in the level loading process or the sprite loading process. 
+
+0100 - Problem loading an object on player object, variations include -0; Turn manager faild to load -1; Building manager faild to load, -2; Unit manager faild to load, -3; Level manager faild to load
+

@@ -17,8 +17,8 @@ public class Start_Up_Script : Prefab_Loader
     [SerializeField]
     GameObject m_Player;
 
-    // [SerializeField]
-    // GameObject m_AI;
+    [SerializeField]
+    GameObject m_AI;
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class Start_Up_Script : Prefab_Loader
         }
         else
         {
-            Debug.LogError("Error code 0001-4 - Unable to load Interface");
+            Debug.LogError("Error code 0001-2 - Unable to load Interface");
         }
 
         // The Turn manager. 
@@ -48,7 +48,7 @@ public class Start_Up_Script : Prefab_Loader
 
         if (m_TurnManager == null)
         {
-            Debug.LogError("Error code 0001 - Unable to load Turn Manager");
+            Debug.LogError("Error code 0001-0 - Unable to load Turn Manager");
         }
 
         // Loding the levels into the game. 
@@ -91,6 +91,8 @@ public class Start_Up_Script : Prefab_Loader
         // Introduce the player and AI into the game. 
 
         Debug.Log("Begining Player Creation.");
+
+        // Player Object. 
 
         m_Player = new GameObject(); 
 
@@ -136,6 +138,8 @@ public class Start_Up_Script : Prefab_Loader
             if (l_UnitManager != null)
             {
                 l_UnitManager.name = "Unit Manager";
+
+                l_UnitManager.tag = "Unit_Manager_Player"; 
 
                 l_UnitManager.transform.parent = m_Player.transform;
 
@@ -202,6 +206,96 @@ public class Start_Up_Script : Prefab_Loader
 
             }
 
+        }
+
+        // AI Object. 
+
+        Debug.Log("Begining AI Creation");
+
+        m_AI = new GameObject(); 
+
+        if(m_AI != null)
+        {
+            // Give the AI object a new name.
+            m_AI.name = "AI Object";
+
+            // Assign a parent to this new game object. 
+            m_AI.transform.parent = gameObject.transform;
+
+            m_AI.AddComponent<Prefab_Loader>();
+
+            // Add the building manager onto the AI
+
+            GameObject l_AIBuildingManager = new GameObject();
+
+            if (l_AIBuildingManager != null)
+            {
+                l_AIBuildingManager.name = "Building Manager";
+
+                l_AIBuildingManager.transform.parent = m_AI.transform;
+
+                l_AIBuildingManager.AddComponent<Bulding_Manager>();
+
+                Debug.Log("Building Manager Created and added to AI");
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SetOwner(CurrentTurn.ai);
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SetBasicBuilding(m_AI.GetComponent<Prefab_Loader>().m_ExportPrefabObject("Prefabs/Building Prefabs/TempBuilding", "Basic Building"));
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnHQ(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetHQSpawnPoint(1));
+            }
+            else
+            {
+                Debug.LogError("Error 0200-1 - Unable to create object on AI: Building Manager");
+            }
+
+            // Add the unit manager to the AI.
+
+            GameObject l_AIUnitManager = new GameObject();
+
+            if (l_AIUnitManager != null)
+            {
+                l_AIUnitManager.name = "Unit Manager";
+
+                l_AIUnitManager.tag = "Unit_Manager_AI";
+
+                l_AIUnitManager.transform.parent = m_AI.transform;
+
+                // Add components 
+
+                l_AIUnitManager.AddComponent<AI_Unit_Manager>();
+
+                l_AIUnitManager.AddComponent<Unit_Spwaning>();
+
+                Debug.Log("Unit Manager Created and added to AI");
+
+                // Load in basic unit
+
+                l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOwner(CurrentTurn.ai);
+
+                l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOtherManager(GameObject.FindGameObjectWithTag("Unit_Manager_Player"));
+
+                l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SetBaseUnit(m_AI.GetComponent<Prefab_Loader>().m_ExportPrefabObject("Prefabs/Unit Prefabs/Base Unit AI", "Basic Unit AI"));
+
+                // Spawn Units
+
+                Debug.Log("Spawning Units... ");
+
+                int l_iNumberOfSpawnedUnits = 0;
+
+                foreach (var Cell in l_AIBuildingManager.GetComponent<Bulding_Manager>().m_GetHQObject().GetComponent<Building_Positioning>().m_GetPosition().GetComponent<Cell_Neighbours>().m_GetCellNeighbours())
+                {
+                    l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_AddUnitIntoList((l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(Cell)));
+
+                    l_iNumberOfSpawnedUnits++;
+                }
+
+                Debug.Log(l_iNumberOfSpawnedUnits + " Units have been spawned");
+            }
+            else
+            {
+                Debug.LogError("Error 0200-2 - Unable to create object on AI: Unit Manager");
+            }
         }
 
     }

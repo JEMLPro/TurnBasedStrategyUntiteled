@@ -57,17 +57,20 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
 
     public void m_SetAtTarget(GameObject newObject)
     {
-        m_AtTarget = newObject; 
-
-        if(newObject == null)
+        if (m_OtherUnitManager != null)
         {
-            foreach (var unit in m_OtherUnitManager.GetComponent<AI_Unit_Manager>().m_GetUnitList())
+            m_AtTarget = newObject;
+
+            if (newObject == null)
             {
-                if (unit != null)
+                foreach (var unit in m_OtherUnitManager.GetComponent<AI_Unit_Manager>().m_GetUnitList())
                 {
-                    if (unit.GetComponent<Unit_Attack>().m_GetSelectedForAttack() == true)
+                    if (unit != null)
                     {
-                        unit.GetComponent<Unit_Attack>().m_SetSelectedForAttack(false);
+                        if (unit.GetComponent<Unit_Attack>().m_GetSelectedForAttack() == true)
+                        {
+                            unit.GetComponent<Unit_Attack>().m_SetSelectedForAttack(false);
+                        }
                     }
                 }
             }

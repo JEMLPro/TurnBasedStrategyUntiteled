@@ -103,7 +103,7 @@ public class Level_Loader : MonoBehaviour
 
         if (m_ListOfLevels.levels.Count <= 0)
         {
-            Debug.LogError("Error Code 0002 : Unable to load file into game. ");
+            Debug.LogError("Error Code 0002-0 : Unable to load level Json into game. ");
 
             return false;
         }
@@ -126,7 +126,7 @@ public class Level_Loader : MonoBehaviour
 
         if (m_ListOfLevels.levels.Count <= 0)
         {
-            Debug.LogError("Error Code 0002 : Unable to load Json file into game. ");
+            Debug.LogError("Error Code 0002-0 : Unable to load level Json into game. ");
 
             return false;
         }

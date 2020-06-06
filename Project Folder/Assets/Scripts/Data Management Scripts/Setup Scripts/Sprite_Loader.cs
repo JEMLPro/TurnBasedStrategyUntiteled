@@ -41,7 +41,7 @@ public class Sprite_Loader : MonoBehaviour
 
         if (m_ListOfTiles.sprites.Count <= 0)
         {
-            Debug.LogError("Error Code 0002-1 : Unable to load Json file into game. Sprites have not been loaded.  ");
+            Debug.LogError("Error Code 0002-1 : Unable to load Json file into game. Tile Sprites have not been loaded.  ");
 
             return false;
         }

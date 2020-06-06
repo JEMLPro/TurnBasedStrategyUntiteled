@@ -166,7 +166,7 @@ public class Tile_Map_Manager : MonoBehaviour
 
                                 m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.none, gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites[0].loadedSprite);
 
-                                Debug.LogError("Error Code 0001 : Unable to assign material. " + int.Parse(levelToLoad.tileConfig[k]));
+                                Debug.LogError("Error Code 0004 : Unable to assign material. " + int.Parse(levelToLoad.tileConfig[k]));
 
                                 break;
                             }
@@ -178,7 +178,7 @@ public class Tile_Map_Manager : MonoBehaviour
 
                     m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.none, null);
 
-                    Debug.LogError("Error Code 0001 : Unable to assign material. ");
+                    Debug.LogError("Error Code 0004 : Unable to assign material. ");
                 }
             }
 
@@ -224,7 +224,7 @@ public class Tile_Map_Manager : MonoBehaviour
         {
             // This will output when the level cannot be loaded. 
 
-            Debug.LogError("Error Code 0000 : Unable to load level from file. "); 
+            Debug.LogError("Error Code 0003 : Unable to load level from file. "); 
         }
     }
 
@@ -296,7 +296,7 @@ public class Tile_Map_Manager : MonoBehaviour
 
     public GameObject m_GetHQSpawnPoint(int index)
     {
-        switch(index)
+        switch (index)
         {
             case 0:
                 Debug.Log("HQ spawn point one found");
@@ -304,9 +304,19 @@ public class Tile_Map_Manager : MonoBehaviour
                 return m_GetCellUsingGridPosition(m_HQPosOne.x, m_HQPosOne.y);
 
             case 1:
-                Debug.Log("HQ spawn point two found");
+                if (m_GetCellUsingGridPosition(m_HQPosTwo.x, m_HQPosTwo.y) != null)
+                {
 
-                return m_GetCellUsingGridPosition(m_HQPosTwo.x, m_HQPosTwo.y);
+                    Debug.Log("HQ spawn point two found");
+
+                    return m_GetCellUsingGridPosition(m_HQPosTwo.x, m_HQPosTwo.y);
+                }
+                else
+                {
+                    Debug.Log("HQ spawn point two not found with coords " + m_HQPosTwo.x + ", " + m_HQPosTwo.y);
+
+                    return null;
+                }
 
             default:
                 break;
