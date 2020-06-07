@@ -141,9 +141,22 @@ public class Unit_Manager : MonoBehaviour
 
                                         if (gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget() != null)
                                         {
-                                            m_UnitAttack();
+                                            if (gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget().GetComponent<Unit_Attack>() != null)
+                                            {
+                                                Debug.Log("Unit Combat");
 
-                                            m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0);
+                                                m_UnitAttack();
+
+                                                m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0);
+                                            }
+                                            else
+                                            {
+                                                Debug.Log("Building Combat");
+
+                                                m_AttackBuilding();
+
+                                                m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0);
+                                            }
 
                                             m_SetActionNull();
                                         }
@@ -303,6 +316,14 @@ public class Unit_Manager : MonoBehaviour
         if (m_GetSelectedUnit() != null)
         {
             m_GetSelectedUnit().GetComponent<Unit_Attack>().m_AttackTarget(gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget());
+        }
+    }
+
+    void m_AttackBuilding()
+    {
+        if (m_GetSelectedUnit() != null)
+        {
+            m_GetSelectedUnit().GetComponent<Unit_Attack>().m_AttackBuildingTarget(gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget());
         }
     }
 

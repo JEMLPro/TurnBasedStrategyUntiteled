@@ -7,7 +7,7 @@ public class AI_Unit_Manager : Unit_Manager
     // Unit Management.
 
     [SerializeField]
-    GameObject m_OtherUnitManger; 
+    GameObject m_OtherManger; 
 
     [SerializeField]
     GameObject m_ActiveUnit = null; 
@@ -40,9 +40,9 @@ public class AI_Unit_Manager : Unit_Manager
             {
                 // Find enemy target.
 
-                if (m_OtherUnitManger != null)
+                if (m_OtherManger != null)
                 {
-                    GameObject l_TargetUnit = m_OtherUnitManger.GetComponent<Unit_Manager>().m_GetLowestCombatRating(m_ActiveUnit);
+                    GameObject l_TargetUnit = m_OtherManger.GetComponentInChildren<Unit_Manager>().m_GetLowestCombatRating(m_ActiveUnit);
 
                     m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_bCheckForTurn = true;
 
@@ -53,32 +53,41 @@ public class AI_Unit_Manager : Unit_Manager
                     {
                         // Debug.Log("This Target : " + l_TargetUnit.name);
 
-                        if (m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
+                        if(m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition()) > 1)
                         {
-                            // Set path finding requirements. 
-
-                            if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckRequirements() == false)
+                            if (m_ActiveUnit.GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
                             {
-                                if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckStateOfPath() == false)
+                                // Set path finding requirements. 
+
+                                if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckRequirements() == false)
                                 {
-                                    Debug.Log("Setting variables");
-
-                                    // Check the target unit's position for a free space next to it. 
-
-                                    GameObject l_TargetPosition = l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Neighbours>().m_GetClosestNeighbour(m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetCurrentPosition());
-
-                                    if (l_TargetPosition != null)
+                                    if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckStateOfPath() == false)
                                     {
-                                        m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_SetStartandEndPoints(l_TargetPosition);
-                                    }
-                                    else
-                                    {
-                                        // If a target position cannot be found (if the target is surrounded for example), wait for this turn. 
+                                        Debug.Log("Setting variables");
 
-                                        m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_UnitWait();
+                                        // Check the target unit's position for a free space next to it. 
+
+                                        GameObject l_TargetPosition = l_TargetUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Neighbours>().m_GetClosestNeighbour(m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetCurrentPosition());
+
+                                        if (l_TargetPosition != null)
+                                        {
+                                            m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_SetStartandEndPoints(l_TargetPosition);
+                                        }
+                                        else
+                                        {
+                                            // If a target position cannot be found (if the target is surrounded for example), wait for this turn. 
+
+                                            m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_UnitWait();
+                                        }
                                     }
                                 }
                             }
+                        }
+                        else
+                        {
+                            Debug.Log("No need to move");
+
+                            m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_UnitWait();
                         }
                     }
 
@@ -145,7 +154,7 @@ public class AI_Unit_Manager : Unit_Manager
         }
     }
 
-    public void m_SetOtherManager(GameObject playerUnitManager) { m_OtherUnitManger = playerUnitManager; }
+    public void m_SetOtherManager(GameObject playerUnitManager) { m_OtherManger = playerUnitManager; }
 
     void m_ResetUnits()
     {

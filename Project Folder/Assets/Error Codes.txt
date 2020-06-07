@@ -8,3 +8,5 @@
 
 0100 - Problem loading an object on player object, variations include -0; Turn manager faild to load -1; Building manager faild to load, -2; Unit manager faild to load, -3; Level manager faild to load
 
+0200 - Problem loading an object on AI object, variations include -0; Turn manager faild to load -1; Building manager faild to load, -2; Unit manager faild to load, -3; Level manager faild to load
+

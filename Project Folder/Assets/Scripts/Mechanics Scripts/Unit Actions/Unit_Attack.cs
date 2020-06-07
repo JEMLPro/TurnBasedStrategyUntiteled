@@ -130,6 +130,11 @@ public class Unit_Attack : MonoBehaviour
         }
     }
 
+    public void m_AttackBuildingTarget(GameObject targetForAttack)
+    {
+        targetForAttack.GetComponent<Health_Management>().m_TakeHit(m_fAttack); 
+    }
+
     /*! \fn This will output the attack range of this unit. */
     public float m_GetAttackRange() => m_fAttackRange;
 

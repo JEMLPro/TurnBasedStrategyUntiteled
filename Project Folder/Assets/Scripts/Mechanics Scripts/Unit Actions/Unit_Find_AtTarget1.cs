@@ -8,11 +8,11 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
     GameObject m_AtTarget = null;
 
     [SerializeField]
-    GameObject m_OtherUnitManager;
+    GameObject m_OtherManager;
 
     private void Start()
     {
-        m_OtherUnitManager = GameObject.FindGameObjectWithTag("Unit_Manager_AI");
+        m_OtherManager = GameObject.FindGameObjectWithTag("AI_Manager");
     }
 
     public void m_AtRangeFinder()
@@ -21,7 +21,9 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
 
         if (l_SelectedUnit != null)
         {
-            foreach (var unit in m_OtherUnitManager.GetComponent<AI_Unit_Manager>().m_GetUnitList())
+            // Check Units
+
+            foreach (var unit in m_OtherManager.GetComponentInChildren<AI_Unit_Manager>().m_GetUnitList())
             {
                 if (unit != null)
                 {
@@ -38,12 +40,32 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
                     }
                 }
             }
+
+            // Check Buildings
+
+            foreach (var building in m_OtherManager.GetComponentInChildren<Bulding_Manager>().m_GetBuildigList())
+            {
+                if (building != null)
+                {
+                    if (l_SelectedUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(building.GetComponent<Building_Positioning>().m_GetPosition()) ==
+                        l_SelectedUnit.GetComponent<Unit_Attack>().m_GetAttackRange())
+                    {
+                        Debug.Log("Theres a Building within range");
+
+                        building.GetComponent<Select_Building>().m_SetWithinRange(true);
+                    }
+                    else
+                    {
+                        building.GetComponent<Select_Building>().m_SetWithinRange(false);
+                    }
+                }
+            }
         }
     }
 
     public void m_SelectAttackTarget()
     {
-        foreach (var unit in m_OtherUnitManager.GetComponent<AI_Unit_Manager>().m_GetUnitList())
+        foreach (var unit in m_OtherManager.GetComponentInChildren<AI_Unit_Manager>().m_GetUnitList())
         {
             if (unit != null)
             {
@@ -53,17 +75,30 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
                 }
             }
         }
+
+        // If no target has been set then check fr buidlings
+
+        if (m_AtTarget == null)
+        {
+            foreach (var building in m_OtherManager.GetComponentInChildren<Bulding_Manager>().m_GetBuildigList())
+            {
+                if (building.GetComponent<Select_Building>().m_GetSelected() == true)
+                {
+                    m_AtTarget = building; 
+                }
+            }
+        }
     }
 
     public void m_SetAtTarget(GameObject newObject)
     {
-        if (m_OtherUnitManager != null)
+        if (m_OtherManager != null)
         {
             m_AtTarget = newObject;
 
             if (newObject == null)
             {
-                foreach (var unit in m_OtherUnitManager.GetComponent<AI_Unit_Manager>().m_GetUnitList())
+                foreach (var unit in m_OtherManager.GetComponentInChildren<AI_Unit_Manager>().m_GetUnitList())
                 {
                     if (unit != null)
                     {

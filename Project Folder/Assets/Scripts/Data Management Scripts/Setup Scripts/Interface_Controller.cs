@@ -12,7 +12,10 @@ public class Interface_Controller : MonoBehaviour
     GameObject m_RadialMenu;
 
     [SerializeField]
-    RectTransform m_MainCanvas; 
+    RectTransform m_MainCanvas;
+
+    [SerializeField]
+    GameObject m_GameOverScreen;
 
     private void Start()
     {
@@ -36,6 +39,18 @@ public class Interface_Controller : MonoBehaviour
 
             m_RadialMenu = GameObject.FindGameObjectWithTag("Action_Radial_Menu");
         }
+
+        if(m_GameOverScreen == null)
+        {
+            Debug.Log("Finding Game Over Screen.");
+
+            m_GameOverScreen = GameObject.FindGameObjectWithTag("Game_Over_Screen");
+
+            if(m_GameOverScreen.activeSelf == true)
+            {
+                m_GameOverScreen.SetActive(false);
+            }
+        }
     }
 
     public void m_SetEndTurnFunctionality(GameObject turnManager)
@@ -53,6 +68,8 @@ public class Interface_Controller : MonoBehaviour
     }
 
     public GameObject m_GetRadialMenu() => m_RadialMenu;
+
+    public GameObject m_GetGameOverScreen() => m_GameOverScreen; 
 
     public RectTransform m_GetMainCanvas() => m_MainCanvas; 
 

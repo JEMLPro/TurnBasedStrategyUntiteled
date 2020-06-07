@@ -24,14 +24,14 @@ public class Start_Up_Script : Prefab_Loader
     {
         // This will be the start of the game and will initate all of the other items in the game. 
 
-        Debug.Log("Locating interface manger in game."); 
+        Debug.Log("Locating interface manger in game.");
 
-        if(m_UserInterfaceManager == null)
+        if (m_UserInterfaceManager == null)
         {
             m_UserInterfaceManager = GameObject.FindGameObjectWithTag("User_Interface");
         }
 
-        if(m_UserInterfaceManager != null)
+        if (m_UserInterfaceManager != null)
         {
             Debug.Log("Interface manger found and connected.");
         }
@@ -94,9 +94,9 @@ public class Start_Up_Script : Prefab_Loader
 
         // Player Object. 
 
-        m_Player = new GameObject(); 
+        m_Player = new GameObject();
 
-        if(m_Player != null)
+        if (m_Player != null)
         {
             // Give the player object a new name.
             m_Player.name = "Player Object";
@@ -105,6 +105,10 @@ public class Start_Up_Script : Prefab_Loader
             m_Player.transform.parent = gameObject.transform;
 
             m_Player.AddComponent<Prefab_Loader>();
+
+            m_Player.AddComponent<Lose_Script>();
+
+            m_Player.GetComponent<Lose_Script>().m_SetOwner(CurrentTurn.player);
 
             // Add the building manager onto the player
 
@@ -118,11 +122,13 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_BuildingManager.AddComponent<Bulding_Manager>();
 
-                Debug.Log("Building Manager Created and added to player"); 
+                Debug.Log("Building Manager Created and added to player");
 
                 l_BuildingManager.GetComponent<Bulding_Manager>().m_SetOwner(CurrentTurn.player);
 
                 l_BuildingManager.GetComponent<Bulding_Manager>().m_SetBasicBuilding(m_Player.GetComponent<Prefab_Loader>().m_ExportPrefabObject("Prefabs/Building Prefabs/TempBuilding", "Basic Building"));
+
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SetTurnManager(m_TurnManager);
 
                 l_BuildingManager.GetComponent<Bulding_Manager>().m_SpawnHQ(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetHQSpawnPoint(0));
             }
@@ -139,7 +145,7 @@ public class Start_Up_Script : Prefab_Loader
             {
                 l_UnitManager.name = "Unit Manager";
 
-                l_UnitManager.tag = "Unit_Manager_Player"; 
+                l_UnitManager.tag = "Unit_Manager_Player";
 
                 l_UnitManager.transform.parent = m_Player.transform;
 
@@ -149,9 +155,9 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_UnitManager.AddComponent<Unit_Spwaning>();
 
-                l_UnitManager.AddComponent<Unit_Find_AtTarget1>(); 
+                l_UnitManager.AddComponent<Unit_Find_AtTarget1>();
 
-                l_UnitManager.AddComponent<Activate_Radial_Menu>(); 
+                l_UnitManager.AddComponent<Activate_Radial_Menu>();
 
                 Debug.Log("Unit Manager Created and added to player");
 
@@ -172,7 +178,7 @@ public class Start_Up_Script : Prefab_Loader
                     l_iNumberOfSpawnedUnits++;
                 }
 
-                Debug.Log(l_iNumberOfSpawnedUnits + " Units have been spawned"); 
+                Debug.Log(l_iNumberOfSpawnedUnits + " Units have been spawned");
             }
             else
             {
@@ -183,12 +189,12 @@ public class Start_Up_Script : Prefab_Loader
 
             Debug.Log("User Interface connection");
 
-            if(m_UserInterfaceManager == null)
+            if (m_UserInterfaceManager == null)
             {
                 m_UserInterfaceManager = GameObject.FindGameObjectWithTag("User_Interface");
             }
 
-            if(m_UserInterfaceManager != null)
+            if (m_UserInterfaceManager != null)
             {
                 // Connect end turn button to theturn manager. 
 
@@ -201,9 +207,11 @@ public class Start_Up_Script : Prefab_Loader
                 // Assign functions to the radial menu. 
 
                 m_Player.GetComponentInChildren<Activate_Radial_Menu>().m_SetRadialMenuObject(l_RadialMenuObj, l_RadialMenuObj.GetComponentInChildren<RectTransform>(),
-                   m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetMainCanvas(), l_UnitManager); 
+                   m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetMainCanvas(), l_UnitManager);
 
+                // Connect game over screen. 
 
+                m_Player.GetComponent<Lose_Script>().m_SetGameOverScreen(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetGameOverScreen());
             }
 
         }
@@ -212,17 +220,23 @@ public class Start_Up_Script : Prefab_Loader
 
         Debug.Log("Begining AI Creation");
 
-        m_AI = new GameObject(); 
+        m_AI = new GameObject();
 
-        if(m_AI != null)
+        if (m_AI != null)
         {
             // Give the AI object a new name.
             m_AI.name = "AI Object";
+
+            m_AI.tag = "AI_Manager";
 
             // Assign a parent to this new game object. 
             m_AI.transform.parent = gameObject.transform;
 
             m_AI.AddComponent<Prefab_Loader>();
+
+            m_AI.AddComponent<Lose_Script>();
+
+            m_AI.GetComponent<Lose_Script>().m_SetOwner(CurrentTurn.ai);
 
             // Add the building manager onto the AI
 
@@ -241,6 +255,8 @@ public class Start_Up_Script : Prefab_Loader
                 l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SetOwner(CurrentTurn.ai);
 
                 l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SetBasicBuilding(m_AI.GetComponent<Prefab_Loader>().m_ExportPrefabObject("Prefabs/Building Prefabs/TempBuilding", "Basic Building"));
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SetTurnManager(m_TurnManager);
 
                 l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnHQ(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetHQSpawnPoint(1));
             }
@@ -273,7 +289,7 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOwner(CurrentTurn.ai);
 
-                l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOtherManager(GameObject.FindGameObjectWithTag("Unit_Manager_Player"));
+                l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOtherManager(m_Player);
 
                 l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SetBaseUnit(m_AI.GetComponent<Prefab_Loader>().m_ExportPrefabObject("Prefabs/Unit Prefabs/Base Unit AI", "Basic Unit AI"));
 
@@ -296,8 +312,20 @@ public class Start_Up_Script : Prefab_Loader
             {
                 Debug.LogError("Error 0200-2 - Unable to create object on AI: Unit Manager");
             }
-        }
 
+            Debug.Log("User Interface connection - AI. ");
+
+            if (m_UserInterfaceManager == null)
+            {
+                m_UserInterfaceManager = GameObject.FindGameObjectWithTag("User_Interface");
+            }
+
+            if (m_UserInterfaceManager != null)
+            {
+                m_AI.GetComponent<Lose_Script>().m_SetGameOverScreen(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetGameOverScreen());
+            }
+
+        }
     }
 
 }

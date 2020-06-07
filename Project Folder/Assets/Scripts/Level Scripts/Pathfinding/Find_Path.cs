@@ -46,6 +46,8 @@ public class Find_Path : MonoBehaviour
         }
         else
         {
+            Debug.Log("Searching for Path"); 
+
             // Check all the requirements are met. 
             if(m_CurrentCell != null && m_StartCell != null && m_EndCell != null)
             {

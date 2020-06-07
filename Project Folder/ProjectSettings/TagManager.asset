@@ -18,6 +18,8 @@ TagManager:
   - Attack_Button
   - Move_Button
   - Build_button
+  - AI_Manager
+  - Game_Over_Screen
   layers:
   - Default
   - TransparentFX
