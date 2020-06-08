@@ -1,0 +1,9 @@
+When playing the current build for the game keep in mind that if there are any issues with the game please report them using the 
+bug testing table, the link is provided at the end of this document. It is important to report any issues which pop up no matter 
+how small because if they happen once they will ost likely happen a second time. Thank you for your continued support. 
+
+Ryan Hood, 
+
+If you have any issues with starting the game let me know and I can include a start-up guide. 
+
+https://docs.google.com/spreadsheets/d/1S2uLL0u6nihChddsj7UsYwGwUi5EN3q0ML7nyJVQX80/edit?usp=sharing 
