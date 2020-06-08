@@ -7,8 +7,6 @@ public class AI_Unit_Movement : Unit_Movement
 
     public Find_Path m_GetPathfinding() => gameObject.GetComponent<Find_Path>();
 
-    public bool m_bCheckForTurn = false; 
-
     public void m_SetStartandEndPoints(GameObject endPoint)
     {
         Debug.Log("Setting Requirements"); 
@@ -17,12 +15,16 @@ public class AI_Unit_Movement : Unit_Movement
         m_GetPathfinding().m_SetEndCell(endPoint);
     }
 
-    public override void Update()
+    public void FixedUpdate()
     {
-        if (m_bCheckForTurn)
+        if (gameObject.GetComponentInParent<AI_Unit_Manager>().m_CheckTurn())
         {
+            Debug.Log(gameObject.name + "'s turn.");
+
             if (m_GetPathfinding().m_CheckStateOfPath() == true)
             {
+                Debug.Log(gameObject.name + "'s found a path.");
+
                 List<GameObject> l_PathToTarget = gameObject.GetComponent<Find_Path>().m_GetFinalPath();
 
                 if (l_PathToTarget.Count > 0)
@@ -79,9 +81,11 @@ public class AI_Unit_Movement : Unit_Movement
             }
             else
             {
+                Debug.Log(gameObject.name + "'s not found its path.");
+
                 if (m_GetPathfinding().m_CheckRequirements() == true)
                 {
-                    Debug.Log("Looking for path");
+                    Debug.Log(gameObject.name + "'s got what it needs to search for a path.");
 
                     m_GetPathfinding().m_FindPath();
                 }

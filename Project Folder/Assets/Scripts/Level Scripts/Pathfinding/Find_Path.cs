@@ -75,7 +75,7 @@ public class Find_Path : MonoBehaviour
     }
 
     /*! \fn Used to add cells into the open set but excludes cells lready inside the open set. */
-    void m_AddIntoOpenSet(List<GameObject> cellsToAdd)
+    public void m_AddIntoOpenSet(List<GameObject> cellsToAdd)
     {
         foreach (var neighbour in cellsToAdd)
         {

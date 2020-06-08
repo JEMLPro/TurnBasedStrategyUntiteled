@@ -55,7 +55,7 @@ public class Unit_Attack : MonoBehaviour
     {
         // Init Local Variables 
 
-        float l_fDamage = 0, l_fHitChance = 0;
+        float l_fDamage, l_fHitChance;
 
         bool l_bAdvantage = m_CheckForAdvantage(targetForAttack.GetComponent<Unit_Attack>().m_UnitType); 
 
@@ -204,7 +204,9 @@ public class Unit_Attack : MonoBehaviour
         m_fCombatRating = gameObject.GetComponent<Health_Management>().m_GetCurrentHealth() + m_fAttack + m_fDefence;
     }
 
-    public float m_GetCombatRating() => m_fCombatRating; 
+    public float m_GetCombatRating() => m_fCombatRating;
+
+    public void m_SetCombatRating(float newRating) { m_fCombatRating = newRating; }
 
     public void m_SetUnitStats(float attack, float defence, float hitChance, float speed, float attackRange, UnitType type)
     {

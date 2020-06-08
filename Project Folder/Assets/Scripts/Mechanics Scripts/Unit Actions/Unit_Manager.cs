@@ -411,6 +411,8 @@ public class Unit_Manager : MonoBehaviour
 
                 l_fPrevRating = l_TargetUnit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10);
 
+                l_TargetUnit.GetComponent<Unit_Attack>().m_SetCombatRating(l_fPrevRating);
+
                 foreach (var unit in m_UnitList)
                 {
                     if (unit != null)
@@ -420,6 +422,8 @@ public class Unit_Manager : MonoBehaviour
                         l_fCurrDist = unit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition());
 
                         l_fNewRating = unit.GetComponent<Unit_Attack>().m_GetCombatRating() + (l_fCurrDist * 10);
+
+                        unit.GetComponent<Unit_Attack>().m_SetCombatRating(l_fNewRating);
 
                         // Debug.Log(unit.name + " has a combat rating of " + l_fNewRating);
 
@@ -452,6 +456,8 @@ public class Unit_Manager : MonoBehaviour
             Debug.Log("Unit '" + newUnit.name + "' has been added into this manager");
         }
     }
+
+    public void m_SetTurnManager(GameObject turnManager) { m_TurnManager = turnManager; }
 
     // Action Management. 
 

@@ -972,10 +972,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd9b73fe18415d488c12076e05bf67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EndTurnButton: {fileID: 0}
-  m_RadialMenu: {fileID: 0}
-  m_MainCanvas: {fileID: 0}
-  m_GameOverScreen: {fileID: 0}
+  m_EndTurnButton: {fileID: 2428155700744903872}
+  m_RadialMenu: {fileID: 2428155700536515055}
+  m_MainCanvas: {fileID: 2428155701924877011}
+  m_GameOverScreen: {fileID: 5716076018741890271}
 --- !u!1 &2428155700529132109
 GameObject:
   m_ObjectHideFlags: 0

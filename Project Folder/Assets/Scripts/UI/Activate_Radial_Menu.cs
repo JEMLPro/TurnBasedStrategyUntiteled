@@ -14,14 +14,6 @@ public class Activate_Radial_Menu : MonoBehaviour
     [SerializeField]
     RectTransform m_Canvas = null; 
 
-    private void Start()
-    {
-        if(m_RadialMenu.activeSelf == true)
-        {
-            m_RadialMenu.SetActive(false);
-        }
-    }
-
     public void m_SetRadialMenuObject(GameObject radialMenu, RectTransform pieMenu, RectTransform canvas, GameObject unitManager)
     {
         m_RadialMenu = radialMenu;
@@ -76,6 +68,11 @@ public class Activate_Radial_Menu : MonoBehaviour
                     Debug.Log(button.tag + " Found - Undefined functionality. ");
 
                     break;
+            }
+
+            if (m_RadialMenu.activeSelf == true)
+            {
+                m_RadialMenu.SetActive(false);
             }
         }
     }

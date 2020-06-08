@@ -108,4 +108,76 @@ public class Bulding_Manager : MonoBehaviour
         return null;
     }
 
+    public GameObject m_GetLowestCombatRating(GameObject unitOfFocus)
+    {
+        if (unitOfFocus != null)
+        {
+            GameObject l_Targetbuilding = null;
+
+            foreach (var building in m_BuildingList)
+            {
+                if (building != null)
+                {
+                    // Start by getting the first building which isn't a null object. 
+
+                    l_Targetbuilding = building;
+
+                    break;
+                }
+            }
+
+            if (l_Targetbuilding != null)
+            {
+                // Start by calculating the combat raing for the first building. 
+
+                l_Targetbuilding.GetComponent<Building_Combat_Rating>().m_GetCombatRating();
+
+                float l_fPrevRating, l_fNewRating;
+
+                float l_fCurrDist = l_Targetbuilding.GetComponent<Building_Positioning>().m_GetPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition());
+
+                // Using the distance we can judge the viability of this target. 
+
+                l_fPrevRating = l_Targetbuilding.GetComponent<Building_Combat_Rating>().m_GetCombatRating() + (l_fCurrDist * 10);
+
+                l_Targetbuilding.GetComponent<Building_Combat_Rating>().m_SetCombatRating(l_fPrevRating);
+
+                foreach (var building in m_BuildingList)
+                {
+                    if (building != null)
+                    {
+                        if (building.GetComponent<Building_Positioning>().m_GetPosition().GetComponent<Cell_Neighbours>().m_NeighboursFree())
+                        {
+
+                            l_fCurrDist = building.GetComponent<Building_Positioning>().m_GetPosition().GetComponent<Cell_Manager>().m_Distance(unitOfFocus.GetComponent<Unit_Movement>().m_GetCurrentPosition());
+
+                            l_fNewRating = building.GetComponent<Building_Combat_Rating>().m_GetBaseCombatRating() + (l_fCurrDist * 10);
+
+                            building.GetComponent<Building_Combat_Rating>().m_SetCombatRating(l_fNewRating);
+
+                            // Debug.Log(unit.name + " has a combat rating of " + l_fNewRating);
+
+                            if (l_fNewRating < l_fPrevRating)
+                            {
+                                l_fPrevRating = l_fNewRating;
+
+                                l_Targetbuilding = building;
+
+                                // Debug.Log("New Unit Selected"); 
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("Unable to move to this position"); 
+                        }
+                    }
+                }
+
+                return l_Targetbuilding;
+            }
+        }
+
+        return null;
+    }
+
 }

@@ -289,6 +289,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOwner(CurrentTurn.ai);
 
+                l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetTurnManager(m_TurnManager); 
+
                 l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOtherManager(m_Player);
 
                 l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SetBaseUnit(m_AI.GetComponent<Prefab_Loader>().m_ExportPrefabObject("Prefabs/Unit Prefabs/Base Unit AI", "Basic Unit AI"));

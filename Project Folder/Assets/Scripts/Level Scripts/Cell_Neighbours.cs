@@ -43,4 +43,21 @@ public class Cell_Neighbours : MonoBehaviour
         return l_ReturnNeighbour;
     }
 
+    public bool m_NeighboursFree()
+    {
+        bool l_bCheckMove = false;
+
+        foreach (var neighbour in m_CellNeighbours)
+        {
+            if(neighbour.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
+            {
+                l_bCheckMove = true;
+
+                break;
+            }
+        }
+
+        return l_bCheckMove; 
+    }
+
 }

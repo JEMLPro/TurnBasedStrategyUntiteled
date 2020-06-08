@@ -11,6 +11,7 @@ public class Lose_Script : MonoBehaviour
     [SerializeField]
     bool m_GameOver;
 
+    [SerializeField]
     CurrentTurn m_Owner; 
 
     private void Update()
@@ -42,15 +43,18 @@ public class Lose_Script : MonoBehaviour
     public void m_SetGameOver()
     {
         m_GameOver = true;
-
-        Time.timeScale = 0;
-
-        m_GameOverScreen.SetActive(true);
-
-        m_GameOverScreen.GetComponentInChildren<Text>().text = "Someone has won!"; 
     }
 
-    public void m_SetGameOverScreen(GameObject gameOverScreen) { m_GameOverScreen = gameOverScreen; }
+    public void m_SetGameOverScreen(GameObject gameOverScreen) 
+    { 
+        m_GameOverScreen = gameOverScreen; 
+
+        if(m_GameOverScreen.activeSelf == true)
+        {
+            m_GameOverScreen.SetActive(false);
+        }
+
+    }
 
     public void m_SetOwner(CurrentTurn newOwner) { m_Owner = newOwner; }
 
