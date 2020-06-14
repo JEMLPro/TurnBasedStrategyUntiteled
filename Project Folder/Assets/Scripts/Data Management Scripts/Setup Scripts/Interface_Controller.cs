@@ -17,8 +17,13 @@ public class Interface_Controller : MonoBehaviour
     [SerializeField]
     GameObject m_GameOverScreen;
 
-    private void Start()
+    [SerializeField]
+    GameObject m_LevelSelectDropdownMenu; 
+
+    public void m_StartUp()
     {
+        // Find Objects. 
+
         if (m_MainCanvas == null)
         {
             Debug.Log("Finding Main Canvas.");
@@ -51,6 +56,20 @@ public class Interface_Controller : MonoBehaviour
                 m_GameOverScreen.SetActive(false);
             }
         }
+
+        if(m_LevelSelectDropdownMenu == null)
+        {
+            Debug.Log("Finding Level Select Dropdown list.");
+
+            m_LevelSelectDropdownMenu = GameObject.FindGameObjectWithTag("Level_Select_DropDown");
+        }
+
+        // Set-Up Basic Ui functionality
+
+        if(m_LevelSelectDropdownMenu != null)
+        {
+            m_LevelSelectDropdownMenu.GetComponentInChildren<Attach_Levels_To_List>().m_StartUp();
+        }
     }
 
     public void m_SetEndTurnFunctionality(GameObject turnManager)
@@ -71,6 +90,8 @@ public class Interface_Controller : MonoBehaviour
 
     public GameObject m_GetGameOverScreen() => m_GameOverScreen; 
 
-    public RectTransform m_GetMainCanvas() => m_MainCanvas; 
+    public RectTransform m_GetMainCanvas() => m_MainCanvas;
+
+    public GameObject m_GetLevelSelectDropDown() => m_LevelSelectDropdownMenu; 
 
 }

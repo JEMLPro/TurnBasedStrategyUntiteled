@@ -34,6 +34,8 @@ public class Start_Up_Script : Prefab_Loader
         if (m_UserInterfaceManager != null)
         {
             Debug.Log("Interface manger found and connected.");
+
+            m_UserInterfaceManager.GetComponent<Interface_Controller>().m_StartUp(); 
         }
         else
         {
@@ -63,29 +65,80 @@ public class Start_Up_Script : Prefab_Loader
 
             m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_SetupMaps();
 
-            // Set the bounds for the camera
+            // Adding list of levels into dropdown list. 
 
-            Debug.Log("Updating main camera bounds");
+            Debug.Log("Attempting to add levels into the dropdown list."); 
 
-            if (Camera.main.GetComponent<Move_Object>() != null)
+            int l_iCount = 0;
+
+            foreach (var level in m_LevelManager.GetComponentInChildren<Level_Loader>().m_GetLevelList().levels)
             {
-                // Set the movement bounds of the camera 
+                if (level != null)
+                {
+                    m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_AddItemIntoDropdown(level.levelName, l_iCount);
 
-                Camera.main.GetComponent<Move_Object>().m_SetMinBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMinBounds());
-                Camera.main.GetComponent<Move_Object>().m_SetMaxBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMaxBounds());
+                    l_iCount++;
+                }
+                else
+                {
+                    Debug.LogError("Level faild to initalize"); 
+                }
             }
-            else
-            {
-                // If the camera doesn't have the movement script add it and continue. 
 
-                Camera.main.gameObject.AddComponent<Move_Object>();
-                Camera.main.GetComponent<Move_Object>().m_SetMinBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMinBounds());
-                Camera.main.GetComponent<Move_Object>().m_SetMaxBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMaxBounds());
-            }
+            m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().SetActive(false); 
         }
         else
         {
             Debug.LogError("Error code 0001-1 - Unable to load Level Manager");
+        }
+    }
+
+    public void m_Begin()
+    {
+        if (m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_GetLoadNewLevel())
+        {
+            m_StartSkirmishGame(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_GetLevelToLoad());
+
+            m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_LevelHasBeenLoaded();
+        }
+    }
+
+    private void m_StartSkirmishGame(int level)
+    {
+        // Delete all of the preveous items
+
+        if(m_Player != null)
+        {
+            Destroy(m_Player);
+        }
+
+        if (m_AI != null)
+        {
+            Destroy(m_AI);
+        }
+
+        // Load the game map using level index. 
+
+        m_LevelManager.GetComponentInChildren<Tile_Map_Manager>().m_CreateTileMap(level); 
+
+        // Set the bounds for the camera
+
+        Debug.Log("Updating main camera bounds");
+
+        if (Camera.main.GetComponent<Move_Object>() != null)
+        {
+            // Set the movement bounds of the camera 
+
+            Camera.main.GetComponent<Move_Object>().m_SetMinBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMinBounds());
+            Camera.main.GetComponent<Move_Object>().m_SetMaxBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMaxBounds());
+        }
+        else
+        {
+            // If the camera doesn't have the movement script add it and continue. 
+
+            Camera.main.gameObject.AddComponent<Move_Object>();
+            Camera.main.GetComponent<Move_Object>().m_SetMinBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMinBounds());
+            Camera.main.GetComponent<Move_Object>().m_SetMaxBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMaxBounds());
         }
 
         // Introduce the player and AI into the game. 
@@ -289,7 +342,7 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOwner(CurrentTurn.ai);
 
-                l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetTurnManager(m_TurnManager); 
+                l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetTurnManager(m_TurnManager);
 
                 l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_SetOtherManager(m_Player);
 
@@ -329,5 +382,7 @@ public class Start_Up_Script : Prefab_Loader
 
         }
     }
+
+
 
 }

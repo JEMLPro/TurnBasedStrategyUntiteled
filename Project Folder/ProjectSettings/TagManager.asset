@@ -20,6 +20,7 @@ TagManager:
   - Build_button
   - AI_Manager
   - Game_Over_Screen
+  - Level_Select_DropDown
   layers:
   - Default
   - TransparentFX

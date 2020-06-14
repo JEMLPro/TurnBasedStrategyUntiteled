@@ -48,14 +48,7 @@ public class Tile_Map_Manager : MonoBehaviour
                 // This will load the tile sprites into the game critical for loading a new map. The tiles data is stored in a Json file
                 // to allow for additional tiles to be easily added into the game. 
 
-                Debug.Log("Loading level " + m_iCurrentLevel);
-
-                m_CreateTileMap(gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(m_iCurrentLevel));
-
-                // The map bounds will need to be stored to allow for the camera to move around the map. This will need to be done whenever a 
-                // new map is loaded to ensure full vision over the map. 
-
-                m_CalculateMapBounds(); 
+                Debug.Log("Map Sucsessfully Setup"); 
             }
             else
             {
@@ -80,7 +73,7 @@ public class Tile_Map_Manager : MonoBehaviour
     }
 
     // Used to load a level using the Level Class. 
-    void m_CreateTileMap(Level levelToLoad)
+    public void m_CreateTileMap(Level levelToLoad)
     {
         // Reset the grid to it's default state.
 
@@ -225,6 +218,169 @@ public class Tile_Map_Manager : MonoBehaviour
             // This will output when the level cannot be loaded. 
 
             Debug.LogError("Error Code 0003 : Unable to load level from file. "); 
+        }
+
+        m_CalculateMapBounds(); 
+    }
+
+    public void m_CreateTileMap(int levelindex)
+    {
+        // Reset the grid to it's default state.
+
+        Debug.Log("Map being reset for map creation.");
+
+        m_ResetGrid();
+
+        // Get level to load  
+
+        Level l_LevelToLoad = gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(levelindex);
+
+        if (l_LevelToLoad != null)
+        {
+            // Init local variables.
+
+            float l_fSpacing = -1.0f;
+
+            // Check the tile configuration for the level. 
+
+            if (l_LevelToLoad.tileConfig.Length > 0)
+            {
+
+                Debug.Log("Map being created with dimentions: " + l_LevelToLoad.rows + ", " + l_LevelToLoad.columns);
+
+                // Create and store the grid using level's definitions. 
+
+                for (int i = 0; i < l_LevelToLoad.rows; i++)
+                {
+                    for (int j = 0; j < l_LevelToLoad.columns; j++)
+                    {
+
+                        // Create a new position for the cell.
+                        Vector3 l_Pos = new Vector3(i, j, 0) * l_fSpacing;
+
+                        // Create a new cell for the map.
+                        GameObject l_NewCell = Instantiate(m_Cell, l_Pos, Quaternion.identity);
+
+                        // Assign a grid position to the cell, for path finding and other similar functionality. 
+                        l_NewCell.GetComponent<Cell_Manager>().m_SetGridPos(i, j);
+
+                        // Update the game hierarchy, making this the parent to the new cell.
+                        l_NewCell.transform.parent = gameObject.transform;
+
+                        // Add the new cell into a list of cells gorming a grid. 
+                        m_Grid.Add(l_NewCell);
+                    }
+                }
+
+                Debug.Log("Map created with a number of " + m_Grid.Count + " cells in total.");
+
+                // Loop through created the newly created map. 
+
+                Debug.Log("Beginning Tile Assignment. Tile config size " + l_LevelToLoad.tileConfig.Length);
+
+                int l_iNumberOfTiles = l_LevelToLoad.tileConfig.Length;
+
+                for (int k = 0; k < m_Grid.Count; k++)
+                {
+                    m_AssignCellNeighbours(k);
+
+                    // Using tile config for level assign proper tiles. 
+
+                    if (l_iNumberOfTiles >= k)
+                    {
+                        // This will check the tile config for the code of the next cell allowing for assignment. 
+                        switch (int.Parse(l_LevelToLoad.tileConfig[k]))
+                        {
+                            case 1:
+                                {
+                                    if (gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites.Count >= 2)
+                                    {
+                                        Sprite l_newSprite = gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites[1].loadedSprite;
+
+                                        m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.grass, l_newSprite);
+                                    }
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    if (gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites.Count >= 3)
+                                    {
+                                        m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.water, gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites[2].loadedSprite);
+                                    }
+                                    break;
+                                }
+                            default:
+                                {
+                                    // If the tile config is out of range the cell will be assigned a null material. 
+
+                                    m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.none, gameObject.GetComponent<Sprite_Loader>().m_GetSpriteList().sprites[0].loadedSprite);
+
+                                    Debug.LogError("Error Code 0004 : Unable to assign material. " + int.Parse(l_LevelToLoad.tileConfig[k]));
+
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        // If tile config has not been assigned for this cell assign null material, allowing for visual repersentation in level for the error. 
+
+                        m_Grid[k].GetComponent<Cell_Manager>().m_SetTile(CellTile.none, null);
+
+                        Debug.LogError("Error Code 0004 : Unable to assign material. ");
+                    }
+                }
+
+                if (l_LevelToLoad.hqPosOne.Length > 0)
+                {
+                    foreach (var point in l_LevelToLoad.hqPosOne)
+                    {
+                        Debug.Log(point);
+                    }
+
+                    m_HQPosOne.x = l_LevelToLoad.hqPosOne.First<int>();
+                    m_HQPosOne.y = l_LevelToLoad.hqPosOne.Last<int>();
+
+                    Debug.Log("First Hq spawn point found");
+                }
+                else
+                {
+                    Debug.LogError("Unable to get spawn positions");
+                }
+
+                if (l_LevelToLoad.hqPosTwo.Length > 0)
+                {
+                    foreach (var point in l_LevelToLoad.hqPosTwo)
+                    {
+                        Debug.Log(point);
+                    }
+
+                    m_HQPosTwo.x = l_LevelToLoad.hqPosTwo.First<int>();
+                    m_HQPosTwo.y = l_LevelToLoad.hqPosTwo.Last<int>();
+
+                    Debug.Log("Second Hq spawn point found");
+                }
+                else
+                {
+                    Debug.LogError("Unable to get spawn positions");
+                }
+
+                // Debugging - Output when level finished loading. 
+
+                Debug.Log("Level: " + l_LevelToLoad.levelName + " has been loaded. ");
+            }
+            else
+            {
+                // This will output when the level cannot be loaded. 
+
+                Debug.LogError("Error Code 0003 : Unable to load level from file. ");
+            }
+
+            m_CalculateMapBounds();
+        }
+        else
+        {
+            Debug.LogError("Error Code 0003 : Unable to load level from file. ");
         }
     }
 

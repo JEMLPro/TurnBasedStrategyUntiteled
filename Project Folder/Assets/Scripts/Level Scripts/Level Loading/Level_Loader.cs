@@ -45,6 +45,8 @@ public class Level_Loader : MonoBehaviour
     [SerializeField]
     int m_iLevelLoaded = 2;
 
+    public Levels m_GetLevelList() => m_ListOfLevels; 
+
     public void m_SetLevelToLoad(int levelSelecton)
     {
         m_iLevelLoaded = levelSelecton; 
