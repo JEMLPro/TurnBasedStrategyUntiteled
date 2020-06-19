@@ -30,6 +30,8 @@ public class Activate_Radial_Menu : MonoBehaviour
 
                     if (button.GetComponentInChildren<Button>())
                     {
+                        button.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
+
                         button.GetComponentInChildren<Button>().onClick.AddListener(delegate { unitManager.GetComponent<Unit_Manager>().m_SetActionWait(); });
 
                         Debug.Log("Button functionality assiggned");
@@ -43,6 +45,8 @@ public class Activate_Radial_Menu : MonoBehaviour
 
                     if (button.GetComponentInChildren<Button>())
                     {
+                        button.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
+
                         button.GetComponentInChildren<Button>().onClick.AddListener(delegate { unitManager.GetComponent<Unit_Manager>().m_SetActionMove(); });
 
                         Debug.Log("Button functionality assiggned");
@@ -56,6 +60,8 @@ public class Activate_Radial_Menu : MonoBehaviour
 
                     if(button.GetComponentInChildren<Button>())
                     {
+                        button.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
+
                         button.GetComponentInChildren<Button>().onClick.AddListener(delegate { unitManager.GetComponent<Unit_Manager>().m_SetActionAttack(); });
 
                         Debug.Log("Button functionality assiggned");

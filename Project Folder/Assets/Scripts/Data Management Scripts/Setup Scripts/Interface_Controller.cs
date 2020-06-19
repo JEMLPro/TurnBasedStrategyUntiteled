@@ -18,7 +18,10 @@ public class Interface_Controller : MonoBehaviour
     GameObject m_GameOverScreen;
 
     [SerializeField]
-    GameObject m_LevelSelectDropdownMenu; 
+    GameObject m_LevelSelectDropdownMenu;
+
+    [SerializeField]
+    GameObject m_InfoPanel; 
 
     public void m_StartUp()
     {
@@ -36,6 +39,7 @@ public class Interface_Controller : MonoBehaviour
             Debug.Log("Finding End turn button.");
 
             m_EndTurnButton = GameObject.FindGameObjectWithTag("End_Turn_Button").GetComponent<Button>();
+
         }
 
         if (m_RadialMenu == null)
@@ -64,6 +68,13 @@ public class Interface_Controller : MonoBehaviour
             m_LevelSelectDropdownMenu = GameObject.FindGameObjectWithTag("Level_Select_DropDown");
         }
 
+        if(m_InfoPanel == null)
+        {
+            Debug.Log("Finding Info Panel.");
+
+            m_LevelSelectDropdownMenu = GameObject.FindGameObjectWithTag("Info_Panel");
+        }
+
         // Set-Up Basic Ui functionality
 
         if(m_LevelSelectDropdownMenu != null)
@@ -78,12 +89,21 @@ public class Interface_Controller : MonoBehaviour
         {
             Debug.Log("Setting up End Turn button");
 
+            m_EndTurnButton.gameObject.SetActive(true);
+
+            m_EndTurnButton.onClick.RemoveAllListeners();
+
             m_EndTurnButton.onClick.AddListener(delegate { turnManager.GetComponent<Turn_Manager>().m_SwitchTurn(); }); 
         }
         else
         {
             Debug.LogError("Unable to access End Turn Button"); 
         }
+    }
+
+    public void m_SetUpInfoPanel()
+    {
+        m_InfoPanel.SetActive(true); 
     }
 
     public GameObject m_GetRadialMenu() => m_RadialMenu;

@@ -21,6 +21,7 @@ TagManager:
   - AI_Manager
   - Game_Over_Screen
   - Level_Select_DropDown
+  - Info_Panel
   layers:
   - Default
   - TransparentFX

@@ -120,24 +120,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &433427433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2428155700529132109, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2428155701566143404}
+  m_PrefabAsset: {fileID: 0}
 --- !u!108 &705507994 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 2428155701130774838, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
     type: 3}
   m_PrefabInstance: {fileID: 2428155701566143404}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1926444574 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1084290394, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2428155701566143404}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d0b652f32a2cc243917e4028fa0f046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2428155701566143404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -145,10 +139,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1084290397, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f, type: 3}
-      propertyPath: m_LevelDropDown
-      value: 
-      objectReference: {fileID: 1926444574}
+    - target: {fileID: 2428155700023245238, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428155700287268876, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428155700604276739, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428155701232336018, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 2428155701594125609, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
         type: 3}
       propertyPath: m_Name
@@ -209,5 +219,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9195201905206716659, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_InfoPanel
+      value: 
+      objectReference: {fileID: 433427433}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f, type: 3}

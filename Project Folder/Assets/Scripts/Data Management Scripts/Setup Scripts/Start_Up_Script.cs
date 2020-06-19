@@ -48,6 +48,8 @@ public class Start_Up_Script : Prefab_Loader
 
         m_TurnManager = GameObject.Instantiate(l_TurnManagerReference, gameObject.transform);
 
+        m_TurnManager.GetComponent<Turn_Manager>().m_Startup(); 
+
         if (m_TurnManager == null)
         {
             Debug.LogError("Error code 0001-0 - Unable to load Turn Manager");
@@ -101,6 +103,8 @@ public class Start_Up_Script : Prefab_Loader
 
             m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_LevelHasBeenLoaded();
         }
+
+        Time.timeScale = 1;
     }
 
     private void m_StartSkirmishGame(int level)
@@ -265,6 +269,8 @@ public class Start_Up_Script : Prefab_Loader
                 // Connect game over screen. 
 
                 m_Player.GetComponent<Lose_Script>().m_SetGameOverScreen(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetGameOverScreen());
+
+                m_UserInterfaceManager.GetComponent<Interface_Controller>().m_SetUpInfoPanel();
             }
 
         }

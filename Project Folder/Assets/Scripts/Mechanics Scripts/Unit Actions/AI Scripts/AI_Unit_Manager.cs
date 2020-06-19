@@ -151,6 +151,14 @@ public class AI_Unit_Manager : Unit_Manager
                 return l_TargetBuilding;
             }
         }
+        else if(l_TargetBuilding != null)
+        {
+            return l_TargetBuilding;
+        }
+        else if(l_TargetUnit != null)
+        {
+            return l_TargetUnit;
+        }
         else
         {
             return null;
