@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7433200465018048698}
-  - component: {fileID: 7433200465018048693}
   - component: {fileID: 407485684815930211}
   - component: {fileID: 5592437051778320004}
+  - component: {fileID: 3847762256882915993}
   m_Layer: 0
   m_Name: Tile Map
   m_TagString: Map
@@ -33,30 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7433200465018048693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7433200465018048692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620967e866ace93479132c4fbaeace36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Grid: []
-  m_MinBounds: {x: 0, y: 0}
-  m_MaxBounds: {x: 0, y: 0}
-  m_Cell: {fileID: 5759563300985394516, guid: ca0298caac486e246a776da759d4cdbe, type: 3}
-  m_bAllowSelectable: 0
-  m_iCurrentLevel: 1
-  m_HQPosOne:
-    x: 0
-    y: 0
-  m_HQPosTwo:
-    x: 0
-    y: 0
 --- !u!114 &407485684815930211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,3 +64,27 @@ MonoBehaviour:
   m_TileSpriteManager: {fileID: 4900000, guid: b0997483f2da7bb408267e5c541fb524, type: 3}
   m_ListOfTiles:
     sprites: []
+--- !u!114 &3847762256882915993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7433200465018048692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a896306a8f80fb84a9365eb443671958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Grid: []
+  m_MinBounds: {x: 0, y: 0}
+  m_MaxBounds: {x: 0, y: 0}
+  m_Cell: {fileID: 5759563300985394516, guid: ca0298caac486e246a776da759d4cdbe, type: 3}
+  m_bAllowSelectable: 0
+  m_iCurrentLevel: 1
+  m_HQPosOne:
+    x: 0
+    y: 0
+  m_HQPosTwo:
+    x: 0
+    y: 0

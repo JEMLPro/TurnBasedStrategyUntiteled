@@ -177,13 +177,10 @@ public class Tile_Map_Manager : MonoBehaviour
 
             if(levelToLoad.hqPosOne.Length > 0)
             {
-                foreach (var point in levelToLoad.hqPosOne)
-                {
-                    Debug.Log(point);
-                }
+                
 
-                m_HQPosOne.x = levelToLoad.hqPosOne.First<int>();
-                m_HQPosOne.y = levelToLoad.hqPosOne.Last<int>();
+                m_HQPosOne.x = (int)levelToLoad.hqPosOne[0];
+                m_HQPosOne.y = (int)levelToLoad.hqPosOne[1];
 
                 Debug.Log("First Hq spawn point found");
             }
@@ -333,13 +330,9 @@ public class Tile_Map_Manager : MonoBehaviour
 
                 if (l_LevelToLoad.hqPosOne.Length > 0)
                 {
-                    foreach (var point in l_LevelToLoad.hqPosOne)
-                    {
-                        Debug.Log(point);
-                    }
 
-                    m_HQPosOne.x = l_LevelToLoad.hqPosOne.First<int>();
-                    m_HQPosOne.y = l_LevelToLoad.hqPosOne.Last<int>();
+                    m_HQPosOne.x = (int)l_LevelToLoad.hqPosOne[0];
+                    m_HQPosOne.y = (int)l_LevelToLoad.hqPosOne[0];
 
                     Debug.Log("First Hq spawn point found");
                 }

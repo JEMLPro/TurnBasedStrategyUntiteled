@@ -10,7 +10,12 @@ public class Attach_Levels_To_List : MonoBehaviour
 
     int m_iLevelToLoad = -1;
 
-    bool m_bLoadnewLevel = false; 
+    bool m_bLoadnewLevel = false;
+
+    private void OnEnable()
+    {
+        m_LevelDropDown.value = 0;
+    }
 
     public void m_StartUp()
     {

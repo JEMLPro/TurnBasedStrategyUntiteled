@@ -1,5 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 
 public class RMF_Demo : MonoBehaviour {
 
@@ -7,8 +9,9 @@ public class RMF_Demo : MonoBehaviour {
     public RMF_RadialMenu rm;
 	// Use this for initialization
 	void Start () {
-	
-	}
+        
+
+    }
 
     // Update is called once per frame
     void Update() {
@@ -24,11 +27,11 @@ public class RMF_Demo : MonoBehaviour {
 
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            Application.LoadLevel(0);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            Application.LoadLevel(1);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
 
 
@@ -39,7 +42,7 @@ public class RMF_Demo : MonoBehaviour {
         ps.Emit(count);
 
 
-
+        
     }
 
 

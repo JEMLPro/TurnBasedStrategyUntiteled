@@ -11,7 +11,7 @@ public class Prefab_Loader : MonoBehaviour
 
     public bool m_LoadPrefabObject(string filePath, string objName)
     {
-        Debug.Log("Attempting to load object " + objName);
+        Debug.Log("Attempting to load object " + objName + " at file location " + filePath);
 
         UnityEngine.Object l_MapPrefab = Resources.Load(filePath);
 

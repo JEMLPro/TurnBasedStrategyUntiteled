@@ -1,8 +1,8 @@
 {
   "sprites": [
     {
-      "spriteName": "Untiled",
-      "filePath": "Textures/Environment/Temp/Temp Cell"
+      "spriteName": "placeBuilding",
+      "filePath": "Textures/Buildings/PlaceBuilding"
     },
     {
       "spriteName": "grass",

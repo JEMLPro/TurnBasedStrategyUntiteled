@@ -22,6 +22,9 @@ TagManager:
   - Game_Over_Screen
   - Level_Select_DropDown
   - Info_Panel
+  - Iron_Mine
+  - Farm_Building
+  - Gold_Mine
   layers:
   - Default
   - TransparentFX

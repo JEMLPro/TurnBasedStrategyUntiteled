@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5759563300985394518}
   - component: {fileID: 5759563300985394519}
   - component: {fileID: 8634737243869008528}
-  - component: {fileID: 5759563300985394512}
-  - component: {fileID: 5759563300985394513}
   - component: {fileID: 9160718466546838944}
   - component: {fileID: 5491225898380294379}
+  - component: {fileID: 7068367591271964132}
+  - component: {fileID: 6298042061874186250}
   m_Layer: 8
   m_Name: Cell
   m_TagString: Untagged
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1552484147
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: eb8e3d3292ceb22479fe8ae75d0d57f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -111,38 +111,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5759563300985394512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759563300985394516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299f78c9c55c4b946ad12f1709ba6721, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CellMaterial: {fileID: 0}
-  m_TileType: 0
-  m_GridPos:
-    x: 0
-    y: 0
-  m_bOccupied: 0
-  m_bObsticle: 0
---- !u!114 &5759563300985394513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759563300985394516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c032ee6d5c9168b47b8e6a0fbdb45fdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CellNeighbours: []
 --- !u!114 &9160718466546838944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,3 +140,35 @@ MonoBehaviour:
   m_fHScore: 0
   m_fFScore: 0
   m_fMovementCost: 10
+--- !u!114 &7068367591271964132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759563300985394516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f6246426fd9625448319d2817f2848a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CellMaterial: {fileID: 21300000, guid: eb8e3d3292ceb22479fe8ae75d0d57f7, type: 3}
+  m_TileType: 0
+  m_GridPos:
+    x: 0
+    y: 0
+  m_bOccupied: 0
+  m_bObsticle: 0
+--- !u!114 &6298042061874186250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759563300985394516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6a007e0d248244e84c4ea348ee9d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CellNeighbours: []

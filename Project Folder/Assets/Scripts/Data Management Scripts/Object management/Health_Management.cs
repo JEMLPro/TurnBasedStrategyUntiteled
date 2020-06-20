@@ -15,6 +15,23 @@ public class Health_Management : MonoBehaviour
     [SerializeField]
     Slider m_HealthBar = null;
 
+    private void Start()
+    {
+        // Init Object 
+
+        if (m_HealthBar != null)
+        {
+            // If the object has a health bar attached to it, update their values to be correct. 
+
+            if (m_HealthBar.maxValue != m_fMaxHealth)
+            {
+                m_HealthBar.maxValue = m_fMaxHealth;
+            }
+
+            m_HealthBar.value = m_fHealth;
+        }
+    }
+
     // This will change the maimum health value.
     public void m_SetMaxHealth(float newMaxHealth)
     {
@@ -47,6 +64,11 @@ public class Health_Management : MonoBehaviour
         if (m_HealthBar != null)
         {
             m_HealthBar.value = m_fHealth;
+
+            if(m_HealthBar.maxValue != m_fMaxHealth)
+            {
+                m_HealthBar.maxValue = m_fMaxHealth; 
+            }
         }
     }
 

@@ -2,26 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This will be used to generate and control all building within the game. 
+/// </summary>
 public class Bulding_Manager : MonoBehaviour
 {
+    // Data Members Start \\
+
+    /// <summary>
+    /// This will be the base building object, It will be given different sprites, scripts and tags to allow it 
+    /// to work in different ways. 
+    /// </summary>
     [SerializeField]
     GameObject m_BasicBuilding = null;
 
+    /// <summary>
+    /// This is the owner of this manager, it will allow for this to operate only on the turn player's turn. 
+    /// </summary>
     [SerializeField]
     CurrentTurn m_Owner = CurrentTurn.player;
 
+    /// <summary>
+    /// This is the list of all building objects managed by this controller, they will be operated based on their 
+    /// attached tags.
+    /// </summary>
     [SerializeField]
     List<GameObject> m_BuildingList = new List<GameObject>();
 
+    /// <summary>
+    /// The turn manager will be used to check which turn it is, allowing for operation only on the owener's turn. 
+    /// </summary>
     [SerializeField]
     GameObject m_TurnManager = null;
 
+    // Member Functions Start \\
+
+    /// <summary>
+    /// This will be called regularly on a fixed time basis, the current time scale for the scene will affect the number of 
+    /// times this function is called. 
+    /// </summary>
     private void FixedUpdate()
     {
         bool l_bCheckForHQDestruction = true;
 
+        // Update all buildings. 
+
         foreach (var building in m_BuildingList)
         {
+            // Check or HQ present.
+
             if (building != null)
             {
                 if (building.tag == "HQ")
@@ -31,18 +60,37 @@ public class Bulding_Manager : MonoBehaviour
             }
         }
 
+        // If there is no Hq in this manager it has been destroyed.
+
         if (l_bCheckForHQDestruction == true)
         {
             gameObject.GetComponentInParent<Lose_Script>().m_SetGameOver(); 
         }
     }
-
+    
+    /// <summary>
+    /// This will set the turn manger for the game, is needed to check for turn. 
+    /// </summary>
+    /// <param name="turnManager">The current turn manager in this scene. </param>
     public void m_SetTurnManager(GameObject turnManager) { m_TurnManager = turnManager; }
 
+    /// <summary>
+    /// This will be used to assign the base building for the game, will be needed to assign all buildings 
+    /// in the game. 
+    /// </summary>
+    /// <param name="newPrefab">A prefab object loaded form the resource file, TempBuilding. </param>
     public void m_SetBasicBuilding(GameObject newPrefab) { m_BasicBuilding = newPrefab; }
 
+    /// <summary>
+    /// This will set the owner of this building manager. 
+    /// </summary>
+    /// <param name="newOwner">The new owner for this building.</param>
     public void m_SetOwner(CurrentTurn newOwner) { m_Owner = newOwner; }
 
+    /// <summary>
+    /// This will be used to check the current turn.
+    /// </summary>
+    /// <returns>True if the current turn is equal to the owner.</returns>
     public bool m_CheckTurn()
     {
         if (m_Owner == m_TurnManager.GetComponent<Turn_Manager>().m_GetCurrentTurn())
@@ -53,8 +101,18 @@ public class Bulding_Manager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Allows access to the full list of buildings controlled by this manager. 
+    /// </summary>
+    /// <returns>List of buildings. </returns>
     public List<GameObject> m_GetBuildigList() => m_BuildingList; 
 
+    /// <summary>
+    /// This will create a new game object, and using the temp building assign it sufficient functionality.
+    /// 
+    /// There can only be one HQ object and this will be spawned at a specific location on the map upon start-up.
+    /// </summary>
+    /// <param name="cellToSpawn">A position on the map for this to spawn. </param>
     public void m_SpawnHQ(GameObject cellToSpawn)
     {
         if (m_BasicBuilding != null)
@@ -65,13 +123,23 @@ public class Bulding_Manager : MonoBehaviour
 
                 if (l_TempHQ != null)
                 {
+                    // Update position. 
+
                     l_TempHQ.GetComponent<Building_Positioning>().m_SetPosition(cellToSpawn);
+
+                    // Update Hierarchy 
 
                     l_TempHQ.transform.parent = gameObject.transform;
 
+                    // Change Name. 
+
                     l_TempHQ.name = "HQ Building";
 
+                    // Assign Tag
+
                     l_TempHQ.tag = "HQ"; 
+
+                    // Add to list. 
 
                     m_BuildingList.Add(l_TempHQ);
 
@@ -93,6 +161,151 @@ public class Bulding_Manager : MonoBehaviour
         }
     }
 
+    public void m_SpawnFarm(GameObject cellToSpawn)
+    {
+        if (m_BasicBuilding != null)
+        {
+            if (cellToSpawn != null)
+            {
+                GameObject l_TempFarm = Instantiate(m_BasicBuilding, cellToSpawn.transform.position, Quaternion.identity);
+
+                if(l_TempFarm != null)
+                {
+                    // Update position. 
+
+                    l_TempFarm.GetComponent<Building_Positioning>().m_SetPosition(cellToSpawn);
+
+                    // Update Hierarchy 
+
+                    l_TempFarm.transform.parent = gameObject.transform;
+
+                    // Change Name. 
+
+                    l_TempFarm.name = "Farm";
+
+                    // Assign Tag
+
+                    l_TempFarm.tag = "Farm_Building";
+
+                    // Add to list. 
+
+                    m_BuildingList.Add(l_TempFarm);
+                }
+                else
+                {
+                    Debug.LogWarning("Unable to spawn Farm - Error instantiating.");
+                }
+
+            }
+            else
+            {
+                Debug.LogWarning("Unable to spawn Farm - Spawn location not found.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Unable to spawn Farm - Basic building not found.");
+        }
+    }
+
+    public void m_SpawnIronMine(GameObject cellToSpawn)
+    {
+        if (m_BasicBuilding != null)
+        {
+            if (cellToSpawn != null)
+            {
+                GameObject l_TempIronMine = Instantiate(m_BasicBuilding, cellToSpawn.transform.position, Quaternion.identity);
+
+                if (l_TempIronMine != null)
+                {
+                    // Update position. 
+
+                    l_TempIronMine.GetComponent<Building_Positioning>().m_SetPosition(cellToSpawn);
+
+                    // Update Hierarchy 
+
+                    l_TempIronMine.transform.parent = gameObject.transform;
+
+                    // Change Name. 
+
+                    l_TempIronMine.name = "Iron Mine";
+
+                    // Assign Tag
+
+                    l_TempIronMine.tag = "Iron_Mine";
+
+                    // Add to list. 
+
+                    m_BuildingList.Add(l_TempIronMine);
+                }
+                else
+                {
+                    Debug.LogWarning("Unable to spawn Iron Mine - Error instantiating.");
+                }
+
+            }
+            else
+            {
+                Debug.LogWarning("Unable to spawn Iron Mine - Spawn location not found.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Unable to spawn Iron Mine - Basic building not found.");
+        }
+    }
+
+    public void m_SpawnGoldMine(GameObject cellToSpawn)
+    {
+        if (m_BasicBuilding != null)
+        {
+            if (cellToSpawn != null)
+            {
+                GameObject l_TempGoldMine = Instantiate(m_BasicBuilding, cellToSpawn.transform.position, Quaternion.identity);
+
+                if (l_TempGoldMine != null)
+                {
+                    // Update position. 
+
+                    l_TempGoldMine.GetComponent<Building_Positioning>().m_SetPosition(cellToSpawn);
+
+                    // Update Hierarchy 
+
+                    l_TempGoldMine.transform.parent = gameObject.transform;
+
+                    // Change Name. 
+
+                    l_TempGoldMine.name = "Gold Mine";
+
+                    // Assign Tag
+
+                    l_TempGoldMine.tag = "Gold_Mine";
+
+                    // Add to list. 
+
+                    m_BuildingList.Add(l_TempGoldMine);
+                }
+                else
+                {
+                    Debug.LogWarning("Unable to spawn Gold Mine - Error instantiating.");
+                }
+
+            }
+            else
+            {
+                Debug.LogWarning("Unable to spawn Gold Mine - Spawn location not found.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Unable to spawn Gold Mine - Basic building not found.");
+        }
+    }
+
+    /// <summary>
+    /// This will allow access to the building tagged as HQ. 
+    /// </summary>
+    /// <returns>The HQ object. </returns>
     public GameObject m_GetHQObject()
     {
         foreach (var building in m_BuildingList)
@@ -108,6 +321,12 @@ public class Bulding_Manager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// This will return the object with the lowest combat rating, with the scaler of the distance 
+    /// from the unit of focus as a basis, allowng for the distance between object to have an effect. 
+    /// </summary>
+    /// <param name="unitOfFocus">The current unit looking for a target. </param>
+    /// <returns>The closest building for the unit of focus.</returns>
     public GameObject m_GetLowestCombatRating(GameObject unitOfFocus)
     {
         if (unitOfFocus != null)
