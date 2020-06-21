@@ -187,7 +187,28 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_BuildingManager.GetComponent<Bulding_Manager>().m_SetTurnManager(m_TurnManager);
 
-                l_BuildingManager.GetComponent<Bulding_Manager>().m_SpawnHQ(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetHQSpawnPoint(0));
+                // Spawn starting buldings. 
+
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SpawnHQ(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.player, 0));
+
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SpawnFarm(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.player, 1));
+
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SpawnIronMine(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.player, 2));
+
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SpawnGoldMine(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.player, 3));
+
+                // Create Resource Manager. 
+
+                GameObject l_ResourceManager = new GameObject();
+
+                l_ResourceManager.name = "Resource Manager";
+
+                l_ResourceManager.AddComponent<Resource_Management>();
+
+                l_ResourceManager.transform.parent = m_Player.transform;
+
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SetResourceManager(l_ResourceManager);
+
             }
             else
             {
@@ -317,7 +338,15 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SetTurnManager(m_TurnManager);
 
-                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnHQ(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetHQSpawnPoint(1));
+                // Spawn starting buldings. 
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnHQ(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.ai, 0));
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnFarm(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.ai, 1));
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnIronMine(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.ai, 2));
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnGoldMine(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.ai, 3));
             }
             else
             {

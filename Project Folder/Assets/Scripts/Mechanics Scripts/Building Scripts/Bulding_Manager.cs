@@ -35,6 +35,11 @@ public class Bulding_Manager : MonoBehaviour
     [SerializeField]
     GameObject m_TurnManager = null;
 
+    [SerializeField]
+    GameObject m_ResourceManager;
+
+    bool m_bResetOnce = false; 
+
     // Member Functions Start \\
 
     /// <summary>
@@ -66,13 +71,84 @@ public class Bulding_Manager : MonoBehaviour
         {
             gameObject.GetComponentInParent<Lose_Script>().m_SetGameOver(); 
         }
+
+        if(m_CheckTurn() == true)
+        {
+            m_bResetOnce = true;
+        }
+        else
+        {
+            if(m_bResetOnce == true)
+            {
+                m_bResetOnce = false;
+
+                // Debug.Log("Turn End - Resetting");
+
+                m_EndTurn();
+            }
+        }
     }
     
+    public void m_EndTurn()
+    {
+        if(m_ResourceManager != null)
+        {
+            float l_fAddToFood = 0, l_fAddToIron = 0, l_fAddToGold = 0;
+
+            for (int i = 0; i < m_BuildingList.Count; i++)
+            {
+                if (m_BuildingList[i] != null)
+                {
+                    switch (m_BuildingList[i].tag)
+                    {
+                        case "Farm_Building":
+                            l_fAddToFood += 15f;
+                            break;
+
+                        case "Iron_Mine":
+                            l_fAddToIron += 10f;
+                            break;
+
+                        case "Gold_Mine":
+                            l_fAddToGold += 10f;
+                            break;
+
+                        default:
+                            Debug.Log("Object doesn't provide any additional resources.");
+                            break;
+                    }
+
+                    if (m_BuildingList[i].tag != "Gold_Mine")
+                    {
+                        l_fAddToGold -= 1;
+                    }
+                }
+                else
+                {
+                    m_BuildingList.RemoveAt(i);
+
+                    i--; 
+                }
+            }
+
+            m_ResourceManager.GetComponent<Resource_Management>().m_AddToFood(l_fAddToFood);
+            m_ResourceManager.GetComponent<Resource_Management>().m_AddToIron(l_fAddToIron);
+            m_ResourceManager.GetComponent<Resource_Management>().m_AddToGold(l_fAddToGold);
+
+            if(m_ResourceManager.GetComponent<Resource_Management>().m_GetGold() <= 0)
+            {
+                m_BuildingList[m_BuildingList.Count - 1].GetComponent<Health_Management>().m_TakeHit(15); 
+            }
+        }
+    }
+
     /// <summary>
     /// This will set the turn manger for the game, is needed to check for turn. 
     /// </summary>
     /// <param name="turnManager">The current turn manager in this scene. </param>
     public void m_SetTurnManager(GameObject turnManager) { m_TurnManager = turnManager; }
+
+    public void m_SetResourceManager(GameObject resourceManager) { m_ResourceManager = resourceManager; }
 
     /// <summary>
     /// This will be used to assign the base building for the game, will be needed to assign all buildings 
@@ -187,6 +263,10 @@ public class Bulding_Manager : MonoBehaviour
 
                     l_TempFarm.tag = "Farm_Building";
 
+                    // Update Health of object.
+
+                    l_TempFarm.GetComponent<Health_Management>().m_SetMaxHealth(100);
+
                     // Add to list. 
 
                     m_BuildingList.Add(l_TempFarm);
@@ -234,6 +314,10 @@ public class Bulding_Manager : MonoBehaviour
 
                     l_TempIronMine.tag = "Iron_Mine";
 
+                    // Update Health of object.
+
+                    l_TempIronMine.GetComponent<Health_Management>().m_SetMaxHealth(100);
+
                     // Add to list. 
 
                     m_BuildingList.Add(l_TempIronMine);
@@ -280,6 +364,10 @@ public class Bulding_Manager : MonoBehaviour
                     // Assign Tag
 
                     l_TempGoldMine.tag = "Gold_Mine";
+
+                    // Update object health. 
+
+                    l_TempGoldMine.GetComponent<Health_Management>().m_SetMaxHealth(100);
 
                     // Add to list. 
 

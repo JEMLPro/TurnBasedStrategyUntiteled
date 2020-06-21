@@ -21,10 +21,10 @@ public class Level
     public string[] tileConfig;
 
     /*! \var The position for the first base on the map. */
-    public int[] hqPosOne;
+    public int[] playerPoints;
 
     /*! \var The position for the second base on the map. */
-    public int[] hqPosTwo;
+    public int[] aiPoints;
 }
 
 [System.Serializable]

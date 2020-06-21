@@ -111,6 +111,11 @@ public class Resource_Management : MonoBehaviour
     {
         m_fGold += addAmount;
 
+        if(m_fGold < 0)
+        {
+            m_fGold = 0; 
+        }
+
         Debug.Log(addAmount + " has been added to gold, new value = " + m_fGold);
     }
 

@@ -25,6 +25,9 @@ public class Tile_Map_Manager : MonoBehaviour
     int m_iCurrentLevel = 1;
 
     [SerializeField]
+    Level m_CurrentLevelLoaded; 
+
+    [SerializeField]
     GridPos m_HQPosOne;
 
     [SerializeField]
@@ -75,6 +78,7 @@ public class Tile_Map_Manager : MonoBehaviour
     // Used to load a level using the Level Class. 
     public void m_CreateTileMap(Level levelToLoad)
     {
+
         // Reset the grid to it's default state.
 
         Debug.Log("Map being reset for map creation."); 
@@ -175,12 +179,12 @@ public class Tile_Map_Manager : MonoBehaviour
                 }
             }
 
-            if(levelToLoad.hqPosOne.Length > 0)
+            if(levelToLoad.playerPoints.Length > 0)
             {
                 
 
-                m_HQPosOne.x = (int)levelToLoad.hqPosOne[0];
-                m_HQPosOne.y = (int)levelToLoad.hqPosOne[1];
+                m_HQPosOne.x = levelToLoad.playerPoints[0];
+                m_HQPosOne.y = levelToLoad.playerPoints[1];
 
                 Debug.Log("First Hq spawn point found");
             }
@@ -189,15 +193,15 @@ public class Tile_Map_Manager : MonoBehaviour
                 Debug.LogError("Unable to get spawn positions");
             }
 
-            if (levelToLoad.hqPosTwo.Length > 0)
+            if (levelToLoad.aiPoints.Length > 0)
             {
-                foreach (var point in levelToLoad.hqPosTwo)
+                foreach (var point in levelToLoad.aiPoints)
                 {
                     Debug.Log(point); 
                 }
 
-                m_HQPosTwo.x = levelToLoad.hqPosTwo.First<int>();
-                m_HQPosTwo.y = levelToLoad.hqPosTwo.Last<int>();
+                m_HQPosTwo.x = levelToLoad.aiPoints[0];
+                m_HQPosTwo.y = levelToLoad.aiPoints[1];
 
                 Debug.Log("Second Hq spawn point found");
             }
@@ -222,6 +226,8 @@ public class Tile_Map_Manager : MonoBehaviour
 
     public void m_CreateTileMap(int levelindex)
     {
+        m_CurrentLevelLoaded = gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(levelindex);
+
         // Reset the grid to it's default state.
 
         Debug.Log("Map being reset for map creation.");
@@ -328,11 +334,11 @@ public class Tile_Map_Manager : MonoBehaviour
                     }
                 }
 
-                if (l_LevelToLoad.hqPosOne.Length > 0)
+                if (l_LevelToLoad.playerPoints.Length > 0)
                 {
 
-                    m_HQPosOne.x = (int)l_LevelToLoad.hqPosOne[0];
-                    m_HQPosOne.y = (int)l_LevelToLoad.hqPosOne[0];
+                    m_HQPosOne.x = l_LevelToLoad.playerPoints[0];
+                    m_HQPosOne.y = l_LevelToLoad.playerPoints[1];
 
                     Debug.Log("First Hq spawn point found");
                 }
@@ -341,15 +347,15 @@ public class Tile_Map_Manager : MonoBehaviour
                     Debug.LogError("Unable to get spawn positions");
                 }
 
-                if (l_LevelToLoad.hqPosTwo.Length > 0)
+                if (l_LevelToLoad.aiPoints.Length > 0)
                 {
-                    foreach (var point in l_LevelToLoad.hqPosTwo)
+                    foreach (var point in l_LevelToLoad.aiPoints)
                     {
                         Debug.Log(point);
                     }
 
-                    m_HQPosTwo.x = l_LevelToLoad.hqPosTwo.First<int>();
-                    m_HQPosTwo.y = l_LevelToLoad.hqPosTwo.Last<int>();
+                    m_HQPosTwo.x = l_LevelToLoad.aiPoints[0];
+                    m_HQPosTwo.y = l_LevelToLoad.aiPoints[1];
 
                     Debug.Log("Second Hq spawn point found");
                 }
@@ -474,6 +480,120 @@ public class Tile_Map_Manager : MonoBehaviour
         Debug.Log("HQ spawn point not found");
 
         return null;
+    }
+
+    public GameObject m_GetSpawnPoint(CurrentTurn owner, int spawnIndex)
+    {
+        GameObject l_ReturnValue = null;
+
+        if(owner == CurrentTurn.player)
+        {
+            // Use the player spawn points. 
+
+            switch (spawnIndex)
+            {
+                case 0:
+                    // Spawn point for HQ.
+
+                    if(m_CurrentLevelLoaded.playerPoints.Length > spawnIndex)
+                    {
+                        l_ReturnValue = m_GetCellUsingGridPosition(m_CurrentLevelLoaded.playerPoints[0], m_CurrentLevelLoaded.playerPoints[1]);
+                    }
+
+                    break;
+
+                case 1:
+                    // Spawn point for Farm.
+
+                    if (m_CurrentLevelLoaded.playerPoints.Length > spawnIndex)
+                    {
+                        l_ReturnValue = m_GetCellUsingGridPosition(m_CurrentLevelLoaded.playerPoints[2], m_CurrentLevelLoaded.playerPoints[3]);
+                    }
+
+                    break;
+
+                case 2:
+                    // Spawn point for Iron Mine.
+
+                    if (m_CurrentLevelLoaded.playerPoints.Length > spawnIndex)
+                    {
+                        l_ReturnValue = m_GetCellUsingGridPosition(m_CurrentLevelLoaded.playerPoints[4], m_CurrentLevelLoaded.playerPoints[5]);
+                    }
+
+                    break;
+
+                case 3:
+                    // Spawn Point for Gold Mine.
+
+                    if (m_CurrentLevelLoaded.playerPoints.Length > spawnIndex)
+                    {
+                        l_ReturnValue = m_GetCellUsingGridPosition(m_CurrentLevelLoaded.playerPoints[6], m_CurrentLevelLoaded.playerPoints[7]);
+                    }
+
+                    break;
+
+                default:
+                    // Base will output error if something is wrong. 
+                    Debug.LogError("Index out of range index value is " + spawnIndex + " should be " + m_CurrentLevelLoaded.playerPoints.Length / 2); 
+
+                    break;
+            }
+        }
+        else
+        {
+            // Use the ai spawn points. 
+
+            switch (spawnIndex)
+            {
+                case 0:
+                    // Spawn point for HQ.
+
+                    if (m_CurrentLevelLoaded.aiPoints.Length > spawnIndex)
+                    {
+                        l_ReturnValue = m_GetCellUsingGridPosition(m_CurrentLevelLoaded.aiPoints[0], m_CurrentLevelLoaded.aiPoints[1]);
+                    }
+
+                    break;
+
+                case 1:
+                    // Spawn point for Farm.
+
+                    if (m_CurrentLevelLoaded.aiPoints.Length > spawnIndex)
+                    {
+                        l_ReturnValue = m_GetCellUsingGridPosition(m_CurrentLevelLoaded.aiPoints[2], m_CurrentLevelLoaded.aiPoints[3]);
+                    }
+
+                    break;
+
+                case 2:
+                    // Spawn point for Iron Mine.
+
+                    if (m_CurrentLevelLoaded.aiPoints.Length > spawnIndex)
+                    {
+                        l_ReturnValue = m_GetCellUsingGridPosition(m_CurrentLevelLoaded.aiPoints[4], m_CurrentLevelLoaded.aiPoints[5]);
+                    }
+
+                    break;
+
+                case 3:
+                    // Spawn Point for Gold Mine.
+
+                    if (m_CurrentLevelLoaded.aiPoints.Length > spawnIndex)
+                    {
+                        l_ReturnValue = m_GetCellUsingGridPosition(m_CurrentLevelLoaded.aiPoints[6], m_CurrentLevelLoaded.aiPoints[7]);
+                    }
+
+                    break;
+
+                default:
+                    // Base will output error if something is wrong. 
+                    Debug.LogError("Index out of range index value is " + spawnIndex + " should be " + m_CurrentLevelLoaded.aiPoints.Length / 2);
+
+                    break;
+            }
+        }
+
+        return l_ReturnValue; 
     }
 
     // This will be used to assign the neighbours to a cell in the grid, a position in the grid will need to be provide. 

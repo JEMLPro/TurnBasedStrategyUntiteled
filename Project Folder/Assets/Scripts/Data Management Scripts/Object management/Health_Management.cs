@@ -39,6 +39,11 @@ public class Health_Management : MonoBehaviour
 
         m_fMaxHealth = newMaxHealth; 
 
+        if(m_fHealth > m_fMaxHealth)
+        {
+            m_fHealth = m_fMaxHealth;
+        }
+
         if(m_HealthBar != null)
         {
             m_HealthBar.maxValue = newMaxHealth; 
