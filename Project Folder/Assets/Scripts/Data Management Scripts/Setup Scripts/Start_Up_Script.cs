@@ -199,9 +199,11 @@ public class Start_Up_Script : Prefab_Loader
 
                 // Create Resource Manager. 
 
-                GameObject l_ResourceManager = new GameObject();
-
-                l_ResourceManager.name = "Resource Manager";
+                GameObject l_ResourceManager = new GameObject
+                {
+                    name = "Resource Manager"
+                    
+                };
 
                 l_ResourceManager.AddComponent<Resource_Management>();
 
@@ -209,6 +211,13 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_BuildingManager.GetComponent<Bulding_Manager>().m_SetResourceManager(l_ResourceManager);
 
+                // Attach player's resource manager to UI
+
+                m_UserInterfaceManager.GetComponent<Interface_Controller>().m_SetUpInfoPanel();
+
+                l_ResourceManager.GetComponent<Resource_Management>().m_SetFoodText(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetFoodText());
+                l_ResourceManager.GetComponent<Resource_Management>().m_SetIronText(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetIronText());
+                l_ResourceManager.GetComponent<Resource_Management>().m_SetGoldText(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetGoldText());
             }
             else
             {
@@ -290,8 +299,6 @@ public class Start_Up_Script : Prefab_Loader
                 // Connect game over screen. 
 
                 m_Player.GetComponent<Lose_Script>().m_SetGameOverScreen(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetGameOverScreen());
-
-                m_UserInterfaceManager.GetComponent<Interface_Controller>().m_SetUpInfoPanel();
             }
 
         }
@@ -347,6 +354,19 @@ public class Start_Up_Script : Prefab_Loader
                 l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnIronMine(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.ai, 2));
 
                 l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnGoldMine(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.ai, 3));
+
+                // Create Resource Manager. 
+
+                GameObject l_AiResourceManager = new GameObject
+                {
+                    name = "Resource Manager"
+                };
+
+                l_AiResourceManager.AddComponent<Resource_Management>();
+
+                l_AiResourceManager.transform.parent = m_AI.transform;
+
+                l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SetResourceManager(l_AiResourceManager);
             }
             else
             {

@@ -106,6 +106,20 @@ public class Interface_Controller : MonoBehaviour
         m_InfoPanel.SetActive(true); 
     }
 
+    public Text m_GetIronText()
+    {
+        return GameObject.FindGameObjectWithTag("Iron_Text").GetComponentInChildren<Text>();
+    }
+
+    public Text m_GetFoodText()
+    {
+        return GameObject.FindGameObjectWithTag("Food_Text").GetComponentInChildren<Text>();
+    }
+
+    public Text m_GetGoldText()
+    {
+        return GameObject.FindGameObjectWithTag("Gold_Text").GetComponentInChildren<Text>();
+    }
     public GameObject m_GetRadialMenu() => m_RadialMenu;
 
     public GameObject m_GetGameOverScreen() => m_GameOverScreen; 

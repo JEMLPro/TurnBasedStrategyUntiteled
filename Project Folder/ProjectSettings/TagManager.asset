@@ -25,6 +25,9 @@ TagManager:
   - Iron_Mine
   - Farm_Building
   - Gold_Mine
+  - Iron_Text
+  - Food_Text
+  - Gold_Text
   layers:
   - Default
   - TransparentFX
