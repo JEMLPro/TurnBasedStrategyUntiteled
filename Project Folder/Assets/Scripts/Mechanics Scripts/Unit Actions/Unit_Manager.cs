@@ -22,40 +22,74 @@ public class Unit_Manager : MonoBehaviour
 
     // Other Managers
 
+    /// <summary>
+    /// The game map will control the grid and cell positioning for the game map, this allows for this manager 
+    /// to properly position it's units and properly interface with the game map. 
+    /// </summary>
     [SerializeField]
-    protected GameObject m_GameMap; /*!< \var This will be the game object holding the game's map. */
+    protected GameObject m_GameMap; 
 
+    /// <summary>
+    /// The turn manager will be used to check the current turn within the game and allow for this managr to limit 
+    /// the actions of its controlled units to ensure they cannot be controlled out of turn. 
+    /// </summary>
     [SerializeField]
-    protected GameObject m_TurnManager; /*!< \var The turn manager for the game, used to check the current turn. */
+    protected GameObject m_TurnManager; 
 
     // Movement Management.
 
+    /// <summary>
+    /// This will be used to check the movement range for the active unit. This will say to set the colour of the map tiles 
+    /// the unit can move to. This will limit that assignemnt process to only once when the unit is first selected and will 
+    /// be reset when this is either deselected or a new one is selected. 
+    /// </summary>
     [SerializeField]
-    bool m_bCheckRange = false; /*!< \var This will be used to check the movement range of the selected unit. */
+    bool m_bCheckRange = false; 
 
     // Unit Management.
 
+    /// <summary>
+    /// This will hold the full list of the units controlled by this player for this game. The main functionality of this class     
+    /// will be to manipulate units within this list. 
+    /// </summary>
     [SerializeField]
-    protected List<GameObject> m_UnitList = new List<GameObject>(); /*!< \var This will hold all of the controlled units. */
+    protected List<GameObject> m_UnitList = new List<GameObject>(); 
 
+    /// <summary>
+    /// This is the current owner of this unit manager, it will determine which turn the controlled units will be able to act. 
+    /// </summary>
     [SerializeField]
-    protected CurrentTurn m_Owner = CurrentTurn.player; /*!< \var The owner ofthis set of units. */
+    protected CurrentTurn m_Owner = CurrentTurn.player; 
 
+    /// <summary>
+    /// This will allow for the units to be reset at the end of the turn, this will only need to happen once and at the start of 
+    /// the next turn it will be reset allowing for it to occur again at the end of the turn. 
+    /// </summary>
     [SerializeField]
-    protected bool m_bResetOnce = false; /*!< \var Used to reset the list of units at the end of the turn. */
+    protected bool m_bResetOnce = false; 
 
     // Action Management. 
 
+    /// <summary>
+    /// This will allow for this manager to determine when an action has been selected for a unit. This will then allow for that 
+    /// action to be processed. 
+    /// </summary>
     [SerializeField]
-    bool m_bActionSelected = false; /*!< \var Used to stop another action from being selected before the action is finished. */
+    bool m_bActionSelected = false; 
 
+    /// <summary>
+    /// The current action which should be processed, the list includes: Wait, Move, Attack and build. each with their own functionality.
+    /// </summary>
     [SerializeField]
-    Action m_Action; /*!< \var The current action which has been selected. */
+    Action m_Action; 
 
     //----------------------------------------------------------------------------------------------------------------------------
     //  Member Functions Start 
     //----------------------------------------------------------------------------------------------------------------------------
 
+    /// <summary>
+    /// When this script is first instantiated this will be called. 
+    /// </summary>
     void Start()
     {
         // If the game objects are not set find the objects through a assigned tag. 
@@ -74,6 +108,9 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will be called regularly every frame.
+    /// </summary>
     private void Update()
     {
         if (m_UnitList.Count > 0)
@@ -211,13 +248,18 @@ public class Unit_Manager : MonoBehaviour
                 {
                     m_ResetUnits();
 
+                    m_FoodConsumption(); 
+
                     m_bResetOnce = false;
                 }
             }
         }
     }
 
-    // This will be ued to check which trun it is. If the turn is the owners.
+    /// <summary>
+    /// This will be used to check if this is the owner's turn. 
+    /// </summary>
+    /// <returns>True if owner == turn</returns>
     public bool m_CheckTurn()
     {
         if(m_Owner == m_TurnManager.GetComponent<Turn_Manager>().m_GetCurrentTurn())
@@ -230,7 +272,9 @@ public class Unit_Manager : MonoBehaviour
 
     // Unit Management. 
 
-    // This will be used to update the position of the selected unit. 
+    /// <summary>
+    /// This will be used to update a single unit's position on the game map. This is activated using the movement action.
+    /// </summary>
     void m_UpdateUnitPosition()
     {
         int l_iResetLoop = 0;
@@ -310,7 +354,10 @@ public class Unit_Manager : MonoBehaviour
 
     }
 
-    // This will be used to allow for the selected unit to attack a selected target. 
+    /// <summary>
+    /// This will be used to allow for the unit to attack another enemy object within the game. This is activated with the 
+    /// attack action. This variation allow for this unit to attack another unit.
+    /// </summary>
     void m_UnitAttack()
     {
         if (m_GetSelectedUnit() != null)
@@ -319,6 +366,10 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will be used to allow for the unit to attack another enemy object within the game. This is activated with the 
+    /// attack action. This variation allow for this unit to attack a building object.
+    /// </summary>
     void m_AttackBuilding()
     {
         if (m_GetSelectedUnit() != null)
@@ -361,6 +412,29 @@ public class Unit_Manager : MonoBehaviour
                 // Reset number of attacks
                 unit.GetComponent<Unit_Attack>().m_SetNumberOfAttacks(1);
 
+            }
+        }
+    }
+
+    void m_FoodConsumption()
+    {
+        GameObject l_ResourceManager = gameObject.transform.parent.GetComponentInChildren<Resource_Management>().gameObject;
+
+        if(l_ResourceManager != null)
+        {
+            float l_fConsumption = -3f;
+
+            foreach (var unit in m_UnitList)
+            {
+                if (unit != null)
+                {
+                    if (l_ResourceManager.GetComponent<Resource_Management>().m_GetFood() <= 2)
+                    {
+                        unit.GetComponent<Health_Management>().m_TakeHit(5);
+                    }
+
+                    l_ResourceManager.GetComponent<Resource_Management>().m_AddToFood(l_fConsumption);
+                }
             }
         }
     }
