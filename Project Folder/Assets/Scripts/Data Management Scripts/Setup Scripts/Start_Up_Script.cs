@@ -202,7 +202,6 @@ public class Start_Up_Script : Prefab_Loader
                 GameObject l_ResourceManager = new GameObject
                 {
                     name = "Resource Manager"
-                    
                 };
 
                 l_ResourceManager.AddComponent<Resource_Management>();
@@ -218,6 +217,10 @@ public class Start_Up_Script : Prefab_Loader
                 l_ResourceManager.GetComponent<Resource_Management>().m_SetFoodText(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetFoodText());
                 l_ResourceManager.GetComponent<Resource_Management>().m_SetIronText(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetIronText());
                 l_ResourceManager.GetComponent<Resource_Management>().m_SetGoldText(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetGoldText());
+
+                // Attach unit spawn menu onto build manager 
+
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SetUnitBuildMenu(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetUnitBuildMenu()); 
             }
             else
             {
@@ -283,7 +286,7 @@ public class Start_Up_Script : Prefab_Loader
 
             if (m_UserInterfaceManager != null)
             {
-                // Connect end turn button to theturn manager. 
+                // Connect end turn button to the turn manager. 
 
                 m_UserInterfaceManager.GetComponent<Interface_Controller>().m_SetEndTurnFunctionality(m_TurnManager);
 
@@ -295,6 +298,10 @@ public class Start_Up_Script : Prefab_Loader
 
                 m_Player.GetComponentInChildren<Activate_Radial_Menu>().m_SetRadialMenuObject(l_RadialMenuObj, l_RadialMenuObj.GetComponentInChildren<RectTransform>(),
                    m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetMainCanvas(), l_UnitManager);
+
+                // Connect unit spawnig to the spawn buttons. 
+
+                m_UserInterfaceManager.GetComponent<Interface_Controller>().m_SetUpUnitSpanwing(l_UnitManager, l_BuildingManager); 
 
                 // Connect game over screen. 
 

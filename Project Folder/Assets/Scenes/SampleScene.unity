@@ -120,9 +120,9 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &433427433 stripped
+--- !u!1 &97902617 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2428155700529132109, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+  m_CorrespondingSourceObject: {fileID: 97902617, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
     type: 3}
   m_PrefabInstance: {fileID: 2428155701566143404}
   m_PrefabAsset: {fileID: 0}
@@ -139,49 +139,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 462612312, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -33
-      objectReference: {fileID: 0}
-    - target: {fileID: 628472053, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2428155700023245237, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
-        type: 3}
-      propertyPath: m_TagString
-      value: Gold_Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 2428155700023245238, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2428155700287268876, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 2428155700604276738, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
-        type: 3}
-      propertyPath: m_TagString
-      value: Iron_Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 2428155700604276739, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2428155701232336017, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
-        type: 3}
-      propertyPath: m_TagString
-      value: Food_Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 2428155701232336018, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 2428155701594125609, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
         type: 3}
       propertyPath: m_Name
@@ -244,8 +201,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9195201905206716659, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
         type: 3}
-      propertyPath: m_InfoPanel
+      propertyPath: m_UnitBuildMenu
       value: 
-      objectReference: {fileID: 433427433}
+      objectReference: {fileID: 97902617}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f, type: 3}

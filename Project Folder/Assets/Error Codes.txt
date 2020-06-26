@@ -10,3 +10,4 @@
 
 0200 - Problem loading an object on AI object, variations include -0; Turn manager faild to load -1; Building manager faild to load, -2; Unit manager faild to load, -3; Level manager faild to load
 
+1010 - Problem setting up UI element, variations include -0; error with button setup,

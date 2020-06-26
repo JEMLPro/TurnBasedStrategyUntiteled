@@ -28,6 +28,11 @@ TagManager:
   - Iron_Text
   - Food_Text
   - Gold_Text
+  - Militia_Button
+  - Engineer_Button
+  - Swordsman_Button
+  - Lancer_Button
+  - Marauder_Button
   layers:
   - Default
   - TransparentFX

@@ -38,7 +38,10 @@ public class Bulding_Manager : MonoBehaviour
     [SerializeField]
     GameObject m_ResourceManager;
 
-    bool m_bResetOnce = false; 
+    bool m_bResetOnce = false;
+
+    [SerializeField]
+    GameObject m_UnitBuildMenu; 
 
     // Member Functions Start \\
 
@@ -49,6 +52,8 @@ public class Bulding_Manager : MonoBehaviour
     private void FixedUpdate()
     {
         bool l_bCheckForHQDestruction = true;
+
+        bool l_bSpawningBuildingSelected = false; 
 
         // Update all buildings. 
 
@@ -61,6 +66,28 @@ public class Bulding_Manager : MonoBehaviour
                 if (building.tag == "HQ")
                 {
                     l_bCheckForHQDestruction = false;
+
+                    if (building.GetComponent<Select_Building>().m_GetSelected() == true)
+                    {
+
+                        m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_HQSelected();
+
+                        l_bSpawningBuildingSelected = true;
+
+                    }
+                }
+            }
+        }
+
+        if (m_UnitBuildMenu != null)
+        {
+            if (l_bSpawningBuildingSelected == false)
+            {
+                if (m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_Visable())
+                {
+                    Debug.Log("Hiding spawn menu");
+
+                    m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_HideAll();
                 }
             }
         }
@@ -149,6 +176,8 @@ public class Bulding_Manager : MonoBehaviour
     public void m_SetTurnManager(GameObject turnManager) { m_TurnManager = turnManager; }
 
     public void m_SetResourceManager(GameObject resourceManager) { m_ResourceManager = resourceManager; }
+
+    public void m_SetUnitBuildMenu(GameObject unitMenu) { m_UnitBuildMenu = unitMenu; }
 
     /// <summary>
     /// This will be used to assign the base building for the game, will be needed to assign all buildings 
@@ -388,6 +417,39 @@ public class Bulding_Manager : MonoBehaviour
         {
             Debug.LogError("Unable to spawn Gold Mine - Basic building not found.");
         }
+    }
+
+    public GameObject m_GetSpawnPointForNewSpawnedUnit()
+    {
+        foreach (var building in m_BuildingList)
+        {
+            if(building.GetComponent<Select_Building>().m_GetSelected())
+            {
+                Debug.Log("Found seleted building."); 
+
+                if(building.tag == "HQ")
+                {
+                    foreach (var cell in building.GetComponent<Building_Positioning>().m_GetPosition().GetComponent<Cell_Neighbours>().m_GetCellNeighbours())
+                    {
+                        if (cell != null)
+                        {
+                            if (cell.GetComponent<Cell_Manager>().m_CanBeMovedTo() == true)
+                            {
+                                return cell;
+                            }
+                        }
+                    }
+
+                    Debug.LogWarning("Cell neighbours cannot be moved to thus a unit cannot be spawned there."); 
+                }
+                else
+                {
+                    Debug.LogWarning("Unble to spawn at this building");
+                }
+            }
+        }
+
+        return null;
     }
 
     /// <summary>
