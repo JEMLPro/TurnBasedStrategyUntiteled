@@ -15,6 +15,7 @@ ScriptsOnlyBuild:
     - Mouse_Controls
     - Move_Object
     - Object_Selection
+    - Open_Unit_Spawn_Menu
     - Pathfinding_Info
     - Prefab_Loader
     - RMF_ForceDirection
@@ -31,7 +32,6 @@ ScriptsOnlyBuild:
     - Update_Turn_Display
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
-    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -79,81 +79,83 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9760}
     - Class: 114
-      Script: {instanceID: 9828}
-    - Class: 114
       Script: {instanceID: 9830}
     - Class: 114
-      Script: {instanceID: 9864}
+      Script: {instanceID: 9832}
     - Class: 114
-      Script: {instanceID: 9874}
+      Script: {instanceID: 9866}
     - Class: 114
-      Script: {instanceID: 9924}
+      Script: {instanceID: 9876}
     - Class: 114
-      Script: {instanceID: 9980}
+      Script: {instanceID: 9926}
     - Class: 114
-      Script: {instanceID: 10058}
+      Script: {instanceID: 9930}
     - Class: 114
-      Script: {instanceID: 10148}
+      Script: {instanceID: 9984}
     - Class: 114
-      Script: {instanceID: 10172}
+      Script: {instanceID: 10062}
     - Class: 114
-      Script: {instanceID: 10256}
+      Script: {instanceID: 10152}
     - Class: 114
-      Script: {instanceID: 10362}
+      Script: {instanceID: 10176}
     - Class: 114
-      Script: {instanceID: 10424}
+      Script: {instanceID: 10260}
     - Class: 114
-      Script: {instanceID: 10514}
+      Script: {instanceID: 10366}
     - Class: 114
-      Script: {instanceID: 10566}
+      Script: {instanceID: 10428}
     - Class: 114
-      Script: {instanceID: 10602}
+      Script: {instanceID: 10518}
     - Class: 114
-      Script: {instanceID: 10606}
+      Script: {instanceID: 10558}
     - Class: 114
-      Script: {instanceID: 10650}
+      Script: {instanceID: 10572}
     - Class: 114
-      Script: {instanceID: 10652}
+      Script: {instanceID: 10608}
     - Class: 114
-      Script: {instanceID: 10654}
+      Script: {instanceID: 10612}
     - Class: 114
-      Script: {instanceID: 10768}
+      Script: {instanceID: 10656}
     - Class: 114
-      Script: {instanceID: 10886}
+      Script: {instanceID: 10658}
     - Class: 114
-      Script: {instanceID: 10910}
+      Script: {instanceID: 10846}
     - Class: 114
-      Script: {instanceID: 10930}
+      Script: {instanceID: 10890}
     - Class: 114
-      Script: {instanceID: 10952}
+      Script: {instanceID: 10914}
     - Class: 114
-      Script: {instanceID: 11062}
+      Script: {instanceID: 10934}
     - Class: 114
-      Script: {instanceID: 11068}
+      Script: {instanceID: 10956}
     - Class: 114
-      Script: {instanceID: 11120}
+      Script: {instanceID: 11066}
     - Class: 114
-      Script: {instanceID: 11156}
+      Script: {instanceID: 11072}
     - Class: 114
-      Script: {instanceID: 11188}
+      Script: {instanceID: 11122}
+    - Class: 114
+      Script: {instanceID: 11158}
     - Class: 114
       Script: {instanceID: 11212}
     - Class: 114
-      Script: {instanceID: 11366}
+      Script: {instanceID: 11334}
     - Class: 114
-      Script: {instanceID: 11412}
+      Script: {instanceID: 11368}
     - Class: 114
-      Script: {instanceID: 11418}
+      Script: {instanceID: 11414}
     - Class: 114
-      Script: {instanceID: 11424}
+      Script: {instanceID: 11420}
     - Class: 114
-      Script: {instanceID: 11438}
+      Script: {instanceID: 11426}
     - Class: 114
-      Script: {instanceID: 11444}
+      Script: {instanceID: 11440}
     - Class: 114
-      Script: {instanceID: 11458}
+      Script: {instanceID: 11446}
     - Class: 114
-      Script: {instanceID: 11476}
+      Script: {instanceID: 11460}
+    - Class: 114
+      Script: {instanceID: 11478}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -207,7 +209,7 @@ ScriptsOnlyBuild:
     className: Building_Combat_Rating
   - hash:
       serializedVersion: 2
-      Hash: 48ea7e106e36c1290d4b1f143b1814d2
+      Hash: 1a1fe0354ef5fb58561b291f38875002
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Bulding_Manager
@@ -217,6 +219,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Pathfinding_Info
+  - hash:
+      serializedVersion: 2
+      Hash: 238091be2506f96f12b852ce5c3a39f4
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Resource_Management
   - hash:
       serializedVersion: 2
       Hash: e7a73f5f78ba6445195ec23b74a1ce2d
@@ -303,6 +311,12 @@ ScriptsOnlyBuild:
     className: AI_Unit_Movement
   - hash:
       serializedVersion: 2
+      Hash: 97bd76adc95a606d4b75b47025558ac7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Cell_Manager
+  - hash:
+      serializedVersion: 2
       Hash: 7ab0e790220bdca831fdd886b339039d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -321,7 +335,7 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
-      Hash: 47728589f8b7fdbc51de788668888ddf
+      Hash: f81f6ab278c866547cf7d87ad4d5a8a7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Level_Loader
@@ -483,6 +497,12 @@ ScriptsOnlyBuild:
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
+      Hash: 54667ee188a8a91db848176974c16356
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Open_Unit_Spawn_Menu
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -519,12 +539,6 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: ec79346d6301f13c0794dc03b6559c9c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Tile_Map_Manager
-  - hash:
-      serializedVersion: 2
       Hash: 20a2e82022a5c2f553b9ca556dbc6b9c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -541,12 +555,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: VerticalLayoutGroup
-  - hash:
-      serializedVersion: 2
-      Hash: 97bd76adc95a606d4b75b47025558ac7
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Cell_Manager
   - hash:
       serializedVersion: 2
       Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
@@ -589,6 +597,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: Physics2DRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: 9a743ca311e37924e2374ac89fa91b9e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Tile_Map_Manager
   - hash:
       serializedVersion: 2
       Hash: 64fd23de1f372c6b804f20982b06a2ca
@@ -669,12 +683,6 @@ ScriptsOnlyBuild:
     className: Health_Bar_On_Object
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Start_Up_Deactive
-  - hash:
-      serializedVersion: 2
       Hash: 138d49a724b70d5b7b12ff5197c5b1f5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -685,12 +693,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Unit_Movement
-  - hash:
-      serializedVersion: 2
-      Hash: 46452b1bebb9c81ac5287f6179193707
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Cell_Neighbours
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -721,6 +723,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ColorGradient
+  - hash:
+      serializedVersion: 2
+      Hash: 46452b1bebb9c81ac5287f6179193707
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Cell_Neighbours
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -771,7 +779,7 @@ ScriptsOnlyBuild:
     className: Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 4e2bb918f28555c4e0dc5e576c877792
+      Hash: 6bf09344fec744feec041cc0c0bbd07e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Interface_Controller
