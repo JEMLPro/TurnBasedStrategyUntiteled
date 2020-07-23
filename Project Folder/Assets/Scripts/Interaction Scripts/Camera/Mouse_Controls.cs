@@ -2,18 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//---------------------------------------------------------------------------------------------------------------------------\\
+// File Start
+//---------------------------------------------------------------------------------------------------------------------------\\
+
+/// <summary>
+/// This script will allow for additional mouse controls added onto the camera.
+/// </summary>
 public class Mouse_Controls : MonoBehaviour
 {
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // Data Members Start
+    //---------------------------------------------------------------------------------------------------------------------------\\
 
+    /// <summary>
+    /// This is the speed at which the mouse controls will occur at. 
+    /// </summary>
     [SerializeField]
     float m_fSpeed = 25;
 
+    /// <summary>
+    /// This is the minimum zoom for the camera. 
+    /// </summary>
     [SerializeField]
     Vector3 m_MinZoomValue;
 
+    /// <summary>
+    /// This is the maximum zoom for the camera.
+    /// </summary>
     [SerializeField]
     Vector3 m_MaxZoomValue;
 
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // Member Functions Start
+    //---------------------------------------------------------------------------------------------------------------------------\\
+
+    /// <summary>
+    /// This will happen at the start of the game, it will init a base set of min and max bounds for the camera. 
+    /// </summary>
     private void Start()
     {
         // At the start of the game assign a min and max zoom value for the attached camera. 

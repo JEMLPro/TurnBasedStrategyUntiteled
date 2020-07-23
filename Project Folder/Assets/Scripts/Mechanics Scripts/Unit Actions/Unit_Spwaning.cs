@@ -11,20 +11,34 @@ public class Unit_Spwaning : MonoBehaviour
 
     public GameObject m_SpawnMilitiaUnit(GameObject spawnCell)
     {
-        GameObject l_NewMilitiaUnit = Instantiate(m_BaseUnit);
+        // Militia cost will be a small amount of gold, to represent the small stats. This could be shown by them 
+        // having basic weapons or simple hand tools in their sprite models. 
 
-        float l_fNewAttack = Random.Range(10, 20); 
-        float l_fNewDefence = Random.Range(10, 20);
-        float l_fNewHitChance = Random.Range(90, 110);
-        float l_fNewSpeed = Random.Range(8, 16);
-        float l_fNewAttackRange = 1;
-        UnitType l_NewType = UnitType.Militia; 
+        const float l_fGoldCost = 3; /*!< \var This will be the gold cost required to spawn a new militia unit.  */ 
 
-        l_NewMilitiaUnit.GetComponent<Unit_Attack>().m_SetUnitStats(l_fNewAttack, l_fNewDefence, l_fNewHitChance, l_fNewSpeed, l_fNewAttackRange, l_NewType);
-        l_NewMilitiaUnit.GetComponent<Unit_Movement>().m_SetPosition(spawnCell);
+        // Check resource requirement before spawning. 
 
-        l_NewMilitiaUnit.name = "Militia";
+        if (gameObject.transform.parent.GetComponentInChildren<Resource_Management>().m_CheckGoldRequirement(l_fGoldCost))
+        {
+            gameObject.transform.parent.GetComponentInChildren<Resource_Management>().m_RemoveFromGold(l_fGoldCost); 
 
-        return l_NewMilitiaUnit; 
+            GameObject l_NewMilitiaUnit = Instantiate(m_BaseUnit);
+
+            float l_fNewAttack = Random.Range(10, 20);
+            float l_fNewDefence = Random.Range(10, 20);
+            float l_fNewHitChance = Random.Range(90, 110);
+            float l_fNewSpeed = Random.Range(8, 16);
+            float l_fNewAttackRange = 1;
+            UnitType l_NewType = UnitType.Militia;
+
+            l_NewMilitiaUnit.GetComponent<Unit_Attack>().m_SetUnitStats(l_fNewAttack, l_fNewDefence, l_fNewHitChance, l_fNewSpeed, l_fNewAttackRange, l_NewType);
+            l_NewMilitiaUnit.GetComponent<Unit_Movement>().m_SetPosition(spawnCell);
+
+            l_NewMilitiaUnit.name = "Militia";
+
+            return l_NewMilitiaUnit;
+        }
+
+        return null; 
     }
 }

@@ -17,7 +17,7 @@ public class Resource_Management : MonoBehaviour
     /// The iron will be needed to create weapons for the addition of new units.
     /// </summary>
     [SerializeField]
-    float m_fIron = 0;
+    float m_fIron = 10;
 
     /// <summary>
     /// This will be used to display the current iron value onto the screen. 
@@ -33,7 +33,7 @@ public class Resource_Management : MonoBehaviour
     /// If there is no food at the end of the turn the units affected will begin to lose health. 
     /// </summary>
     [SerializeField]
-    float m_fFood = 0;
+    float m_fFood = 10;
 
     /// <summary>
     /// This will display the current food value onto the screen. 
@@ -49,7 +49,7 @@ public class Resource_Management : MonoBehaviour
     /// If there is no gold then the buildings will slowly lose health. 
     /// </summary>
     [SerializeField]
-    float m_fGold = 0;
+    float m_fGold = 19;
 
     /// <summary>
     /// This will display the current gold value onto the screen. 
@@ -97,6 +97,28 @@ public class Resource_Management : MonoBehaviour
         }
 
         Debug.Log(removeAmount + " has been removed from iron, new value = " + m_fIron);
+
+        if (m_IronText != null)
+        {
+            string l_sText = "Iron : " + m_fIron.ToString();
+
+            m_IronText.text = l_sText;
+        }
+    }
+
+    /// <summary>
+    /// This will be used to ensure the player has enough iron to create the desired object. 
+    /// </summary>
+    /// <param name="ironNeeded">the amount needed for the creation of the object. </param>
+    /// <returns> True if there is enough of the resource | false if there isn't. </returns>
+    public bool m_CheckIronRequirement(float ironNeeded)
+    {
+        if(m_fIron - ironNeeded < 0)
+        {
+            return false;
+        }
+
+        return true; 
     }
 
     /// <summary>
@@ -146,12 +168,34 @@ public class Resource_Management : MonoBehaviour
     {
         m_fFood -= removeAmount;
 
-        if (m_fIron < 0)
+        if (m_fFood < 0)
         {
-            m_fIron = 0;
+            m_fFood = 0;
         }
 
         Debug.Log(removeAmount + " has been removed from food, new value = " + m_fFood);
+
+        if (m_FoodText != null)
+        {
+            string l_sText = "Food : " + m_fFood.ToString();
+
+            m_FoodText.text = l_sText;
+        }
+    }
+
+    /// <summary>
+    /// This will be used to ensure the player has enough food to create the desired object. 
+    /// </summary>
+    /// <param name="foodNeeded">the amount needed for the creation of the object. </param>
+    /// <returns> True if there is enough of the resource | false if there isn't. </returns>
+    public bool m_CheckFoodRequirement(float foodNeeded)
+    {
+        if (m_fFood - foodNeeded < 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -206,12 +250,34 @@ public class Resource_Management : MonoBehaviour
     {
         m_fGold -= removeAmount;
 
-        if (m_fIron < 0)
+        if (m_fGold < 0)
         {
-            m_fIron = 0;
+            m_fGold = 0;
         }
 
         Debug.Log(removeAmount + " has been removed from gold, new value = " + m_fGold);
+
+        if (m_GoldText != null)
+        {
+            string l_sText = "Gold : " + m_fGold.ToString();
+
+            m_GoldText.text = l_sText;
+        }
+    }
+
+    /// <summary>
+    /// This will be used to ensure the player has enough gold to create the desired object. 
+    /// </summary>
+    /// <param name="goldNeeded">the amount needed for the creation of the object. </param>
+    /// <returns> True if there is enough of the resource | false if there isn't. </returns>
+    public bool m_CheckGoldRequirement(float goldNeeded)
+    {
+        if (m_fGold - goldNeeded < 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>

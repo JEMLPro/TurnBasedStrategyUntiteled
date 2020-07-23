@@ -3,23 +3,72 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+//---------------------------------------------------------------------------------------------------------------------------\\
+// File Start
+//---------------------------------------------------------------------------------------------------------------------------\\
+
+/// <summary>
+/// This class is a main manageent script and will be attached to the game's Game Manager object. This will ensure that all 
+/// items in the game are initialized and loaded in the correct order. This is to ensure that everything is where it needs to 
+/// be before it is referenced. In addition it will also be the staging branch for connecting objects to their other components. 
+/// </summary>
 public class Start_Up_Script : Prefab_Loader
 {
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // Data Members Start
+    //---------------------------------------------------------------------------------------------------------------------------\\
+
+    /// <summary>
+    /// This is the turn manager and will maintain the turn based system within the game limiting player and AI turns. 
+    /// </summary>
     [SerializeField]
     GameObject m_TurnManager;
 
+    /// <summary>
+    /// This will manage the game map and the tiles within it, all levels will be loaded into here and manged within an 
+    /// object it controls. 
+    /// </summary>
     [SerializeField]
     GameObject m_LevelManager;
 
+    /// <summary>
+    /// This will hold references to all major UI elements within the game and through this object it will allow for the 
+    /// UI elements to be connected to all of the required places upon start-up along with new game setup. 
+    /// </summary>
     [SerializeField]
     GameObject m_UserInterfaceManager;
 
+    /// <summary>
+    /// This is the player object and is created when a new game is set up. it will have: a Unit manager, a Building manager 
+    /// and a Resource manager. All of these will be connected and the player will need to use these to beat the AI. 
+    /// </summary>
     [SerializeField]
     GameObject m_Player;
 
+    /// <summary>
+    /// This is a fully programmed player, it will aim to beat the player following it's strict programming, it will have the 
+    /// same resources the player has access to but acts independently. This is by all means a work in progress and the AI turns 
+    /// will 100% need to be tested many times to ensure a working order. 
+    /// 
+    /// The AI will work in a set of different ways, pathfinding which will control their units and where they will move to; 
+    /// combat analysis using the current climate within the game each unit may need to choose a target independenly of all others 
+    /// and this section will ensure each unit will act in it's best interest and finally repositioning and construction, this is 
+    /// to ensure the AI is building new buildings to keep up with demand of resources and is expanding in a proper way, as well as 
+    /// spawning new units. 
+    /// 
+    /// Future additions could include behaviour programming such as an aggressive AI or a defencive one. Things to consider. 
+    /// </summary>
     [SerializeField]
     GameObject m_AI;
 
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // Member Functions Start
+    //---------------------------------------------------------------------------------------------------------------------------\\
+
+    /// <summary>
+    /// This will be called upon start-up and will init all of the management scripts used for the game, it will also ensure the 
+    /// main menu will be working as intended. 
+    /// </summary>
     private void Start()
     {
         // This will be the start of the game and will initate all of the other items in the game. 
@@ -55,7 +104,7 @@ public class Start_Up_Script : Prefab_Loader
             Debug.LogError("Error code 0001-0 - Unable to load Turn Manager");
         }
 
-        // Loding the levels into the game. 
+        // Loading the levels into the game. 
 
         GameObject l_LevelManagerReference = m_ExportPrefabObject("Prefabs/Management_Prefabs/Level Manager", "Level Manager");
 
@@ -95,6 +144,9 @@ public class Start_Up_Script : Prefab_Loader
         }
     }
 
+    /// <summary>
+    /// This will be used to start a game, it will use the level selected from the level select menu to load. 
+    /// </summary>
     public void m_Begin()
     {
         if (m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_GetLoadNewLevel())
@@ -107,6 +159,10 @@ public class Start_Up_Script : Prefab_Loader
         Time.timeScale = 1;
     }
 
+    /// <summary>
+    /// This will be used to start a skirmish game, it will reset all of the current items before beginning. 
+    /// </summary>
+    /// <param name="level">The level selected and which to load.</param>
     private void m_StartSkirmishGame(int level)
     {
         // Delete all of the preveous items
@@ -445,6 +501,7 @@ public class Start_Up_Script : Prefab_Loader
         }
     }
 
-
-
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // File End
+    //---------------------------------------------------------------------------------------------------------------------------\\
 }

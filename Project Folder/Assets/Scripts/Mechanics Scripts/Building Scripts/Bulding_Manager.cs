@@ -69,11 +69,12 @@ public class Bulding_Manager : MonoBehaviour
 
                     if (building.GetComponent<Select_Building>().m_GetSelected() == true)
                     {
+                        if (m_Owner == CurrentTurn.player)
+                        {
+                            m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_HQSelected();
 
-                        m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_HQSelected();
-
-                        l_bSpawningBuildingSelected = true;
-
+                            l_bSpawningBuildingSelected = true;
+                        }
                     }
                 }
             }

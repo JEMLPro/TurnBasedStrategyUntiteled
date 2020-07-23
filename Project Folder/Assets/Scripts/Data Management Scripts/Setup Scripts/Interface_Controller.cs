@@ -3,31 +3,80 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//---------------------------------------------------------------------------------------------------------------------------\\
+// File Start
+//---------------------------------------------------------------------------------------------------------------------------\\
+
+/// <summary>
+/// This will be used to contain all UI elements and allow for them to be connected to the appropriate GameObjects within 
+/// the game. 
+/// </summary>
 public class Interface_Controller : MonoBehaviour
 {
-    [SerializeField]
-    Button m_EndTurnButton;
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // Data Members Start 
+    //---------------------------------------------------------------------------------------------------------------------------\\
 
-    [SerializeField]
-    GameObject m_RadialMenu;
+    // Other and Utility Elements \\ 
 
+    /// <summary>
+    /// This is the main canvas used by the UI to draw onto the screen. 
+    /// </summary>
     [SerializeField]
     RectTransform m_MainCanvas;
 
+    // In-Game UI Elements \\ 
+
+    /// <summary>
+    /// The End Turn button within the main game, this will be used for the player to end their turn. 
+    /// </summary>
+    [SerializeField]
+    Button m_EndTurnButton;
+
+    /// <summary>
+    /// This is the player's action menu, it will allow for the player to direct their units within the game. 
+    /// </summary>
+    [SerializeField]
+    GameObject m_RadialMenu;
+
+    /// <summary>
+    /// Once either of the HQs are destroyed this will be displayed and updated to display the correct info. 
+    /// </summary>
     [SerializeField]
     GameObject m_GameOverScreen;
 
-    [SerializeField]
-    GameObject m_LevelSelectDropdownMenu;
-
+    /// <summary>
+    /// This is the info panel which will display the important info to the player such as turn, and resource into.
+    /// </summary>
     [SerializeField]
     GameObject m_InfoPanel;
 
+    /// <summary>
+    /// This is a menu of buttons which will allow for the player to build new units within the game, differnt buttons 
+    /// will be displayed depending on which building has been selected. 
+    /// </summary>
     [SerializeField]
-    GameObject m_UnitBuildMenu; 
+    GameObject m_UnitBuildMenu;
+
+    // Menu UI Elements \\
+
+    /// <summary>
+    /// This is the level select dropdown list, it will contain a full list of all of the levels within the game, it will 
+    /// be populated upon start-up and is the player's main navigation for starting games as new option needs to be selected 
+    /// for a new game to start.
+    /// </summary>
+    [SerializeField]
+    GameObject m_LevelSelectDropdownMenu;
+
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // Member Functions Start
+    //---------------------------------------------------------------------------------------------------------------------------\\
 
     // Set up UI functionality. 
 
+    /// <summary>
+    /// This will be used to set up and linked all of the user interface items within the game. 
+    /// </summary>
     public void m_StartUp()
     {
         // Find Objects. 
@@ -88,6 +137,10 @@ public class Interface_Controller : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will be used to assign the functionality of the end turn button. 
+    /// </summary>
+    /// <param name="turnManager">The manager of the turn based system in the game. </param>
     public void m_SetEndTurnFunctionality(GameObject turnManager)
     {
         if (m_EndTurnButton != null)
@@ -106,11 +159,19 @@ public class Interface_Controller : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will be used to set up the player's info panel. 
+    /// </summary>
     public void m_SetUpInfoPanel()
     {
         m_InfoPanel.SetActive(true); 
     }
 
+    /// <summary>
+    /// This will be used to set up the unit spawning buttons. 
+    /// </summary>
+    /// <param name="playerUnitManager">The player's unit manager. </param>
+    /// <param name="playerBuildingManager">The player's building manager. </param>
     public void m_SetUpUnitSpanwing(GameObject playerUnitManager, GameObject playerBuildingManager)
     {
         m_UnitBuildMenu.SetActive(true); 
@@ -155,31 +216,65 @@ public class Interface_Controller : MonoBehaviour
 
     // Getters for UI elements 
 
+    /// <summary>
+    /// This will allow access to the Iron Text element. 
+    /// </summary>
+    /// <returns></returns>
     public Text m_GetIronText()
     {
         return GameObject.FindGameObjectWithTag("Iron_Text").GetComponentInChildren<Text>();
     }
 
+    /// <summary>
+    /// This will allow access to the Food Text element. 
+    /// </summary>
+    /// <returns></returns>
     public Text m_GetFoodText()
     {
         return GameObject.FindGameObjectWithTag("Food_Text").GetComponentInChildren<Text>();
     }
 
+    /// <summary>
+    /// This will allow access to the Gold Text element. 
+    /// </summary>
+    /// <returns></returns>
     public Text m_GetGoldText()
     {
         return GameObject.FindGameObjectWithTag("Gold_Text").GetComponentInChildren<Text>();
     }
 
+    /// <summary>
+    /// This will allow access to the player's radial action menu. 
+    /// </summary>
+    /// <returns></returns>
     public GameObject m_GetRadialMenu() => m_RadialMenu;
 
+    /// <summary>
+    /// This will allow access to the game over screen. 
+    /// </summary>
+    /// <returns></returns>
     public GameObject m_GetGameOverScreen() => m_GameOverScreen; 
 
+    /// <summary>
+    /// This will allow access to the main canvas for the game, which all of the other elements will be drawn onto. 
+    /// </summary>
+    /// <returns></returns>
     public RectTransform m_GetMainCanvas() => m_MainCanvas;
 
+    /// <summary>
+    /// This will allow access to the drop-down menu for the level select. 
+    /// </summary>
+    /// <returns></returns>
     public GameObject m_GetLevelSelectDropDown() => m_LevelSelectDropdownMenu;
 
+    /// <summary>
+    /// This will allow access to the unit build menu.
+    /// </summary>
+    /// <returns></returns>
     public GameObject m_GetUnitBuildMenu() => m_UnitBuildMenu;
 
-    
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // File End
+    //---------------------------------------------------------------------------------------------------------------------------\\
 
 }

@@ -50,7 +50,7 @@ public class Unit_Find_AtTarget1 : MonoBehaviour
                     if (l_SelectedUnit.GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(building.GetComponent<Building_Positioning>().m_GetPosition()) ==
                         l_SelectedUnit.GetComponent<Unit_Attack>().m_GetAttackRange())
                     {
-                        Debug.Log("Theres a Building within range");
+                        // Debug.Log("Theres a Building within range");
 
                         building.GetComponent<Select_Building>().m_SetWithinRange(true);
                     }

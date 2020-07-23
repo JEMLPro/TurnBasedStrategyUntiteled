@@ -2,21 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//---------------------------------------------------------------------------------------------------------------------------\\
+// File Start
+//---------------------------------------------------------------------------------------------------------------------------\\
+
+/// <summary>
+/// This will allow for the game camera to be attached to a game object and follow it. The main use for this script will be 
+/// to create a camera which follows a moving object. 
+/// </summary>
 public class Follow_Camera : MonoBehaviour
 {
-    [SerializeField]
-    GameObject m_FollowObject = null; /*!< This is the object the camera will follow. */ 
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // Data Members Start
+    //---------------------------------------------------------------------------------------------------------------------------\\
 
+    /// <summary>
+    /// This is the object the camera will be following. 
+    /// </summary>
     [SerializeField]
-    float m_fXOffset = 0; /*!< This is the offset for the X axis, will allow for camera positioning. */
+    GameObject m_FollowObject = null; 
 
+    /// <summary>
+    /// The X offset for the camera, used to position the camera in the correct place while the connected object is moving. 
+    /// </summary>
     [SerializeField]
-    float m_fYOffset = 0; /*!< This is the offset for the Y axis, will allow for camera positioning. */
+    float m_fXOffset = 0;
 
+    /// <summary>
+    /// The Y offset for the camera, used to position the camera in the correct place while the connected object is moving. 
+    /// </summary>
     [SerializeField]
-    float m_fZOffset = 0; /*!< This is the offset for the Z axis, will allow for camera positioning. */
+    float m_fYOffset = 0; 
 
-    // Update is called once per frame
+    /// <summary>
+    /// The Z offset for the camera, used to position the camera in the correct place while the connected object is moving. 
+    /// </summary>
+    [SerializeField]
+    float m_fZOffset = 0; 
+
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // Member Functions Start
+    //---------------------------------------------------------------------------------------------------------------------------\\
+
+    /// <summary>
+    /// This is called once per frame and will be used to update the position of the camera. 
+    /// </summary>
     void Update()
     {
         // If this game object is not at the target location, move to target location. 
@@ -31,4 +61,8 @@ public class Follow_Camera : MonoBehaviour
 
         }
     }
+
+    //---------------------------------------------------------------------------------------------------------------------------\\
+    // File End
+    //---------------------------------------------------------------------------------------------------------------------------\\
 }
