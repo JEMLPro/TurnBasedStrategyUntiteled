@@ -409,9 +409,11 @@ public class Unit_Manager : MonoBehaviour
                 // Reset Unit's Movememt points allowing for new movement.
                 unit.GetComponent<Unit_Movement>().m_ResetUsedPoints();
 
-                // Reset number of attacks
+                // Reset number of attacks.
                 unit.GetComponent<Unit_Attack>().m_SetNumberOfAttacks(1);
 
+                // Reset all waiting units. 
+                unit.GetComponent<Unit_Active>().m_SetWaiting(false);
             }
         }
     }
@@ -558,6 +560,8 @@ public class Unit_Manager : MonoBehaviour
     {
         if (m_GetSelectedUnit() != null)
         {
+            m_GetSelectedUnit().GetComponent<Unit_Active>().m_SetWaiting(true);
+
             if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
             {
                 m_Action = Action.Wait;
@@ -597,5 +601,53 @@ public class Unit_Manager : MonoBehaviour
         gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null); 
 
         // Debug.Log("Action Selected - Nothing");
+    }
+
+    public bool m_CheckAction(Action actionToCheck)
+    {
+        if (m_GetSelectedUnit() != null)
+        {
+            switch (actionToCheck)
+            {
+                case Action.Nothing:
+                    return false;
+
+                case Action.Wait:
+                    return true;
+
+                case Action.Attack:
+
+                    if (m_GetSelectedUnit().GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                case Action.Move:
+
+                    if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentMoveRange() > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                case Action.Build:
+
+                    // Todo Make build script. 
+
+                    break;
+
+                default:
+                    return false;
+            }
+        }
+
+        return false; 
     }
 }

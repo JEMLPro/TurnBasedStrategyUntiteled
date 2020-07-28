@@ -126,12 +126,87 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2428155701566143404}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &302966893 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2428155701532740259, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2428155701566143404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!108 &705507994 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 2428155701130774838, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
     type: 3}
   m_PrefabInstance: {fileID: 2428155701566143404}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &846967867 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2428155700096391875, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2428155701566143404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1797689164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2428155700536515055, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2428155701566143404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1797689165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797689164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153ea88ffe9a6134a9505d0779da5c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ManagedButtons:
+  - name: Wait
+    buttonElement: {fileID: 2073546897}
+  - name: Attack
+    buttonElement: {fileID: 302966893}
+  - name: Move
+    buttonElement: {fileID: 846967867}
+  - name: Build
+    buttonElement: {fileID: 2074092309}
+--- !u!114 &2073546897 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2428155700410005867, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2428155701566143404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2074092309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2428155700105068654, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2428155701566143404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2428155701566143404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -139,6 +214,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2428155700096391874, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_Name
+      value: Move Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428155700105068652, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_Name
+      value: Build Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428155700410005866, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Wait Button '
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428155701532740258, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
+        type: 3}
+      propertyPath: m_Name
+      value: Attack Button
+      objectReference: {fileID: 0}
     - target: {fileID: 2428155701594125609, guid: 60c3614f3b8e0b14cb7df0198a5ccc7f,
         type: 3}
       propertyPath: m_Name

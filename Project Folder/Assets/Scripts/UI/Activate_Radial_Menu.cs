@@ -94,6 +94,27 @@ public class Activate_Radial_Menu : MonoBehaviour
 
             m_PieMenu.anchoredPosition = l_NewPos;
         }
+
+        // Set active buttons
+
+        if(gameObject.GetComponent<Unit_Manager>().m_CheckAction(Action.Attack))
+        {
+            m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Attack").gameObject.SetActive(true);
+        }
+        else
+        {
+            m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Attack").gameObject.SetActive(false);
+        }
+
+        if (gameObject.GetComponent<Unit_Manager>().m_CheckAction(Action.Move))
+        {
+            m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Move").gameObject.SetActive(true);
+        }
+        else
+        {
+            m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Move").gameObject.SetActive(false);
+        }
+
     }
 
     private Vector2 WorldToCanvasPosition(RectTransform canvas, Camera camera, Vector3 position)
