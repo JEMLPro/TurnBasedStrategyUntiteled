@@ -243,6 +243,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_BuildingManager.GetComponent<Bulding_Manager>().m_SetTurnManager(m_TurnManager);
 
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SetTileMap(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject());
+
                 // Spawn starting buldings. 
 
                 l_BuildingManager.GetComponent<Bulding_Manager>().m_SpawnHQ(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.player, 0));
@@ -305,6 +307,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_UnitManager.AddComponent<Activate_Radial_Menu>();
 
+                l_UnitManager.AddComponent<Activate_Build_Menu>(); 
+
                 Debug.Log("Unit Manager Created and added to player");
 
                 // Load in basic unit
@@ -348,7 +352,7 @@ public class Start_Up_Script : Prefab_Loader
 
                 // Connect Radial menu to player. 
 
-                GameObject l_RadialMenuObj = m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetRadialMenu();
+                GameObject l_RadialMenuObj = m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetActionRadialMenu();
 
                 // Assign functions to the radial menu. 
 
@@ -357,7 +361,13 @@ public class Start_Up_Script : Prefab_Loader
 
                 // Connect unit spawnig to the spawn buttons. 
 
-                m_UserInterfaceManager.GetComponent<Interface_Controller>().m_SetUpUnitSpanwing(l_UnitManager, l_BuildingManager); 
+                m_UserInterfaceManager.GetComponent<Interface_Controller>().m_SetUpUnitSpanwing(l_UnitManager, l_BuildingManager, 
+                    m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetUnitBuildMenu().GetComponent<Open_Unit_Spawn_Menu>().m_GetButtons());
+
+                // Connect Building Spawn Menu.
+
+                m_Player.GetComponentInChildren<Activate_Build_Menu>().m_SetBuildMenu(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetBuildingBuildMenu());
+                m_Player.GetComponentInChildren<Activate_Build_Menu>().m_SetButtonFunctions(l_UnitManager, m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject(), l_BuildingManager);
 
                 // Connect game over screen. 
 

@@ -1,54 +1,111 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
+
+[SerializeField]
+public enum UnitTraningRating
+{
+    Simple = 0x101, 
+    Advanced = 0x201, 
+    Expert = 0x301
+}
+
+[System.Serializable]
+public struct ButtonVisibility
+{
+    public GameObject thisObject;
+
+    public UnitTraningRating visibilityRating; 
+}
 
 public class Open_Unit_Spawn_Menu : MonoBehaviour
 {
+    #region Data Members 
+
     [SerializeField]
     bool m_bopenMenu = false;
 
-    [SerializeField]
-    GameObject m_MilitiaButton;
+    [Header("Dynamic Creation Of Buttons")]
 
     [SerializeField]
-    GameObject m_EngineerButton;
+    List<string> m_sButtonOptions;
 
     [SerializeField]
-    GameObject m_SwordsmanButton;
+    List<ButtonVisibility> m_Buttons;
 
     [SerializeField]
-    GameObject m_LancerButton;
+    GameObject m_ButtonBackground;
 
     [SerializeField]
-    GameObject m_MarauderButton;
+    GameObject m_BasicButton;
+
+    #endregion
 
     private void Start()
     {
-        // Upon startup find all of the buttons if they are not already set. 
+        // Using the list of buttons create a set of buttons for each option. 
 
-        if(m_MilitiaButton == null)
+        if(m_sButtonOptions.Count > 0)
         {
-            m_MilitiaButton = GameObject.FindGameObjectWithTag("Militia_Button");
-        }
+            Debug.Log("\nThere are " + m_sButtonOptions.Count + " options for buttons. Creating now. \n");
 
-        if(m_EngineerButton == null)
-        {
-            m_EngineerButton = GameObject.FindGameObjectWithTag("Engineer_Button");
-        }
+            foreach (var option in m_sButtonOptions)
+            {
+                Debug.Log("\n Creating " + option + ",");
 
-        if(m_SwordsmanButton == null)
-        {
-            m_SwordsmanButton = GameObject.FindGameObjectWithTag("Swordsman_Button");
-        }
+                // Instantiate the button using a button prefab. 
+                GameObject l_Button = Instantiate(m_BasicButton);
 
-        if(m_LancerButton == null)
-        {
-            m_LancerButton = GameObject.FindGameObjectWithTag("Lancer_Button");
-        }
+                l_Button.AddComponent<LayoutElement>();
 
-        if(m_MarauderButton == null)
-        {
-            m_MarauderButton = GameObject.FindGameObjectWithTag("Marauder_Button");
+                // Give the button a name and a parent. 
+                l_Button.transform.SetParent(m_ButtonBackground.transform);
+                l_Button.name = option + " Button";
+
+                // Set the componentsto have the base properties. 
+
+                l_Button.GetComponentInChildren<Text>().text = option; //< Update the text displayed on the button. 
+
+                // Add The new button into the list of buttons. 
+
+                ButtonVisibility l_ComboButton = new ButtonVisibility();
+
+                l_ComboButton.thisObject = l_Button;
+
+                switch (option) //< Set the object's traning rating and the tag for the object.
+                {
+                    case "Militia":
+                        l_ComboButton.visibilityRating = UnitTraningRating.Simple;
+                        l_ComboButton.thisObject.tag = "Militia_Button";
+                        break;
+
+                    case "Engineer":
+                        l_ComboButton.visibilityRating = UnitTraningRating.Simple;
+                        l_ComboButton.thisObject.tag = "Engineer_Button";
+                        break;
+
+                    case "Swordsman":
+                        l_ComboButton.visibilityRating = UnitTraningRating.Advanced;
+                        l_ComboButton.thisObject.tag = "Swordsman_Button";
+                        break;
+
+                    case "Lancer":
+                        l_ComboButton.visibilityRating = UnitTraningRating.Advanced;
+                        l_ComboButton.thisObject.tag = "Lancer_Button";
+                        break;
+
+                    case "Marauder":
+                        l_ComboButton.visibilityRating = UnitTraningRating.Advanced;
+                        l_ComboButton.thisObject.tag = "Marauder_Button";
+                        break;
+
+                    default:
+                        break;
+                }
+
+                m_Buttons.Add(l_ComboButton); 
+            }
         }
 
         m_HideAll(); 
@@ -58,20 +115,37 @@ public class Open_Unit_Spawn_Menu : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        m_MilitiaButton.SetActive(true);
+        foreach (var button in m_Buttons)
+        {
+            if(button.visibilityRating == UnitTraningRating.Simple)
+            {
+                button.thisObject.SetActive(true); 
+            }
+        }
+    }
 
-        m_EngineerButton.SetActive(true);
+    public void m_BarracksSelected()
+    {
+        gameObject.SetActive(true);
+
+        foreach (var button in m_Buttons)
+        {
+            if (button.visibilityRating == UnitTraningRating.Advanced)
+            {
+                button.thisObject.SetActive(true);
+            }
+        }
     }
 
     public void m_HideAll()
     {
-        m_MilitiaButton.SetActive(false);
-        m_EngineerButton.SetActive(false);
-        m_SwordsmanButton.SetActive(false);
-        m_LancerButton.SetActive(false);
-        m_MarauderButton.SetActive(false);
-
         gameObject.SetActive(false);
+        
+        foreach (var button in m_Buttons)
+        {
+            button.thisObject.SetActive(false); 
+        }
+
     }
 
     public bool m_Visable()
@@ -83,4 +157,6 @@ public class Open_Unit_Spawn_Menu : MonoBehaviour
 
         return false;
     }
+
+    public List<ButtonVisibility> m_GetButtons() => m_Buttons; 
 }

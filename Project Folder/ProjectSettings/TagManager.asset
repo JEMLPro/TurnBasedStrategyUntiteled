@@ -17,7 +17,6 @@ TagManager:
   - Wait_Button
   - Attack_Button
   - Move_Button
-  - Build_button
   - AI_Manager
   - Game_Over_Screen
   - Level_Select_DropDown
@@ -33,6 +32,7 @@ TagManager:
   - Swordsman_Button
   - Lancer_Button
   - Marauder_Button
+  - Build_Button
   layers:
   - Default
   - TransparentFX

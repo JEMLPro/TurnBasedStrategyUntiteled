@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public enum BuildingToSpawn
+{
+    None = 0x500,
+    Farm = 0x501, 
+    IronMine = 0x502,
+    GoldMine = 0x503, 
+    Barracks = 0x504
+}
+
 /// <summary>
 /// This will be used to generate and control all building within the game. 
 /// </summary>
@@ -22,6 +32,9 @@ public class Bulding_Manager : MonoBehaviour
     [SerializeField]
     CurrentTurn m_Owner = CurrentTurn.player;
 
+    [SerializeField]
+    BuildingToSpawn m_CurrentBuildingToSPawn = BuildingToSpawn.None;  
+
     /// <summary>
     /// This is the list of all building objects managed by this controller, they will be operated based on their 
     /// attached tags.
@@ -41,7 +54,9 @@ public class Bulding_Manager : MonoBehaviour
     bool m_bResetOnce = false;
 
     [SerializeField]
-    GameObject m_UnitBuildMenu; 
+    GameObject m_UnitBuildMenu;
+
+    GameObject m_TileMap; 
 
     // Member Functions Start \\
 
@@ -103,6 +118,53 @@ public class Bulding_Manager : MonoBehaviour
         if(m_CheckTurn() == true)
         {
             m_bResetOnce = true;
+
+            if(transform.parent.GetComponentInChildren<Unit_Manager>().m_GetSelectedUnit() != null)
+            {
+                if(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false) != null)
+                {
+                    Debug.Log("Cell Selected");
+
+                    if (m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false).GetComponent<Cell_Manager>().
+                        m_Distance(transform.parent.GetComponentInChildren<Unit_Manager>().m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition()) == 1)
+                    {
+                        Debug.Log("Cell within placing range");
+
+                        if (m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false).GetComponent<Cell_Manager>().m_CanBeMovedTo())
+                        {
+
+                            Debug.Log("Cell Can be moved to");
+
+                            if (m_CurrentBuildingToSPawn != BuildingToSpawn.None)
+                            {
+                                switch (m_CurrentBuildingToSPawn)
+                                {
+                                    case BuildingToSpawn.Farm:
+                                        m_SpawnFarm(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
+                                        break;
+                                    case BuildingToSpawn.IronMine:
+                                        m_SpawnIronMine(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
+                                        break;
+                                    case BuildingToSpawn.GoldMine:
+                                        m_SpawnGoldMine(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
+                                        break;
+                                    case BuildingToSpawn.Barracks:
+
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Unable to move to that location, so a building cannot be placed there.");
+                        }
+                    }
+
+                    Debug.LogWarning("Cell out of range"); 
+                }
+            }
         }
         else
         {
@@ -179,6 +241,8 @@ public class Bulding_Manager : MonoBehaviour
     public void m_SetResourceManager(GameObject resourceManager) { m_ResourceManager = resourceManager; }
 
     public void m_SetUnitBuildMenu(GameObject unitMenu) { m_UnitBuildMenu = unitMenu; }
+
+    public void m_SetTileMap(GameObject tileMap) { m_TileMap = tileMap; }
 
     /// <summary>
     /// This will be used to assign the base building for the game, will be needed to assign all buildings 
@@ -418,6 +482,201 @@ public class Bulding_Manager : MonoBehaviour
         {
             Debug.LogError("Unable to spawn Gold Mine - Basic building not found.");
         }
+    }
+
+    public void m_SpawnFarm(GameObject cellToSpawn, float ironCost, float goldCost)
+    {
+        if (m_BasicBuilding != null)
+        {
+            if (cellToSpawn != null)
+            {
+                // Check cost requirements
+
+                if (m_ResourceManager.GetComponent<Resource_Management>().m_CheckIronRequirement(ironCost) &&
+                    m_ResourceManager.GetComponent<Resource_Management>().m_CheckGoldRequirement(goldCost))
+                {
+
+                    m_ResourceManager.GetComponent<Resource_Management>().m_RemoveFromIron(ironCost);
+                    m_ResourceManager.GetComponent<Resource_Management>().m_RemoveFromGold(goldCost);
+
+                    GameObject l_TempFarm = Instantiate(m_BasicBuilding, cellToSpawn.transform.position, Quaternion.identity);
+
+                    if (l_TempFarm != null)
+                    {
+                        // Update position. 
+
+                        l_TempFarm.GetComponent<Building_Positioning>().m_SetPosition(cellToSpawn);
+
+                        // Update Hierarchy 
+
+                        l_TempFarm.transform.parent = gameObject.transform;
+
+                        // Change Name. 
+
+                        l_TempFarm.name = "Farm";
+
+                        // Assign Tag
+
+                        l_TempFarm.tag = "Farm_Building";
+
+                        // Update Health of object.
+
+                        l_TempFarm.GetComponent<Health_Management>().m_SetMaxHealth(100);
+
+                        // Add to list. 
+
+                        m_BuildingList.Add(l_TempFarm);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Unable to spawn Farm - Error instantiating.");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Unable to spawn Farm - Not enough resources");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Unable to spawn Farm - Spawn location not found.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Unable to spawn Farm - Basic building not found.");
+        }
+    }
+
+    public void m_SpawnIronMine(GameObject cellToSpawn, float ironCost, float goldCost)
+    {
+        if (m_BasicBuilding != null)
+        {
+            if (cellToSpawn != null)
+            {
+                if (m_ResourceManager.GetComponent<Resource_Management>().m_CheckIronRequirement(ironCost) &&
+                    m_ResourceManager.GetComponent<Resource_Management>().m_CheckGoldRequirement(goldCost))
+                {
+
+                    m_ResourceManager.GetComponent<Resource_Management>().m_RemoveFromIron(ironCost);
+                    m_ResourceManager.GetComponent<Resource_Management>().m_RemoveFromGold(goldCost);
+
+
+                    GameObject l_TempIronMine = Instantiate(m_BasicBuilding, cellToSpawn.transform.position, Quaternion.identity);
+
+                    if (l_TempIronMine != null)
+                    {
+                        // Update position. 
+
+                        l_TempIronMine.GetComponent<Building_Positioning>().m_SetPosition(cellToSpawn);
+
+                        // Update Hierarchy 
+
+                        l_TempIronMine.transform.parent = gameObject.transform;
+
+                        // Change Name. 
+
+                        l_TempIronMine.name = "Iron Mine";
+
+                        // Assign Tag
+
+                        l_TempIronMine.tag = "Iron_Mine";
+
+                        // Update Health of object.
+
+                        l_TempIronMine.GetComponent<Health_Management>().m_SetMaxHealth(100);
+
+                        // Add to list. 
+
+                        m_BuildingList.Add(l_TempIronMine);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Unable to spawn Iron Mine - Error instantiating.");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Unable to spawn Iron Mine - Not enough resources");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Unable to spawn Iron Mine - Spawn location not found.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Unable to spawn Iron Mine - Basic building not found.");
+        }
+    }
+
+    public void m_SpawnGoldMine(GameObject cellToSpawn, float ironCost, float goldCost)
+    {
+        if (m_BasicBuilding != null)
+        {
+            if (cellToSpawn != null)
+            {
+                if (m_ResourceManager.GetComponent<Resource_Management>().m_CheckIronRequirement(ironCost) &&
+                    m_ResourceManager.GetComponent<Resource_Management>().m_CheckGoldRequirement(goldCost))
+                {
+
+                    m_ResourceManager.GetComponent<Resource_Management>().m_RemoveFromIron(ironCost);
+                    m_ResourceManager.GetComponent<Resource_Management>().m_RemoveFromGold(goldCost);
+
+
+                    GameObject l_TempGoldMine = Instantiate(m_BasicBuilding, cellToSpawn.transform.position, Quaternion.identity);
+
+                    if (l_TempGoldMine != null)
+                    {
+                        // Update position. 
+
+                        l_TempGoldMine.GetComponent<Building_Positioning>().m_SetPosition(cellToSpawn);
+
+                        // Update Hierarchy 
+
+                        l_TempGoldMine.transform.parent = gameObject.transform;
+
+                        // Change Name. 
+
+                        l_TempGoldMine.name = "Gold Mine";
+
+                        // Assign Tag
+
+                        l_TempGoldMine.tag = "Gold_Mine";
+
+                        // Update object health. 
+
+                        l_TempGoldMine.GetComponent<Health_Management>().m_SetMaxHealth(100);
+
+                        // Add to list. 
+
+                        m_BuildingList.Add(l_TempGoldMine);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Unable to spawn Gold Mine - Error instantiating.");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Unable to spawn Gold Mine - Not enough resources");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Unable to spawn Gold Mine - Spawn location not found.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Unable to spawn Gold Mine - Basic building not found.");
+        }
+    }
+
+    public void m_SetBuildingToSpawn(BuildingToSpawn nextBuilding)
+    {
+        m_CurrentBuildingToSPawn = nextBuilding; 
     }
 
     public GameObject m_GetSpawnPointForNewSpawnedUnit()

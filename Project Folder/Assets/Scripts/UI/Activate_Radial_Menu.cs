@@ -69,6 +69,21 @@ public class Activate_Radial_Menu : MonoBehaviour
 
                     break;
 
+                case "Build_Button":
+
+                    Debug.Log(button.tag + " Found");
+
+                    if (button.GetComponentInChildren<Button>())
+                    {
+                        button.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
+
+                        button.GetComponentInChildren<Button>().onClick.AddListener(delegate { unitManager.GetComponent<Unit_Manager>().m_SetActionBuild(); });
+
+                        Debug.Log("Button functionality assiggned");
+                    }
+
+                    break;
+
                 default:
 
                     Debug.Log(button.tag + " Found - Undefined functionality. ");
@@ -95,9 +110,11 @@ public class Activate_Radial_Menu : MonoBehaviour
             m_PieMenu.anchoredPosition = l_NewPos;
         }
 
-        // Set active buttons
+        #region Set active buttons
+        
+        // This will be used to only display the buttons which the player will be able to use. 
 
-        if(gameObject.GetComponent<Unit_Manager>().m_CheckAction(Action.Attack))
+        if (gameObject.GetComponent<Unit_Manager>().m_CheckAction(Action.Attack))
         {
             m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Attack").gameObject.SetActive(true);
         }
@@ -115,6 +132,7 @@ public class Activate_Radial_Menu : MonoBehaviour
             m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Move").gameObject.SetActive(false);
         }
 
+        #endregion
     }
 
     private Vector2 WorldToCanvasPosition(RectTransform canvas, Camera camera, Vector3 position)

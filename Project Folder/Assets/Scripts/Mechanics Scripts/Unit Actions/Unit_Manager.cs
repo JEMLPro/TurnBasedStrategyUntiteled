@@ -81,11 +81,13 @@ public class Unit_Manager : MonoBehaviour
     /// The current action which should be processed, the list includes: Wait, Move, Attack and build. each with their own functionality.
     /// </summary>
     [SerializeField]
-    Action m_Action; 
+    Action m_Action;
 
     //----------------------------------------------------------------------------------------------------------------------------
     //  Member Functions Start 
     //----------------------------------------------------------------------------------------------------------------------------
+
+    #region Member Functions
 
     /// <summary>
     /// When this script is first instantiated this will be called. 
@@ -161,15 +163,15 @@ public class Unit_Manager : MonoBehaviour
                             switch (m_Action)
                             {
                                 case Action.Wait:
-
+                                    #region Attack Action
                                     m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UnitWait();
 
                                     m_SetActionNull();
-
+                                    #endregion
                                     break;
 
                                 case Action.Attack:
-
+                                    #region Attack Action
                                     if (m_GetSelectedUnit().GetComponent<Unit_Attack>().m_GetNumberOfAttacks() > 0)
                                     {
                                         gameObject.GetComponent<Unit_Find_AtTarget1>().m_AtRangeFinder();
@@ -202,19 +204,25 @@ public class Unit_Manager : MonoBehaviour
                                     {
                                         m_SetActionNull();
                                     }
-
+                                    #endregion
                                     break;
 
                                 // Update Unit Position. 
                                 case Action.Move:
+                                    #region Move Action 
                                     // Debug.Log("Move");
 
                                     m_UpdateUnitPosition();
                                     m_GameMap.GetComponent<Tile_Map_Manager>().m_SetSelectable(true);
-
+                                    #endregion
                                     break;
 
                                 case Action.Build:
+                                    #region Build Action 
+
+                                    
+
+                                    #endregion
                                     break;
 
                                 default:
@@ -256,6 +264,8 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    #region Owner/Turn Management
+
     /// <summary>
     /// This will be used to check if this is the owner's turn. 
     /// </summary>
@@ -270,7 +280,11 @@ public class Unit_Manager : MonoBehaviour
         return false; 
     }
 
-    // Unit Management. 
+    public void m_SetTurnManager(GameObject turnManager) { m_TurnManager = turnManager; }
+
+    #endregion
+
+    #region Unit Management
 
     /// <summary>
     /// This will be used to update a single unit's position on the game map. This is activated using the movement action.
@@ -533,9 +547,9 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
-    public void m_SetTurnManager(GameObject turnManager) { m_TurnManager = turnManager; }
+    #endregion
 
-    // Action Management. 
+    #region Action Management
 
     // This will be ued to set the new action.
     public void m_SetActionMove()
@@ -601,6 +615,33 @@ public class Unit_Manager : MonoBehaviour
         gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null); 
 
         // Debug.Log("Action Selected - Nothing");
+
+        // Close build menu if open. 
+
+        if(gameObject.GetComponent<Activate_Build_Menu>().m_ActiveBuildMenu())
+        {
+            gameObject.GetComponent<Activate_Build_Menu>().m_SetBuildMenu(false);
+        }
+    }
+
+    public void m_SetActionBuild()
+    {
+        if (m_GetSelectedUnit() != null)
+        {
+            // Update Selected action. 
+            m_Action = Action.Build;
+
+            // Hide Action menu. 
+            gameObject.GetComponent<Activate_Radial_Menu>().m_ActivateMenu(null, false);
+
+            m_bActionSelected = true;
+
+            Debug.Log("Action Selected - Build");
+
+            // Show Build Menu
+
+            gameObject.GetComponent<Activate_Build_Menu>().m_SetBuildMenu(true); 
+        }
     }
 
     public bool m_CheckAction(Action actionToCheck)
@@ -650,4 +691,8 @@ public class Unit_Manager : MonoBehaviour
 
         return false; 
     }
+
+    #endregion
+
+    #endregion
 }

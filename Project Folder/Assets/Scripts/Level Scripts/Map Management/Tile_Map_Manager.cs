@@ -439,6 +439,24 @@ public class Tile_Map_Manager : MonoBehaviour
         return null; 
     }
 
+    public GameObject m_GetSelectedCell(bool resetCell)
+    {
+        foreach (var cell in m_Grid)
+        {
+            if (cell.GetComponent<Object_Selection>().m_bGetObjectSelected() == true)
+            {
+                if (resetCell)
+                {
+                    cell.GetComponent<Object_Selection>().m_SetObjectSelected(false);
+                }
+
+                return cell;
+            }
+        }
+
+        return null;
+    }
+
     public GameObject m_GetRandomCell()
     {
         if(m_Grid.Count <= 0)

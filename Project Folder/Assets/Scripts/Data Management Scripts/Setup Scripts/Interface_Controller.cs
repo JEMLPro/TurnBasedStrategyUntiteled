@@ -17,6 +17,8 @@ public class Interface_Controller : MonoBehaviour
     // Data Members Start 
     //---------------------------------------------------------------------------------------------------------------------------\\
 
+    #region Data Members
+
     // Other and Utility Elements \\ 
 
     /// <summary>
@@ -27,23 +29,13 @@ public class Interface_Controller : MonoBehaviour
 
     // In-Game UI Elements \\ 
 
+    #region Player Interaction
+
     /// <summary>
     /// The End Turn button within the main game, this will be used for the player to end their turn. 
     /// </summary>
     [SerializeField]
     Button m_EndTurnButton;
-
-    /// <summary>
-    /// This is the player's action menu, it will allow for the player to direct their units within the game. 
-    /// </summary>
-    [SerializeField]
-    GameObject m_RadialMenu;
-
-    /// <summary>
-    /// Once either of the HQs are destroyed this will be displayed and updated to display the correct info. 
-    /// </summary>
-    [SerializeField]
-    GameObject m_GameOverScreen;
 
     /// <summary>
     /// This is the info panel which will display the important info to the player such as turn, and resource into.
@@ -58,6 +50,26 @@ public class Interface_Controller : MonoBehaviour
     [SerializeField]
     GameObject m_UnitBuildMenu;
 
+    /// <summary>
+    /// This will allow access to the building menu the player has access to. 
+    /// </summary>
+    [SerializeField]
+    GameObject m_BuildingBuildMenu; 
+
+    /// <summary>
+    /// This is the player's action menu, it will allow for the player to direct their units within the game. 
+    /// </summary>
+    [SerializeField]
+    GameObject m_ActionRadialMenu;
+
+    #endregion
+
+    /// <summary>
+    /// Once either of the HQs are destroyed this will be displayed and updated to display the correct info. 
+    /// </summary>
+    [SerializeField]
+    GameObject m_GameOverScreen;
+
     // Menu UI Elements \\
 
     /// <summary>
@@ -68,11 +80,15 @@ public class Interface_Controller : MonoBehaviour
     [SerializeField]
     GameObject m_LevelSelectDropdownMenu;
 
+    #endregion
+
     //---------------------------------------------------------------------------------------------------------------------------\\
     // Member Functions Start
     //---------------------------------------------------------------------------------------------------------------------------\\
 
     // Set up UI functionality. 
+
+    #region Member Functions 
 
     /// <summary>
     /// This will be used to set up and linked all of the user interface items within the game. 
@@ -96,11 +112,11 @@ public class Interface_Controller : MonoBehaviour
 
         }
 
-        if (m_RadialMenu == null)
+        if (m_ActionRadialMenu == null)
         {
             Debug.Log("Finding Action Radial Menu.");
 
-            m_RadialMenu = GameObject.FindGameObjectWithTag("Action_Radial_Menu");
+            m_ActionRadialMenu = GameObject.FindGameObjectWithTag("Action_Radial_Menu");
         }
 
         if(m_GameOverScreen == null)
@@ -138,6 +154,14 @@ public class Interface_Controller : MonoBehaviour
     }
 
     /// <summary>
+    /// This will allow access to the main canvas for the game, which all of the other elements will be drawn onto. 
+    /// </summary>
+    /// <returns></returns>
+    public RectTransform m_GetMainCanvas() => m_MainCanvas;
+
+    #region Turn Transition Elements 
+
+    /// <summary>
     /// This will be used to assign the functionality of the end turn button. 
     /// </summary>
     /// <param name="turnManager">The manager of the turn based system in the game. </param>
@@ -159,62 +183,127 @@ public class Interface_Controller : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// This will be used to set up the player's info panel. 
-    /// </summary>
-    public void m_SetUpInfoPanel()
-    {
-        m_InfoPanel.SetActive(true); 
-    }
+    #endregion
+
+    #region Unit Spawning Elements
 
     /// <summary>
     /// This will be used to set up the unit spawning buttons. 
     /// </summary>
     /// <param name="playerUnitManager">The player's unit manager. </param>
     /// <param name="playerBuildingManager">The player's building manager. </param>
-    public void m_SetUpUnitSpanwing(GameObject playerUnitManager, GameObject playerBuildingManager)
+    public void m_SetUpUnitSpanwing(GameObject playerUnitManager, GameObject playerBuildingManager, List<ButtonVisibility> listOfButtons)
     {
-        m_UnitBuildMenu.SetActive(true); 
+        m_UnitBuildMenu.SetActive(true);
 
-        GameObject l_buttonOfFocus = null;
-
-        // Setup militia spawing 
-
-        l_buttonOfFocus = GameObject.FindGameObjectWithTag("Militia_Button");
-
-        if (l_buttonOfFocus != null)
+        if (listOfButtons.Count > 0)
         {
-            l_buttonOfFocus.GetComponent<Button>().onClick.RemoveAllListeners();
-
-            l_buttonOfFocus.GetComponent<Button>().onClick.AddListener(delegate
+            foreach (var button in listOfButtons)
             {
 
-                GameObject l_NewUnit = null;
+                GameObject l_buttonOfFocus = null;
 
-                GameObject l_SpawnPoint = playerBuildingManager.GetComponent<Bulding_Manager>().m_GetSpawnPointForNewSpawnedUnit();
-
-                if (l_SpawnPoint != null)
+                switch (button.thisObject.tag)
                 {
-                    l_NewUnit = playerUnitManager.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(l_SpawnPoint);
+                    case "Militia_Button":
+                        #region Militia Button Setup
 
-                    if (l_NewUnit != null)
-                    {
-                        playerUnitManager.GetComponent<Unit_Manager>().m_AddUnitIntoList(l_NewUnit);
-                    }
+                        // Update the button of focus to this the next button with this new tag. 
+                        l_buttonOfFocus = button.thisObject;
+
+                        if (l_buttonOfFocus != null) //< If the button exists. 
+                        {
+                            // Reset the button to ensure unintended things don't happen. 
+                            l_buttonOfFocus.GetComponent<Button>().onClick.RemoveAllListeners();
+
+                            // Add the button functionality. 
+                            l_buttonOfFocus.GetComponent<Button>().onClick.AddListener(delegate
+                            {
+
+                                GameObject l_NewUnit = null; //< Create the new unit to spawn. 
+
+                                // Find the spawn point for the new unit. 
+                                GameObject l_SpawnPoint = playerBuildingManager.GetComponent<Bulding_Manager>().m_GetSpawnPointForNewSpawnedUnit();
+
+                                // Check the viability of the spawn point. 
+                                if (l_SpawnPoint != null)
+                                {
+                                    // Give the new unit form, stats and class. 
+                                    l_NewUnit = playerUnitManager.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(l_SpawnPoint);
+
+                                    if (l_NewUnit != null)
+                                    {
+                                        // Add the newly spawned unit into the unit manager. 
+                                        playerUnitManager.GetComponent<Unit_Manager>().m_AddUnitIntoList(l_NewUnit);
+                                    }
+                                }
+                                else
+                                {
+                                    Debug.Log("No Free Spawn Points"); // Debugging \\ 
+                                }
+                            });
+                        }
+                        else
+                        {
+                            // Debugging \\
+
+                            Debug.LogError("Error code 1010-0 - Problem setting up the button 'Militia Button'."); 
+                        }
+                        #endregion
+                        break;
+
+                    case "Engineer_Button":
+                        #region Engineer Button Setup
+                        #endregion
+                        break;
+
+                    case "Swordsman_Button":
+                        #region Swordsman Button Setup
+                        #endregion
+                        break;
+
+                    case "Lancer_Button":
+                        #region Lancer Button Setup
+                        #endregion
+                        break;
+
+                    case "Marauder_Button":
+                        #region Marauder Button Setup
+                        #endregion
+                        break;
+
+                    default:
+                        break;
                 }
-                else
-                {
-                    Debug.Log("No Free Spawn Points"); 
-                }
-            });
-        }
-        else
-        {
-            Debug.LogError("Error code 1010-0 - Problem setting up the button 'Militia Button'.");
+
+                
+            }
         }
     }
 
-    // Getters for UI elements 
+    /// <summary>
+    /// This will allow access to the unit build menu.
+    /// </summary>
+    /// <returns></returns>
+    public GameObject m_GetUnitBuildMenu() => m_UnitBuildMenu;
+
+    #endregion
+
+    #region Building Spawning Elements
+
+    public GameObject m_GetBuildingBuildMenu() => m_BuildingBuildMenu; 
+
+    #endregion
+
+    #region Resource elements
+
+    /// <summary>
+    /// This will be used to set up the player's info panel. 
+    /// </summary>
+    public void m_SetUpInfoPanel()
+    {
+        m_InfoPanel.SetActive(true);
+    }
 
     /// <summary>
     /// This will allow access to the Iron Text element. 
@@ -243,23 +332,26 @@ public class Interface_Controller : MonoBehaviour
         return GameObject.FindGameObjectWithTag("Gold_Text").GetComponentInChildren<Text>();
     }
 
+    #endregion
+
+    #region Action Elements
+
     /// <summary>
     /// This will allow access to the player's radial action menu. 
     /// </summary>
     /// <returns></returns>
-    public GameObject m_GetRadialMenu() => m_RadialMenu;
+    public GameObject m_GetActionRadialMenu() => m_ActionRadialMenu;
+
+    #endregion
+
+    #region Menu Elements 
 
     /// <summary>
     /// This will allow access to the game over screen. 
     /// </summary>
     /// <returns></returns>
-    public GameObject m_GetGameOverScreen() => m_GameOverScreen; 
+    public GameObject m_GetGameOverScreen() => m_GameOverScreen;
 
-    /// <summary>
-    /// This will allow access to the main canvas for the game, which all of the other elements will be drawn onto. 
-    /// </summary>
-    /// <returns></returns>
-    public RectTransform m_GetMainCanvas() => m_MainCanvas;
 
     /// <summary>
     /// This will allow access to the drop-down menu for the level select. 
@@ -267,11 +359,10 @@ public class Interface_Controller : MonoBehaviour
     /// <returns></returns>
     public GameObject m_GetLevelSelectDropDown() => m_LevelSelectDropdownMenu;
 
-    /// <summary>
-    /// This will allow access to the unit build menu.
-    /// </summary>
-    /// <returns></returns>
-    public GameObject m_GetUnitBuildMenu() => m_UnitBuildMenu;
+
+    #endregion
+
+    #endregion
 
     //---------------------------------------------------------------------------------------------------------------------------\\
     // File End
