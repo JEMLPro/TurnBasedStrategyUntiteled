@@ -132,6 +132,15 @@ public class Activate_Radial_Menu : MonoBehaviour
             m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Move").gameObject.SetActive(false);
         }
 
+        if (gameObject.GetComponent<Unit_Manager>().m_CheckAction(Action.Build))
+        {
+            m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Build").gameObject.SetActive(true);
+        }
+        else
+        {
+            m_RadialMenu.GetComponent<Button_Manager>().m_GetButton("Build").gameObject.SetActive(false);
+        }
+
         #endregion
     }
 

@@ -680,9 +680,14 @@ public class Unit_Manager : MonoBehaviour
 
                 case Action.Build:
 
-                    // Todo Make build script. 
-
-                    break;
+                    if (m_GetSelectedUnit().GetComponent<Unit_Attack>().m_GetUnitType() == UnitType.Engineer)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
                 default:
                     return false;

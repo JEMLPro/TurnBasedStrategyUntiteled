@@ -11,6 +11,7 @@ public enum UnitType
     Sword, // has high speed and hit chance but low defence and attack power. 
     Axe, // Has high attack power yet low hit chance and defence. 
     Bow, // Has low stats but has an attack range of two allowing for it to attack at a distance. 
+    Engineer // Has low stats but is able to create new buildings. 
 }
 
 /*! \class This will manage the attacking and combat resolution during the player's turn. */
@@ -217,6 +218,8 @@ public class Unit_Attack : MonoBehaviour
         m_fAttackRange = attackRange;
         m_UnitType = type; 
     }
+
+    public UnitType m_GetUnitType() => m_UnitType;
 
     private void OnMouseOver()
     {

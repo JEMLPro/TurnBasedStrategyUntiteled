@@ -323,7 +323,15 @@ public class Start_Up_Script : Prefab_Loader
 
                 foreach (var Cell in l_BuildingManager.GetComponent<Bulding_Manager>().m_GetHQObject().GetComponent<Building_Positioning>().m_GetPosition().GetComponent<Cell_Neighbours>().m_GetCellNeighbours())
                 {
-                    l_UnitManager.GetComponent<Unit_Manager>().m_AddUnitIntoList((l_UnitManager.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(Cell)));
+                    // The first unit spawned should always be an engineer, allowing for the player to create new buildings from thestart of the game.
+                    if (l_iNumberOfSpawnedUnits == 0)
+                    {
+                        l_UnitManager.GetComponent<Unit_Manager>().m_AddUnitIntoList((l_UnitManager.GetComponent<Unit_Spwaning>().m_SpawnEngineerUnit(Cell)));
+                    }
+                    else
+                    {
+                        l_UnitManager.GetComponent<Unit_Manager>().m_AddUnitIntoList((l_UnitManager.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(Cell)));
+                    }
 
                     l_iNumberOfSpawnedUnits++;
                 }
@@ -483,8 +491,16 @@ public class Start_Up_Script : Prefab_Loader
                 int l_iNumberOfSpawnedUnits = 0;
 
                 foreach (var Cell in l_AIBuildingManager.GetComponent<Bulding_Manager>().m_GetHQObject().GetComponent<Building_Positioning>().m_GetPosition().GetComponent<Cell_Neighbours>().m_GetCellNeighbours())
-                {
-                    l_AIUnitManager.GetComponent<AI_Unit_Manager>().m_AddUnitIntoList((l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(Cell)));
+                { 
+                    // The first unit spawned should always be an engineer, allowing for the player to create new buildings from thestart of the game.
+                    if (l_iNumberOfSpawnedUnits == 0)
+                    {
+                        l_AIUnitManager.GetComponent<Unit_Manager>().m_AddUnitIntoList((l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SpawnEngineerUnit(Cell)));
+                    }
+                    else
+                    {
+                        l_AIUnitManager.GetComponent<Unit_Manager>().m_AddUnitIntoList((l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SpawnMilitiaUnit(Cell)));
+                    }
 
                     l_iNumberOfSpawnedUnits++;
                 }
