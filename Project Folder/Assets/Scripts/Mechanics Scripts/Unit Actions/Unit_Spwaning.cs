@@ -2,13 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class will handle the spawning of the new units into the game. 
+/// </summary>
 public class Unit_Spwaning : MonoBehaviour
 {
+    #region Data Members
+
+    /// <summary>
+    /// This is the base prefab for a unit, this will allow for all of the other units to be spawned using a single base. 
+    /// </summary>
     [SerializeField]
     GameObject m_BaseUnit = null;
-    
+
+    #endregion
+
+    #region Member Functions 
+
+    /// <summary>
+    /// This will be used to assign the basic unit variale, storing this locally. 
+    /// </summary>
+    /// <param name="newPrefab">The prefab object used to create all other units. </param>
     public void m_SetBaseUnit(GameObject newPrefab) { m_BaseUnit = newPrefab; }
 
+    #region Units To Spawn
+
+    /// <summary>
+    /// This will spawn a militia unit onto the spawn cell prvided into this function. The militia is the weakest unit in the game, but 
+    /// is the cheapest unit to spawn. 
+    /// </summary>
+    /// <param name="spawnCell">The cell the unit will be spawned onto. </param>
+    /// <returns>The newly spawned unit to be added into the unit list. </returns>
     public GameObject m_SpawnMilitiaUnit(GameObject spawnCell)
     {
         // Militia cost will be a small amount of gold, to represent the small stats. This could be shown by them 
@@ -42,6 +66,11 @@ public class Unit_Spwaning : MonoBehaviour
         return null; 
     }
 
+    /// <summary>
+    /// This will spawn an engineer unit. The engineer is the main unit which can build within the game. 
+    /// </summary>
+    /// <param name="spawnCell">The cell the unit will be spawned onto. </param>
+    /// <returns>The newly spawned unit to be added into the unit list. </returns>
     public GameObject m_SpawnEngineerUnit(GameObject spawnCell)
     {
         // Militia cost will be a small amount of gold, to represent the small stats. This could be shown by them 
@@ -74,4 +103,14 @@ public class Unit_Spwaning : MonoBehaviour
 
         return null;
     }
+
+    // Todo Add Swordsman spawn function. 
+
+    // Todo Add Lancer spawn function. 
+
+    // Todo Add Maurauder spawn function.
+
+    #endregion
+
+    #endregion
 }

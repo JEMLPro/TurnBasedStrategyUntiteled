@@ -184,6 +184,10 @@ public class Unit_Manager : MonoBehaviour
                                             {
                                                 Debug.Log("Unit Combat");
 
+                                                // Todo Spawn combat screen. 
+
+                                                // Todo Check combat confirmation. 
+
                                                 m_UnitAttack();
 
                                                 m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0);
@@ -191,6 +195,10 @@ public class Unit_Manager : MonoBehaviour
                                             else
                                             {
                                                 Debug.Log("Building Combat");
+
+                                                // Todo Spawn combat screen. 
+
+                                                // Todo Check combat confirmation. 
 
                                                 m_AttackBuilding();
 

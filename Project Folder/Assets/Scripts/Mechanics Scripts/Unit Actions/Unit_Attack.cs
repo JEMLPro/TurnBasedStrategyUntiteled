@@ -6,12 +6,12 @@ using UnityEngine;
 [System.Serializable]
 public enum UnitType
 {
-    Militia, // Doesn't gain any advantages during combat. 
-    Spear, // Has high defence low speed and attack. 
-    Sword, // has high speed and hit chance but low defence and attack power. 
-    Axe, // Has high attack power yet low hit chance and defence. 
-    Bow, // Has low stats but has an attack range of two allowing for it to attack at a distance. 
-    Engineer // Has low stats but is able to create new buildings. 
+    Militia,    // Doesn't gain any advantages during combat. 
+    Spear,      // Has high defence low speed and attack. 
+    Sword,      // has high speed and hit chance but low defence and attack power. 
+    Axe,        // Has high attack power yet low hit chance and defence. 
+    Bow,        // Has low stats but has an attack range of two allowing for it to attack at a distance. 
+    Engineer    // Has low stats but is able to create new buildings. 
 }
 
 /*! \class This will manage the attacking and combat resolution during the player's turn. */

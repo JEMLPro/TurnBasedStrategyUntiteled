@@ -3,17 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
 
+/// <summary>
+/// This class will be used to activate and display a radial menu within the game. 
+/// </summary>
 public class Activate_Radial_Menu : MonoBehaviour
 {
+    #region Data Members 
+
+    /// <summary>
+    /// This is the radial menu being displayed and controlled by this function. 
+    /// </summary>
     [SerializeField]
     GameObject m_RadialMenu = null;
 
+    /// <summary>
+    /// This is the Rect transform for the Radial menu to be diaplayed, allowing for it's position to be updated 
+    /// and manipulated. 
+    /// </summary>
     [SerializeField]
     RectTransform m_PieMenu = null;
 
+    /// <summary>
+    /// This is the main canvas used to display the UI within the game. 
+    /// </summary>
     [SerializeField]
-    RectTransform m_Canvas = null; 
+    RectTransform m_Canvas = null;
 
+    #endregion
+
+    #region Member Functions 
+
+    /// <summary>
+    /// This will be used to assign the components needed for the Radial menu to be functional. This will also setup 
+    /// the buttons within this radial menu.
+    /// </summary>
+    /// <param name="radialMenu">The Radial menu to be managed. </param>
+    /// <param name="pieMenu">The Transform for the radial menu allowing for it to be moved on the canvas. </param>
+    /// <param name="canvas">The main canvas used to display the game's UI. </param>
+    /// <param name="unitManager">The Unit manager for the game, allowing for the Pie menu to be placed on top of units. </param>
     public void m_SetRadialMenuObject(GameObject radialMenu, RectTransform pieMenu, RectTransform canvas, GameObject unitManager)
     {
         m_RadialMenu = radialMenu;
@@ -24,6 +51,7 @@ public class Activate_Radial_Menu : MonoBehaviour
         {
             switch (button.tag)
             {
+                #region Wait Button 
                 case "Wait_Button":
 
                     Debug.Log(button.tag + " Found");
@@ -38,7 +66,9 @@ public class Activate_Radial_Menu : MonoBehaviour
                     }
 
                     break;
+                #endregion
 
+                #region Move Button 
                 case "Move_Button":
 
                     Debug.Log(button.tag + " Found");
@@ -53,7 +83,9 @@ public class Activate_Radial_Menu : MonoBehaviour
                     }
 
                     break;
+                #endregion
 
+                #region Attack Button
                 case "Attack_Button":
 
                     Debug.Log(button.tag + " Found");
@@ -69,6 +101,9 @@ public class Activate_Radial_Menu : MonoBehaviour
 
                     break;
 
+                #endregion
+
+                #region Build Button
                 case "Build_Button":
 
                     Debug.Log(button.tag + " Found");
@@ -84,6 +119,8 @@ public class Activate_Radial_Menu : MonoBehaviour
 
                     break;
 
+                #endregion
+
                 default:
 
                     Debug.Log(button.tag + " Found - Undefined functionality. ");
@@ -98,7 +135,11 @@ public class Activate_Radial_Menu : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// This will activate or deactivate the radial menu for the game. 
+    /// </summary>
+    /// <param name="attachedObject">This will be the unit to place the menu on top of. </param>
+    /// <param name="menuState">This is the new state of the menu. </param>
     public void m_ActivateMenu(GameObject attachedObject, bool menuState)
     {
         m_RadialMenu.SetActive(menuState); 
@@ -144,6 +185,13 @@ public class Activate_Radial_Menu : MonoBehaviour
         #endregion
     }
 
+    /// <summary>
+    /// This will be use to convert the world positioning to canvas positioning. 
+    /// </summary>
+    /// <param name="canvas">The main game canvas. </param>
+    /// <param name="camera">The main canvas. </param>
+    /// <param name="position">The position to convert. </param>
+    /// <returns></returns>
     private Vector2 WorldToCanvasPosition(RectTransform canvas, Camera camera, Vector3 position)
     {
         //Vector position (percentage from 0 to 1) considering camera size.
@@ -165,4 +213,6 @@ public class Activate_Radial_Menu : MonoBehaviour
 
         return temp;
     }
+
+    #endregion
 }

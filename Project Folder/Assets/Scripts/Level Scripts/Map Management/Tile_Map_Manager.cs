@@ -4,35 +4,81 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
+/// <summary>
+/// This class will be used to manage a tile map within the game. 
+/// </summary>
 public class Tile_Map_Manager : MonoBehaviour
 {
-    [SerializeField]
-    List<GameObject> m_Grid = new List<GameObject>(); /*!< \var This is the grid object in the game, it will hold all if the cells forming the map. */
+    #region Data Members 
 
+    /// <summary>
+    /// This is a grid formed by an arrangement of game objects which will act as cells in the grid. 
+    /// </summary>
     [SerializeField]
-    Vector2 m_MinBounds;
-
+    List<GameObject> m_Grid = new List<GameObject>();
+    /// <summary>
+    /// This is the basic cell prefab, this will be cloned to create the grid patten, forming a map. 
+    /// </summary>
     [SerializeField]
-    Vector2 m_MaxBounds; 
+    GameObject m_Cell;
 
-    [SerializeField]
-    GameObject m_Cell; /*!< /var This is the prefab object for the cell, used for cloning. */
-
+    /// <summary>
+    /// This will determine if the cells on within the map will be selectable. 
+    /// </summary>
     [SerializeField]
     bool m_bAllowSelectable = false;
 
+    /// <summary>
+    /// This will be used to check which level is currently loaded. 
+    /// </summary>
     [SerializeField]
-    int m_iCurrentLevel = 1;
+    Level m_CurrentLevelLoaded;
 
+    #region Camera Interaction
+
+    [Header("Camera Interaction")]
+
+    /// <summary>
+    /// This is the minimum bounds for the map, this will be used to ensure a camera doesn't extend out of map range. 
+    /// </summary>
     [SerializeField]
-    Level m_CurrentLevelLoaded; 
+    Vector2 m_MinBounds;
 
+    /// <summary>
+    /// This is the maximum bounds for the map, this will be used to ensure a camera doesn't extend out of map range. 
+    /// </summary>
+    [SerializeField]
+    Vector2 m_MaxBounds;
+
+    #endregion
+
+    #region Points of Interest
+
+    [Header("Points of Interest")]
+
+    /// <summary>
+    /// This is a poit of interest on the map, this translates to the HQ position for the Player.
+    /// </summary>
     [SerializeField]
     GridPos m_HQPosOne;
 
+    /// <summary>
+    /// This is a poit of interest on the map, this translates to the HQ position for the AI.
+    /// </summary>
     [SerializeField]
     GridPos m_HQPosTwo;
 
+    #endregion
+
+    #endregion
+
+    #region Member Functions 
+
+    #region Map Creation and Set-up
+
+    /// <summary>
+    /// This will be used to setup the maps during start-up. 
+    /// </summary>
     public void m_SetupMaps()
     {
         Debug.Log("Attempting to load levels into game.");
@@ -60,7 +106,9 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
-    // Used to reset the grid allowing for a new one to be built. 
+    /// <summary>
+    /// This will reset the map allowing for a new one to be created. 
+    /// </summary>
     void m_ResetGrid()
     {
         // Loops through the current cells and removes them from the game.
@@ -75,7 +123,10 @@ public class Tile_Map_Manager : MonoBehaviour
         m_Grid.Clear(); 
     }
 
-    // Used to load a level using the Level Class. 
+    /// <summary>
+    /// This will be used to create a map using level data loaded from a file. 
+    /// </summary>
+    /// <param name="levelToLoad">This is the data needed to create a level. </param>
     public void m_CreateTileMap(Level levelToLoad)
     {
 
@@ -224,6 +275,10 @@ public class Tile_Map_Manager : MonoBehaviour
         m_CalculateMapBounds(); 
     }
 
+    /// <summary>
+    /// This will be used to create a map using level data loaded from a file. 
+    /// </summary>
+    /// <param name="levelindex">The index of levels to load. The int passed into this will load the corisponding level. </param>
     public void m_CreateTileMap(int levelindex)
     {
         m_CurrentLevelLoaded = gameObject.GetComponent<Level_Loader>().m_GetLevelFromList(levelindex);
@@ -383,10 +438,13 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------------------------------
-    //  Map Bounds and Camera Interaction.
-    //--------------------------------------------------------------------------------------------------------------------------------
+    #endregion
 
+    #region Map Bounds and Camera Interaction
+
+    /// <summary>
+    /// This will use the size of the map to calculate the map bounds for the camera. 
+    /// </summary>
     void m_CalculateMapBounds()
     {
         m_MinBounds = m_Grid.First<GameObject>().transform.position;
@@ -394,15 +452,28 @@ public class Tile_Map_Manager : MonoBehaviour
         m_MaxBounds = m_Grid.Last<GameObject>().transform.position;
     }
 
+    /// <summary>
+    /// This allows access to the minimum map bounds.
+    /// </summary>
+    /// <returns></returns>
     public Vector2 m_GetMinBounds() => m_MinBounds;
 
+    /// <summary>
+    /// This allows access to the maximum map bounds.
+    /// </summary>
+    /// <returns></returns>
     public Vector2 m_GetMaxBounds() => m_MaxBounds;
 
-    //--------------------------------------------------------------------------------------------------------------------------------
-    //  Cell Manipulation and Location. 
-    //--------------------------------------------------------------------------------------------------------------------------------
+    #endregion
 
-    // This will return a cell depending on the cell coordiantes provided. 
+    #region Cell Manipulation 
+
+    /// <summary>
+    /// This will be used to get access to a cell using a pair of coords. 
+    /// </summary>
+    /// <param name="x">The X position of the cell. </param>
+    /// <param name="y">The Y position of the cell. </param>
+    /// <returns>A cell at the position of the coords. </returns>
     public GameObject m_GetCellUsingGridPosition(int x, int y)
     {
         // This will loop through each object in the grid until the desired cell is found. 
@@ -424,6 +495,10 @@ public class Tile_Map_Manager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// If a cell is selected this will return the cell which is selected. 
+    /// </summary>
+    /// <returns>The selected cell. </returns>
     public GameObject m_GetSelectedCell()
     {
         foreach (var cell in m_Grid)
@@ -439,6 +514,12 @@ public class Tile_Map_Manager : MonoBehaviour
         return null; 
     }
 
+    /// <summary>
+    /// If a cell is selected this will return the cell which is selected. 
+    /// </summary>
+    /// <param name="resetCell">This will be used to select to either reset the selection to null or keep 
+    /// the cell selected at the end of the function. </param>
+    /// <returns>The selected cell. </returns>
     public GameObject m_GetSelectedCell(bool resetCell)
     {
         foreach (var cell in m_Grid)
@@ -457,6 +538,10 @@ public class Tile_Map_Manager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// This will generate a cell from the map and export it from this function. 
+    /// </summary>
+    /// <returns>A random cell on the map. </returns>
     public GameObject m_GetRandomCell()
     {
         if(m_Grid.Count <= 0)
@@ -467,6 +552,11 @@ public class Tile_Map_Manager : MonoBehaviour
         return m_Grid[Random.Range(0, m_Grid.Count - 1)];
     }
 
+    /// <summary>
+    /// This will allow access to HQ spawn points wthin the map. 
+    /// </summary>
+    /// <param name="index">Which HQ point to get. </param>
+    /// <returns>A cell to spawn the desired HQ. </returns>
     public GameObject m_GetHQSpawnPoint(int index)
     {
         switch (index)
@@ -500,6 +590,12 @@ public class Tile_Map_Manager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// This will get a spawn point based on which player and which index is used. 
+    /// </summary>
+    /// <param name="owner">The player which needs the object to be spawned. </param>
+    /// <param name="spawnIndex">The object being spawned. </param>
+    /// <returns>The spawn point for the desired building depending upon which player needs the building. </returns>
     public GameObject m_GetSpawnPoint(CurrentTurn owner, int spawnIndex)
     {
         GameObject l_ReturnValue = null;
@@ -614,7 +710,11 @@ public class Tile_Map_Manager : MonoBehaviour
         return l_ReturnValue; 
     }
 
-    // This will be used to assign the neighbours to a cell in the grid, a position in the grid will need to be provide. 
+    /// <summary>
+    /// This will assign the neighbours for this cell. It will use the grid position to calculate which other cells 
+    /// are around the desired cell.
+    /// </summary>
+    /// <param name="numberInGrid">The cell to assign neighbours to. </param>
     void m_AssignCellNeighbours(int numberInGrid)
     {
         // This will check that the number provided isn't out of the grid's range. 
@@ -677,6 +777,11 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will be used to check the cell range from the start cell to the cells around it.
+    /// </summary>
+    /// <param name="dist">The max move distance.</param>
+    /// <param name="startCell">The starting cell. </param>
     public void m_CheckCellRange(int dist, GameObject startCell)
     {
         if (startCell != null)
@@ -724,6 +829,9 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will be used to reset the colours for the cells. 
+    /// </summary>
     public void m_ResetCellColours()
     {
         foreach (var cell in m_Grid)
@@ -732,6 +840,9 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will be used to reset all occupied cells. 
+    /// </summary>
     public void m_ResetOccupied()
     {
         foreach (var cell in m_Grid)
@@ -740,10 +851,22 @@ public class Tile_Map_Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will change the selectable state for the map. 
+    /// </summary>
+    /// <param name="newValue">This is the value for if the map tiles can be selected. </param>
     public void m_SetSelectable(bool newValue)
     {
         m_bAllowSelectable = newValue;
     }
 
-    public bool m_GetAllowSelectable() => m_bAllowSelectable; 
+    /// <summary>
+    /// This will check if the map is selectable is. 
+    /// </summary>
+    /// <returns>Weather the map is selectable. </returns>
+    public bool m_GetAllowSelectable() => m_bAllowSelectable;
+
+    #endregion
+
+    #endregion
 }
