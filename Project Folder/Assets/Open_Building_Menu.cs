@@ -3,30 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
 
+/// <summary>
+/// This class is used to open the buiding menu, allowing for the player to select a building to be built. 
+/// </summary>
 public class Open_Building_Menu : MonoBehaviour
 {
     #region Data Members 
 
-    [SerializeField]
-    bool m_bopenMenu = false;
-
     [Header("Dynamic Creation Of Buttons")]
 
+    /// <summary>
+    /// This is the list of buttons that needs to be created dynammically, the string name in this list 
+    /// will directly corrispond to the name of the Button and the text it displays. 
+    /// </summary>
     [SerializeField]
     List<string> m_sButtonOptions;
-
+    
+    /// <summary>
+    /// This is the list of buttons created at the start of this class's existance. This list will 
+    /// allow for them to be controlled and updated. 
+    /// </summary>
     [SerializeField]
     List<GameObject> m_Buttons;
 
+    /// <summary>
+    /// The background for the buttons, this is needed to ensure they are set the correct size and 
+    /// positions. 
+    /// </summary>
     [SerializeField]
     GameObject m_ButtonBackground;
 
+    /// <summary>
+    /// This is a basic button, this will be cloned to allow for new buttons to be created. 
+    /// </summary>
     [SerializeField]
     GameObject m_BasicButton;
 
     #endregion
 
-    // Start is called before the first frame update
+    #region Member Functions 
+
+    /// <summary>
+    /// This is called before the first update for this object, used to initilize and create all 
+    /// the buttons in the list. 
+    /// </summary>
     void Start()
     {
         // Using the list of buttons create a set of buttons for each option. 
@@ -61,13 +81,24 @@ public class Open_Building_Menu : MonoBehaviour
         m_HideAll();
     }
 
+    /// <summary>
+    /// This will allow access to the full list of buttons created by this class. 
+    /// </summary>
+    /// <returns>All buttons managed by this class. </returns>
     public List<GameObject> m_GetButtons() => m_Buttons;
 
+    /// <summary>
+    /// This will be used to hide the buttons when they don't need to be displayed. 
+    /// </summary>
     public void m_HideAll()
     {
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// This will be used to check if this is currently visable within the game. 
+    /// </summary>
+    /// <returns>True if the buttons are visable in the game. </returns>
     public bool m_Visable()
     {
         if (gameObject.activeSelf == true)
@@ -78,4 +109,5 @@ public class Open_Building_Menu : MonoBehaviour
         return false;
     }
 
+    #endregion
 }
