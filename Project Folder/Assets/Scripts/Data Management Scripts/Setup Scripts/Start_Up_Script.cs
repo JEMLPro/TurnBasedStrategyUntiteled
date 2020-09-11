@@ -14,9 +14,9 @@ using UnityEditor;
 /// </summary>
 public class Start_Up_Script : Prefab_Loader
 {
-    //---------------------------------------------------------------------------------------------------------------------------\\
-    // Data Members Start
-    //---------------------------------------------------------------------------------------------------------------------------\\
+    #region Data Members Start
+
+    #region Managers 
 
     /// <summary>
     /// This is the turn manager and will maintain the turn based system within the game limiting player and AI turns. 
@@ -37,6 +37,10 @@ public class Start_Up_Script : Prefab_Loader
     /// </summary>
     [SerializeField]
     GameObject m_UserInterfaceManager;
+
+    #endregion
+
+    #region Players 
 
     /// <summary>
     /// This is the player object and is created when a new game is set up. it will have: a Unit manager, a Building manager 
@@ -61,9 +65,11 @@ public class Start_Up_Script : Prefab_Loader
     [SerializeField]
     GameObject m_AI;
 
-    //---------------------------------------------------------------------------------------------------------------------------\\
-    // Member Functions Start
-    //---------------------------------------------------------------------------------------------------------------------------\\
+    #endregion
+
+    #endregion
+
+    #region Member Functions Start
 
     /// <summary>
     /// This will be called upon start-up and will init all of the management scripts used for the game, it will also ensure the 
@@ -72,6 +78,8 @@ public class Start_Up_Script : Prefab_Loader
     private void Start()
     {
         // This will be the start of the game and will initate all of the other items in the game. 
+
+        #region Locate and start Interface Manager
 
         Debug.Log("Locating interface manger in game.");
 
@@ -91,6 +99,10 @@ public class Start_Up_Script : Prefab_Loader
             Debug.LogError("Error code 0001-2 - Unable to load Interface");
         }
 
+        #endregion
+
+        #region Locate and Start Turn Manager
+
         // The Turn manager. 
 
         GameObject l_TurnManagerReference = m_ExportPrefabObject("Prefabs/Management_Prefabs/Turn Manager", "Turn Manager");
@@ -103,6 +115,10 @@ public class Start_Up_Script : Prefab_Loader
         {
             Debug.LogError("Error code 0001-0 - Unable to load Turn Manager");
         }
+
+        #endregion
+
+        #region Load levels into the game
 
         // Loading the levels into the game. 
 
@@ -142,6 +158,8 @@ public class Start_Up_Script : Prefab_Loader
         {
             Debug.LogError("Error code 0001-1 - Unable to load Level Manager");
         }
+
+        #endregion
     }
 
     /// <summary>
@@ -165,9 +183,9 @@ public class Start_Up_Script : Prefab_Loader
     /// <param name="level">The level selected and which to load.</param>
     private void m_StartSkirmishGame(int level)
     {
-        // Delete all of the preveous items
+        #region Delete all of the preveous items
 
-        if(m_Player != null)
+        if (m_Player != null)
         {
             Destroy(m_Player);
         }
@@ -176,6 +194,10 @@ public class Start_Up_Script : Prefab_Loader
         {
             Destroy(m_AI);
         }
+
+        #endregion
+
+        #region Setup Selected Level
 
         // Load the game map using level index. 
 
@@ -201,9 +223,13 @@ public class Start_Up_Script : Prefab_Loader
             Camera.main.GetComponent<Move_Object>().m_SetMaxBounds(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetMaxBounds());
         }
 
+        #endregion
+
         // Introduce the player and AI into the game. 
 
         Debug.Log("Begining Player Creation.");
+
+        #region Setup Player
 
         // Player Object. 
 
@@ -211,6 +237,8 @@ public class Start_Up_Script : Prefab_Loader
 
         if (m_Player != null)
         {
+            #region Assign Base Components
+
             // Give the player object a new name.
             m_Player.name = "Player Object";
 
@@ -222,6 +250,10 @@ public class Start_Up_Script : Prefab_Loader
             m_Player.AddComponent<Lose_Script>();
 
             m_Player.GetComponent<Lose_Script>().m_SetOwner(CurrentTurn.player);
+
+            #endregion
+
+            #region Create Building Manager
 
             // Add the building manager onto the player
 
@@ -255,6 +287,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_BuildingManager.GetComponent<Bulding_Manager>().m_SpawnGoldMine(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.player, 3));
 
+                #region Create Resource Manager
+
                 // Create Resource Manager. 
 
                 GameObject l_ResourceManager = new GameObject
@@ -278,12 +312,18 @@ public class Start_Up_Script : Prefab_Loader
 
                 // Attach unit spawn menu onto build manager 
 
-                l_BuildingManager.GetComponent<Bulding_Manager>().m_SetUnitBuildMenu(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetUnitBuildMenu()); 
+                l_BuildingManager.GetComponent<Bulding_Manager>().m_SetUnitBuildMenu(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetUnitBuildMenu());
+
+                #endregion
             }
             else
             {
                 Debug.LogError("Error 0100-1 - Unable to create object on player: Building Manager");
             }
+
+            #endregion
+
+            #region Create Unit Manager
 
             // Add the unit manager to the player.
 
@@ -311,6 +351,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 Debug.Log("Unit Manager Created and added to player");
 
+                #region Spawn Units
+
                 // Load in basic unit
 
                 l_UnitManager.GetComponent<Unit_Spwaning>().m_SetBaseUnit(m_Player.GetComponent<Prefab_Loader>().m_ExportPrefabObject("Prefabs/Unit Prefabs/Base Unit", "Basic Unit"));
@@ -337,11 +379,17 @@ public class Start_Up_Script : Prefab_Loader
                 }
 
                 Debug.Log(l_iNumberOfSpawnedUnits + " Units have been spawned");
+
+                #endregion
             }
             else
             {
                 Debug.LogError("Error 0100-2 - Unable to create object on player: Unit Manager");
             }
+
+            #endregion
+
+            #region Connect Interface Elements
 
             // Connect the user interface objects to their reference objects. 
 
@@ -382,16 +430,23 @@ public class Start_Up_Script : Prefab_Loader
                 m_Player.GetComponent<Lose_Script>().m_SetGameOverScreen(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetGameOverScreen());
             }
 
+            #endregion
         }
+
+        #endregion
 
         // AI Object. 
 
         Debug.Log("Begining AI Creation");
 
+        #region Setup AI
+
         m_AI = new GameObject();
 
         if (m_AI != null)
         {
+            #region Assign Base Components
+
             // Give the AI object a new name.
             m_AI.name = "AI Object";
 
@@ -405,6 +460,10 @@ public class Start_Up_Script : Prefab_Loader
             m_AI.AddComponent<Lose_Script>();
 
             m_AI.GetComponent<Lose_Script>().m_SetOwner(CurrentTurn.ai);
+
+            #endregion
+
+            #region Create Building Manager
 
             // Add the building manager onto the AI
 
@@ -436,6 +495,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SpawnGoldMine(m_LevelManager.GetComponent<Prefab_Loader>().m_GetLoadedObject().GetComponent<Tile_Map_Manager>().m_GetSpawnPoint(CurrentTurn.ai, 3));
 
+                #region Create Resource Manager
+
                 // Create Resource Manager. 
 
                 GameObject l_AiResourceManager = new GameObject
@@ -448,11 +509,17 @@ public class Start_Up_Script : Prefab_Loader
                 l_AiResourceManager.transform.parent = m_AI.transform;
 
                 l_AIBuildingManager.GetComponent<Bulding_Manager>().m_SetResourceManager(l_AiResourceManager);
+
+                #endregion
             }
             else
             {
                 Debug.LogError("Error 0200-1 - Unable to create object on AI: Building Manager");
             }
+
+            #endregion
+
+            #region Create Unit Manager
 
             // Add the unit manager to the AI.
 
@@ -484,6 +551,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SetBaseUnit(m_AI.GetComponent<Prefab_Loader>().m_ExportPrefabObject("Prefabs/Unit Prefabs/Base Unit AI", "Basic Unit AI"));
 
+                #region Spawn Units
+
                 // Spawn Units
 
                 Debug.Log("Spawning Units... ");
@@ -506,11 +575,17 @@ public class Start_Up_Script : Prefab_Loader
                 }
 
                 Debug.Log(l_iNumberOfSpawnedUnits + " Units have been spawned");
+
+                #endregion
             }
             else
             {
                 Debug.LogError("Error 0200-2 - Unable to create object on AI: Unit Manager");
             }
+
+            #endregion
+
+            #region Connect Interface Elements
 
             Debug.Log("User Interface connection - AI. ");
 
@@ -524,8 +599,13 @@ public class Start_Up_Script : Prefab_Loader
                 m_AI.GetComponent<Lose_Script>().m_SetGameOverScreen(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetGameOverScreen());
             }
 
+            #endregion
         }
+
+        #endregion
     }
+
+    #endregion
 
     //---------------------------------------------------------------------------------------------------------------------------\\
     // File End
