@@ -347,7 +347,13 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_UnitManager.AddComponent<Activate_Radial_Menu>();
 
-                l_UnitManager.AddComponent<Activate_Build_Menu>(); 
+                l_UnitManager.AddComponent<Activate_Build_Menu>();
+
+                // Assign functionality to the combat menu.
+
+                m_Player.GetComponentInChildren<Unit_Manager>().m_AssignCombatMenu(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetCombatMenu());
+
+                m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetCombatMenu().GetComponent<Manage_Combat_Screen>().m_SetAttackConfirmation(l_UnitManager);
 
                 Debug.Log("Unit Manager Created and added to player");
 

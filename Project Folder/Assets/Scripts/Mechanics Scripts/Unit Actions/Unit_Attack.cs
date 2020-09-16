@@ -106,6 +106,34 @@ public class Unit_Attack : MonoBehaviour
 
     #region Member Functions
 
+    #region Get Stats
+
+    /// <summary>
+    /// This will allow access to this unit's current attack stat. 
+    /// </summary>
+    /// <returns></returns>
+    public float m_GetAttack() => m_fAttack;
+
+    /// <summary>
+    /// This will allow access to this unit's current hit chance stat. 
+    /// </summary>
+    /// <returns></returns>
+    public float m_GetHitChance() => m_fHit;
+
+    /// <summary>
+    /// This will allow access to this unit's current speed stat. 
+    /// </summary>
+    /// <returns></returns>
+    public float m_GetSpeed() => m_fSpeed;
+
+    /// <summary>
+    /// This will allow access to this unit's current defence stat. 
+    /// </summary>
+    /// <returns></returns>
+    public float m_GetDefence() => m_fDefence;
+
+    #endregion
+
     #region Combat Resolution
 
     /// <summary>

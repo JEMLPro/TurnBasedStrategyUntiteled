@@ -19,7 +19,7 @@ public class Interface_Controller : MonoBehaviour
 
     #region Data Members
 
-    // Other and Utility Elements \\ 
+    [Header("Other and Utility Elements")] 
 
     /// <summary>
     /// This is the main canvas used by the UI to draw onto the screen. 
@@ -27,7 +27,7 @@ public class Interface_Controller : MonoBehaviour
     [SerializeField]
     RectTransform m_MainCanvas;
 
-    // In-Game UI Elements \\ 
+    [Header("In-Game UI Elements")]
 
     #region Player Interaction
 
@@ -62,6 +62,12 @@ public class Interface_Controller : MonoBehaviour
     [SerializeField]
     GameObject m_ActionRadialMenu;
 
+    /// <summary>
+    /// This will be used to display the combat breakdown before combat. 
+    /// </summary>
+    [SerializeField]
+    GameObject m_CombatMenu;
+
     #endregion
 
     /// <summary>
@@ -70,7 +76,7 @@ public class Interface_Controller : MonoBehaviour
     [SerializeField]
     GameObject m_GameOverScreen;
 
-    // Menu UI Elements \\
+    [Header("Menu UI Elements")]
 
     /// <summary>
     /// This is the level select dropdown list, it will contain a full list of all of the levels within the game, it will 
@@ -341,6 +347,13 @@ public class Interface_Controller : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public GameObject m_GetActionRadialMenu() => m_ActionRadialMenu;
+
+    /// <summary>
+    /// This will allow access to the combat menu, allowing for it to be passed into the unit manager, so it can be easily opened 
+    /// when combat is initiated. 
+    /// </summary>
+    /// <returns></returns>
+    public GameObject m_GetCombatMenu() => m_CombatMenu; 
 
     #endregion
 

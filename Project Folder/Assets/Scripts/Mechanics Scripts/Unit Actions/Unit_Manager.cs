@@ -96,6 +96,9 @@ public class Unit_Manager : MonoBehaviour
     [SerializeField]
     Action m_Action;
 
+    [SerializeField]
+    GameObject m_CombatMenu; 
+
     #endregion
 
     #endregion
@@ -194,11 +197,13 @@ public class Unit_Manager : MonoBehaviour
 
                                                 // Todo Spawn combat screen. 
 
+                                                if (m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_CheckVisability() == false)
+                                                {
+                                                    m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_ShowMenu(true);
+
+                                                    m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_DisplayPlayerStats(m_GetSelectedUnit());
+                                                }
                                                 // Todo Check combat confirmation. 
-
-                                                m_UnitAttack();
-
-                                                m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0);
                                             }
                                             else
                                             {
@@ -212,8 +217,6 @@ public class Unit_Manager : MonoBehaviour
 
                                                 m_GetSelectedUnit().GetComponent<Unit_Attack>().m_SetNumberOfAttacks(0);
                                             }
-
-                                            m_SetActionNull();
                                         }
                                     }
                                     else
@@ -278,6 +281,8 @@ public class Unit_Manager : MonoBehaviour
             }
         }
     }
+
+    public void m_AssignCombatMenu(GameObject combatMenu) { m_CombatMenu = combatMenu; }
 
     #endregion
 
@@ -394,7 +399,7 @@ public class Unit_Manager : MonoBehaviour
     /// This will be used to allow for the unit to attack another enemy object within the game. This is activated with the 
     /// attack action. This variation allow for this unit to attack another unit.
     /// </summary>
-    void m_UnitAttack()
+    public void m_UnitAttack()
     {
         if (m_GetSelectedUnit() != null)
         {
@@ -670,13 +675,17 @@ public class Unit_Manager : MonoBehaviour
         m_bActionSelected = false;
 
         // Resets the target for attact allowing for a new target to be selected. 
-        gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null); 
+        gameObject.GetComponent<Unit_Find_AtTarget1>().m_SetAtTarget(null);
 
         // Debug.Log("Action Selected - Nothing");
 
+        // Close Combat menu if open
+
+        m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_ShowMenu(false);
+
         // Close build menu if open. 
 
-        if(gameObject.GetComponent<Activate_Build_Menu>().m_ActiveBuildMenu())
+        if (gameObject.GetComponent<Activate_Build_Menu>().m_ActiveBuildMenu())
         {
             gameObject.GetComponent<Activate_Build_Menu>().m_SetBuildMenu(false);
         }
