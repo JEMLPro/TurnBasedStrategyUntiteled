@@ -242,7 +242,7 @@ public class Unit_Attack : MonoBehaviour
     /// </summary>
     /// <param name="otherUnitType">The type the other unit has been assigned. </param>
     /// <returns></returns>
-    bool m_CheckForAdvantage(UnitType otherUnitType)
+    public bool m_CheckForAdvantage(UnitType otherUnitType)
     {
         if ((m_UnitType == UnitType.Spear && otherUnitType == UnitType.Sword) ||
             (m_UnitType == UnitType.Sword && otherUnitType == UnitType.Axe) ||

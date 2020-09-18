@@ -355,6 +355,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetCombatMenu().GetComponent<Manage_Combat_Screen>().m_SetAttackConfirmation(l_UnitManager);
 
+                m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetCombatMenu().GetComponent<Manage_Combat_Screen>().m_SetCancelConfirmation(l_UnitManager);
+
                 Debug.Log("Unit Manager Created and added to player");
 
                 #region Spawn Units

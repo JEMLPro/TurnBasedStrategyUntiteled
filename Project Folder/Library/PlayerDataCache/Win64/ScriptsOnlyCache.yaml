@@ -5,6 +5,7 @@ ScriptsOnlyBuild:
     - Attach_Levels_To_List
     - Building_Combat_Rating
     - Building_Positioning
+    - Button_Manager
     - Cell_Manager
     - Cell_Neighbours
     - Close_Game
@@ -12,9 +13,11 @@ ScriptsOnlyBuild:
     - Health_Management
     - Interface_Controller
     - Level_Loader
+    - Manage_Combat_Screen
     - Mouse_Controls
     - Move_Object
     - Object_Selection
+    - Open_Building_Menu
     - Open_Unit_Spawn_Menu
     - Pathfinding_Info
     - Prefab_Loader
@@ -30,8 +33,12 @@ ScriptsOnlyBuild:
     - Unit_Attack
     - Unit_Movement
     - Update_Turn_Display
+    Unity.Rider.Editor.dll:
+    - Packages.Rider.Editor.UnitTesting.CallbackData
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
+    - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -39,7 +46,9 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.Dropdown
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.Image
+    - UnityEngine.UI.LayoutElement
     - UnityEngine.UI.Mask
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Scrollbar
@@ -73,94 +82,106 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9674}
+      Script: {instanceID: 11708}
     - Class: 114
-      Script: {instanceID: 9724}
+      Script: {instanceID: 11710}
     - Class: 114
-      Script: {instanceID: 9760}
+      Script: {instanceID: 11712}
     - Class: 114
-      Script: {instanceID: 9830}
+      Script: {instanceID: 11736}
     - Class: 114
-      Script: {instanceID: 9832}
+      Script: {instanceID: 11796}
     - Class: 114
-      Script: {instanceID: 9866}
+      Script: {instanceID: 11844}
     - Class: 114
-      Script: {instanceID: 9876}
+      Script: {instanceID: 11922}
     - Class: 114
-      Script: {instanceID: 9926}
+      Script: {instanceID: 11924}
     - Class: 114
-      Script: {instanceID: 9930}
+      Script: {instanceID: 11958}
     - Class: 114
-      Script: {instanceID: 9984}
+      Script: {instanceID: 11968}
     - Class: 114
-      Script: {instanceID: 10062}
+      Script: {instanceID: 12026}
     - Class: 114
-      Script: {instanceID: 10152}
+      Script: {instanceID: 12034}
     - Class: 114
-      Script: {instanceID: 10176}
+      Script: {instanceID: 12090}
     - Class: 114
-      Script: {instanceID: 10260}
+      Script: {instanceID: 12114}
     - Class: 114
-      Script: {instanceID: 10366}
+      Script: {instanceID: 12186}
     - Class: 114
-      Script: {instanceID: 10428}
+      Script: {instanceID: 12292}
     - Class: 114
-      Script: {instanceID: 10518}
+      Script: {instanceID: 12322}
     - Class: 114
-      Script: {instanceID: 10558}
+      Script: {instanceID: 12422}
     - Class: 114
-      Script: {instanceID: 10572}
+      Script: {instanceID: 12560}
     - Class: 114
-      Script: {instanceID: 10608}
+      Script: {instanceID: 12646}
     - Class: 114
-      Script: {instanceID: 10612}
+      Script: {instanceID: 12766}
     - Class: 114
-      Script: {instanceID: 10656}
+      Script: {instanceID: 12818}
     - Class: 114
-      Script: {instanceID: 10658}
+      Script: {instanceID: 12836}
     - Class: 114
-      Script: {instanceID: 10846}
+      Script: {instanceID: 12880}
     - Class: 114
-      Script: {instanceID: 10890}
+      Script: {instanceID: 12940}
     - Class: 114
-      Script: {instanceID: 10914}
+      Script: {instanceID: 12942}
     - Class: 114
-      Script: {instanceID: 10934}
+      Script: {instanceID: 13156}
     - Class: 114
-      Script: {instanceID: 10956}
+      Script: {instanceID: 13200}
     - Class: 114
-      Script: {instanceID: 11066}
+      Script: {instanceID: 13240}
     - Class: 114
-      Script: {instanceID: 11072}
+      Script: {instanceID: 13266}
     - Class: 114
-      Script: {instanceID: 11122}
+      Script: {instanceID: 13284}
     - Class: 114
-      Script: {instanceID: 11158}
+      Script: {instanceID: 13296}
     - Class: 114
-      Script: {instanceID: 11212}
+      Script: {instanceID: 13430}
     - Class: 114
-      Script: {instanceID: 11334}
+      Script: {instanceID: 13438}
     - Class: 114
-      Script: {instanceID: 11368}
+      Script: {instanceID: 13494}
     - Class: 114
-      Script: {instanceID: 11414}
+      Script: {instanceID: 13536}
     - Class: 114
-      Script: {instanceID: 11420}
+      Script: {instanceID: 13548}
     - Class: 114
-      Script: {instanceID: 11426}
+      Script: {instanceID: 13600}
     - Class: 114
-      Script: {instanceID: 11440}
+      Script: {instanceID: 13726}
     - Class: 114
-      Script: {instanceID: 11446}
+      Script: {instanceID: 13760}
     - Class: 114
-      Script: {instanceID: 11460}
+      Script: {instanceID: 13816}
     - Class: 114
-      Script: {instanceID: 11478}
+      Script: {instanceID: 13824}
+    - Class: 114
+      Script: {instanceID: 13832}
+    - Class: 114
+      Script: {instanceID: 13850}
+    - Class: 114
+      Script: {instanceID: 13854}
+    - Class: 114
+      Script: {instanceID: 13868}
+    - Class: 114
+      Script: {instanceID: 13904}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
     - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -176,7 +197,27 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 258
       Script: {instanceID: 0}
+    - Class: 850595691
+      Script: {instanceID: 0}
   scriptHashData:
+  - hash:
+      serializedVersion: 2
+      Hash: 7ab0e790220bdca831fdd886b339039d
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: GridLayoutGroup
+  - hash:
+      serializedVersion: 2
+      Hash: f087c23fbfa15475a0d110af46fb0496
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Button
+  - hash:
+      serializedVersion: 2
+      Hash: 0c05f2bfb402def3f0a85a62a2323c7f
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Slider
   - hash:
       serializedVersion: 2
       Hash: 4bc4346a71a8df53a6b106f68ef3a190
@@ -185,7 +226,7 @@ ScriptsOnlyBuild:
     className: CanvasScaler
   - hash:
       serializedVersion: 2
-      Hash: 3c08375166df118bd1801438fc36b92f
+      Hash: f40fedccd4adbc76605bea6d67537e4b
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SelectionCaret
@@ -197,7 +238,7 @@ ScriptsOnlyBuild:
     className: AudioPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 626925ef558787b2d85c809198164d19
+      Hash: 4298152c7490141086c39d1836a5a43a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Dropdown
@@ -209,7 +250,7 @@ ScriptsOnlyBuild:
     className: Building_Combat_Rating
   - hash:
       serializedVersion: 2
-      Hash: 1a1fe0354ef5fb58561b291f38875002
+      Hash: 52c0356645d18c65c6c75d48c7ee6d1e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Bulding_Manager
@@ -233,6 +274,12 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: UnityEngine.TestRunner.dll
+    namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
+    className: PlayerQuitHandler
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -245,19 +292,19 @@ ScriptsOnlyBuild:
     className: ActivationTrack
   - hash:
       serializedVersion: 2
-      Hash: 72712369a7c681ad84fc255a5ec0b333
+      Hash: 699619b86d9359741a4f58540298c80b
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Text
   - hash:
       serializedVersion: 2
-      Hash: 499fd23433e68e265d153aa6b95d0047
+      Hash: fd8b23ad3c9e81bc85b197495bc510ac
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Scrollbar
   - hash:
       serializedVersion: 2
-      Hash: 2d9792521b1ee39b706ec0ebb2ece77a
+      Hash: 420e6dda105d0250350819435555117b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Unit_Manager
@@ -281,7 +328,7 @@ ScriptsOnlyBuild:
     className: Turn_Manager
   - hash:
       serializedVersion: 2
-      Hash: 8e0313c6f5e2ce35991fec2d64f8eaab
+      Hash: a6e561615949734e9f12f9b61661f43e
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Image
@@ -299,7 +346,7 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: 234235b9fb07320d11497e08a726cc56
+      Hash: 5f206dd3b0d6b103c9456019be49d644
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_InputField
@@ -315,12 +362,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Cell_Manager
-  - hash:
-      serializedVersion: 2
-      Hash: 7ab0e790220bdca831fdd886b339039d
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: GridLayoutGroup
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -365,7 +406,7 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
-      Hash: 6b6db2e328d85cb911c8aaf1b684a3f5
+      Hash: c23efa7295c049c0f57abe442cf0c6ff
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AI_Unit_Manager
@@ -383,13 +424,13 @@ ScriptsOnlyBuild:
     className: RMF_ForceDirection
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: ef5c43f921427d03730f6ea4c848f07d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: RectMask2D
   - hash:
       serializedVersion: 2
-      Hash: 4e9333594897a1fb8b136ad2eae996c7
+      Hash: 6980e81ddc615a861309d2d659cc3760
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SubMeshUI
@@ -413,6 +454,12 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
+      Hash: 78462a9443d38433e8628f12b456da9e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Activate_Build_Menu
+  - hash:
+      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -431,7 +478,7 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: b8a5e8091ab0b8861d2add371082c5e0
+      Hash: 5cc439bf63c0539d39588e69465ac2ab
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SpriteAsset
@@ -467,7 +514,7 @@ ScriptsOnlyBuild:
     className: TMP_Asset
   - hash:
       serializedVersion: 2
-      Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
+      Hash: 040dd48e3a027d5424519a5fa2009df4
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ScrollRect
@@ -497,7 +544,7 @@ ScriptsOnlyBuild:
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
-      Hash: 54667ee188a8a91db848176974c16356
+      Hash: e4cbc64f8cdb4e5bf26d18222523b9c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Open_Unit_Spawn_Menu
@@ -527,13 +574,7 @@ ScriptsOnlyBuild:
     className: Object_Selection
   - hash:
       serializedVersion: 2
-      Hash: 5f1752ed2092162f016c19510c28a8b9
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Button
-  - hash:
-      serializedVersion: 2
-      Hash: feb9a5a121d15fa3654d4e50a5233045
+      Hash: c1d728126ff1918728036c59106d32b2
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: RawImage
@@ -551,37 +592,37 @@ ScriptsOnlyBuild:
     className: Building_Positioning
   - hash:
       serializedVersion: 2
-      Hash: 5ad4aa237d47ac2bab17bacb672edf7a
+      Hash: 3164bc883ff663a5cdb32d1ef7e7c0c5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
+      Hash: f7bb6096199e0cf058d5d69878184cf4
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: InputField
   - hash:
       serializedVersion: 2
-      Hash: c9a8b80298a116835b51ba1cf9284367
+      Hash: 908b3077da284d11de0450423ca1808e
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: 5ad4aa237d47ac2bab17bacb672edf7a
+      Hash: 3164bc883ff663a5cdb32d1ef7e7c0c5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: HorizontalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 35a9693c388776aaf487636491a20f11
+      Hash: 344a8c2e106a0a4e098e91a52e0af063
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
   - hash:
       serializedVersion: 2
-      Hash: e1300922cc039f41ab46a47f4cb05898
+      Hash: 0b72c8cb307a829156936043ce529602
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Settings
@@ -599,13 +640,13 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 9a743ca311e37924e2374ac89fa91b9e
+      Hash: 6afaeb2138505f705a948f23ebebdf2f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Tile_Map_Manager
   - hash:
       serializedVersion: 2
-      Hash: 64fd23de1f372c6b804f20982b06a2ca
+      Hash: b57a220adb86cdd3aba557335b9a02c1
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Unit_Attack
@@ -629,10 +670,16 @@ ScriptsOnlyBuild:
     className: Update_Turn_Display
   - hash:
       serializedVersion: 2
-      Hash: 1b35f574ccd08f00644f490626f96f52
+      Hash: 298a4fd49e93540b12f3cf44725f2e52
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Unit_Active
+  - hash:
+      serializedVersion: 2
+      Hash: e42f6b449fc14111d01b57848a6027c5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Open_Building_Menu
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -641,7 +688,7 @@ ScriptsOnlyBuild:
     className: Prefab_Loader
   - hash:
       serializedVersion: 2
-      Hash: 3b760e6526e13f7504f59e210145899a
+      Hash: e4aac510b698bae77a5dbde189fe88e5
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshProUGUI
@@ -659,7 +706,7 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
-      Hash: 81fecec0ac0efecb6e480de4700ac0e0
+      Hash: ac290ce47b3bf89c0db759f9e170df75
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Move_Object
@@ -695,6 +742,12 @@ ScriptsOnlyBuild:
     className: Unit_Movement
   - hash:
       serializedVersion: 2
+      Hash: 4b358fdda6718f9d7d58e4278150afb2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Manage_Combat_Screen
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -713,7 +766,7 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
-      Hash: df434544c9f7b33d1cc7e635b180d279
+      Hash: a01d7cd1372d550f912f7121e6ebe739
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshPro
@@ -755,7 +808,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: a63fc1a3b035e5a0b5839cd7f7b3086e
+      Hash: 134322c9293c1896357cce271b819ce4
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: EventTrigger
@@ -767,19 +820,25 @@ ScriptsOnlyBuild:
     className: TMP_SubMesh
   - hash:
       serializedVersion: 2
-      Hash: 20eeaeae829475b5e354d1f626c51a2b
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: UnityEngine.TestRunner.dll
+    namespaceName: UnityEngine.TestRunner.Utils
+    className: TestRunCallbackListener
+  - hash:
+      serializedVersion: 2
+      Hash: c60c5cba0d5ed4f4a018240d6339217f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner
     className: PlaymodeTestsController
   - hash:
       serializedVersion: 2
-      Hash: 2aeeec1b1a144c469cd2d37776bc2315
+      Hash: 0fd689b29ca4e350893b80d82ac126b1
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 6bf09344fec744feec041cc0c0bbd07e
+      Hash: 085005b313104805bd869071149d2c6b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Interface_Controller
@@ -791,7 +850,7 @@ ScriptsOnlyBuild:
     className: StandaloneInputModule
   - hash:
       serializedVersion: 2
-      Hash: aa88ae22474df55295327e4ee99e5a24
+      Hash: 0ffaf073d4b1fa4e8036cf7ad52ddba7
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Toggle
@@ -809,10 +868,10 @@ ScriptsOnlyBuild:
     className: Attach_Levels_To_List
   - hash:
       serializedVersion: 2
-      Hash: 7072231382eb3c4871b3dd75ad0227e1
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Slider
+      Hash: dcf4527c18b38f526e9ea175768bca33
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Button_Manager
   - hash:
       serializedVersion: 2
       Hash: 0fd6822f6177297bd0eb4d83cc7a9030
@@ -835,4 +894,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
   playerPath: C:/Users/Hoodr/OneDrive/Documents/GitHub/TurnBasedStrategyUntiteled/Build
-    Folder/Build v0.02/TurnBasedStrategyUntiteled.exe
+    Folder/Build v0.06/TurnBasedStrategyUntiteled.exe

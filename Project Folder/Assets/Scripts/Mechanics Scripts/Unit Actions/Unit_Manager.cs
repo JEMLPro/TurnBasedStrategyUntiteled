@@ -195,14 +195,20 @@ public class Unit_Manager : MonoBehaviour
                                             {
                                                 Debug.Log("Unit Combat");
 
-                                                // Todo Spawn combat screen. 
-
                                                 if (m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_CheckVisability() == false)
                                                 {
                                                     m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_ShowMenu(true);
 
                                                     m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_DisplayPlayerStats(m_GetSelectedUnit());
+
+                                                    m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_DisplayAIStats(gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget());
+
+                                                    bool l_bPlayerAdvantage = m_GetSelectedUnit().GetComponent<Unit_Attack>().m_CheckForAdvantage(gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget().GetComponent<Unit_Attack>().m_GetUnitType()), 
+                                                        l_bAiAdvantage = gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget().GetComponent<Unit_Attack>().m_CheckForAdvantage(m_GetSelectedUnit().GetComponent<Unit_Attack>().m_GetUnitType());
+
+                                                    m_CombatMenu.GetComponent<Manage_Combat_Screen>().m_DisplayCombatBreakdown(m_GetSelectedUnit(), gameObject.GetComponent<Unit_Find_AtTarget1>().m_GetAtTarget(), l_bPlayerAdvantage, l_bAiAdvantage);
                                                 }
+
                                                 // Todo Check combat confirmation. 
                                             }
                                             else
@@ -282,6 +288,10 @@ public class Unit_Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This will be used to assign the current combat menu into this class.
+    /// </summary>
+    /// <param name="combatMenu">The current combat UI menu. </param>
     public void m_AssignCombatMenu(GameObject combatMenu) { m_CombatMenu = combatMenu; }
 
     #endregion
@@ -508,6 +518,14 @@ public class Unit_Manager : MonoBehaviour
         }
 
         return null; 
+    }
+
+    /// <summary>
+    /// This will be used to find the selected unit and deselect them. 
+    /// </summary>
+    public void m_DeselectSelectedUnit()
+    {
+        m_GetSelectedUnit().GetComponent<Unit_Active>().m_SetUnitActive(false); 
     }
 
     /// <summary>
