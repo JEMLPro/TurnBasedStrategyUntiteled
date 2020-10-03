@@ -109,7 +109,7 @@ public class Tile_Map_Manager : MonoBehaviour
     /// <summary>
     /// This will reset the map allowing for a new one to be created. 
     /// </summary>
-    void m_ResetGrid()
+    public void m_ResetGrid()
     {
         // Loops through the current cells and removes them from the game.
 

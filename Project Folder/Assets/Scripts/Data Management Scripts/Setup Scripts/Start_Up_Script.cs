@@ -16,6 +16,12 @@ public class Start_Up_Script : Prefab_Loader
 {
     #region Data Members Start
 
+    #region Other
+
+    bool m_bInGame = false; 
+
+    #endregion
+
     #region Managers 
 
     /// <summary>
@@ -183,19 +189,7 @@ public class Start_Up_Script : Prefab_Loader
     /// <param name="level">The level selected and which to load.</param>
     private void m_StartSkirmishGame(int level)
     {
-        #region Delete all of the preveous items
-
-        if (m_Player != null)
-        {
-            Destroy(m_Player);
-        }
-
-        if (m_AI != null)
-        {
-            Destroy(m_AI);
-        }
-
-        #endregion
+        m_ResetAllItems(); 
 
         #region Setup Selected Level
 
@@ -611,7 +605,34 @@ public class Start_Up_Script : Prefab_Loader
         }
 
         #endregion
+
+        m_bInGame = true; 
     }
+
+    public void m_ResetAllItems()
+    {
+        #region Delete all of the preveous items
+
+        if (m_Player != null)
+        {
+            Destroy(m_Player);
+        }
+
+        if (m_AI != null)
+        {
+            Destroy(m_AI);
+        }
+
+        m_LevelManager.GetComponentInChildren<Tile_Map_Manager>().m_ResetGrid();
+
+        m_SetInGameBoolean(false);
+
+        #endregion
+    }
+
+    public void m_SetInGameBoolean(bool newValue) { m_bInGame = newValue; }
+
+    public bool m_bGetInGame() => m_bInGame; 
 
     #endregion
 
