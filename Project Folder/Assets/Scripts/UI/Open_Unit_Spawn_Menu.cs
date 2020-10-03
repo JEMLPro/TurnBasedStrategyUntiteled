@@ -113,6 +113,8 @@ public class Open_Unit_Spawn_Menu : MonoBehaviour
 
     public void m_HQSelected()
     {
+        m_ButtonBackground.SetActive(true);
+
         gameObject.SetActive(true);
 
         foreach (var button in m_Buttons)
@@ -126,6 +128,8 @@ public class Open_Unit_Spawn_Menu : MonoBehaviour
 
     public void m_BarracksSelected()
     {
+        m_ButtonBackground.SetActive(true);
+
         gameObject.SetActive(true);
 
         foreach (var button in m_Buttons)
@@ -139,6 +143,8 @@ public class Open_Unit_Spawn_Menu : MonoBehaviour
 
     public void m_HideAll()
     {
+        m_ButtonBackground.SetActive(false); 
+
         gameObject.SetActive(false);
         
         foreach (var button in m_Buttons)
