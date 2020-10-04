@@ -1,0 +1,8 @@
+{
+  "sprites": [
+    {
+      "spriteName": "Archer",
+      "filePath": "Textures/Units/Archer_Character_Template"
+    }
+  ]
+}

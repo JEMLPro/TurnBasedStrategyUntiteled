@@ -94,115 +94,118 @@ public class Bulding_Manager : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        bool l_bCheckForHQDestruction = true;
-
-        bool l_bSpawningBuildingSelected = false; 
-
-        // Update all buildings. 
-
-        foreach (var building in m_BuildingList)
+        if (m_BuildingList.Count > 0)
         {
-            // Check or HQ present.
+            bool l_bCheckForHQDestruction = true;
 
-            if (building != null)
+            bool l_bSpawningBuildingSelected = false;
+
+            // Update all buildings. 
+
+            foreach (var building in m_BuildingList)
             {
-                if (building.tag == "HQ")
-                {
-                    l_bCheckForHQDestruction = false;
+                // Check or HQ present.
 
-                    if (building.GetComponent<Select_Building>().m_GetSelected() == true)
+                if (building != null)
+                {
+                    if (building.tag == "HQ")
                     {
-                        if (m_Owner == CurrentTurn.player)
+                        l_bCheckForHQDestruction = false;
+
+                        if (building.GetComponent<Select_Building>().m_GetSelected() == true)
                         {
-                            m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_HQSelected();
-
-                            l_bSpawningBuildingSelected = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        if (m_UnitBuildMenu != null)
-        {
-            if (l_bSpawningBuildingSelected == false)
-            {
-                if (m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_Visable())
-                {
-                    Debug.Log("Hiding spawn menu");
-
-                    m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_HideAll();
-                }
-            }
-        }
-
-        // If there is no Hq in this manager it has been destroyed.
-
-        if (l_bCheckForHQDestruction == true)
-        {
-            gameObject.GetComponentInParent<Lose_Script>().m_SetGameOver(); 
-        }
-
-        if(m_CheckTurn() == true)
-        {
-            m_bResetOnce = true;
-
-            if(transform.parent.GetComponentInChildren<Unit_Manager>().m_GetSelectedUnit() != null)
-            {
-                if(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false) != null)
-                {
-                    Debug.Log("Cell Selected");
-
-                    if (m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false).GetComponent<Cell_Manager>().
-                        m_Distance(transform.parent.GetComponentInChildren<Unit_Manager>().m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition()) == 1)
-                    {
-                        Debug.Log("Cell within placing range");
-
-                        if (m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false).GetComponent<Cell_Manager>().m_CanBeMovedTo())
-                        {
-
-                            Debug.Log("Cell Can be moved to");
-
-                            if (m_CurrentBuildingToSPawn != BuildingToSpawn.None)
+                            if (m_Owner == CurrentTurn.player)
                             {
-                                switch (m_CurrentBuildingToSPawn)
-                                {
-                                    case BuildingToSpawn.Farm:
-                                        m_SpawnFarm(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
-                                        break;
-                                    case BuildingToSpawn.IronMine:
-                                        m_SpawnIronMine(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
-                                        break;
-                                    case BuildingToSpawn.GoldMine:
-                                        m_SpawnGoldMine(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
-                                        break;
-                                    case BuildingToSpawn.Barracks:
+                                m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_HQSelected();
 
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                l_bSpawningBuildingSelected = true;
                             }
                         }
-                        else
-                        {
-                            Debug.LogWarning("Unable to move to that location, so a building cannot be placed there.");
-                        }
                     }
-
-                    Debug.LogWarning("Cell out of range"); 
                 }
             }
-        }
-        else
-        {
-            if(m_bResetOnce == true)
+
+            if (m_UnitBuildMenu != null)
             {
-                m_bResetOnce = false;
+                if (l_bSpawningBuildingSelected == false)
+                {
+                    if (m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_Visable())
+                    {
+                        Debug.Log("Hiding spawn menu");
 
-                // Debug.Log("Turn End - Resetting");
+                        m_UnitBuildMenu.GetComponent<Open_Unit_Spawn_Menu>().m_HideAll();
+                    }
+                }
+            }
 
-                m_EndTurn();
+            // If there is no Hq in this manager it has been destroyed.
+
+            if (l_bCheckForHQDestruction == true)
+            {
+                gameObject.GetComponentInParent<Lose_Script>().m_SetGameOver();
+            }
+
+            if (m_CheckTurn() == true)
+            {
+                m_bResetOnce = true;
+
+                if (transform.parent.GetComponentInChildren<Unit_Manager>().m_GetSelectedUnit() != null)
+                {
+                    if (m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false) != null)
+                    {
+                        Debug.Log("Cell Selected");
+
+                        if (m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false).GetComponent<Cell_Manager>().
+                            m_Distance(transform.parent.GetComponentInChildren<Unit_Manager>().m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition()) == 1)
+                        {
+                            Debug.Log("Cell within placing range");
+
+                            if (m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(false).GetComponent<Cell_Manager>().m_CanBeMovedTo())
+                            {
+
+                                Debug.Log("Cell Can be moved to");
+
+                                if (m_CurrentBuildingToSPawn != BuildingToSpawn.None)
+                                {
+                                    switch (m_CurrentBuildingToSPawn)
+                                    {
+                                        case BuildingToSpawn.Farm:
+                                            m_SpawnFarm(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
+                                            break;
+                                        case BuildingToSpawn.IronMine:
+                                            m_SpawnIronMine(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
+                                            break;
+                                        case BuildingToSpawn.GoldMine:
+                                            m_SpawnGoldMine(m_TileMap.GetComponent<Tile_Map_Manager>().m_GetSelectedCell(), 15, 10);
+                                            break;
+                                        case BuildingToSpawn.Barracks:
+
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Unable to move to that location, so a building cannot be placed there.");
+                            }
+                        }
+
+                        Debug.LogWarning("Cell out of range");
+                    }
+                }
+            }
+            else
+            {
+                if (m_bResetOnce == true)
+                {
+                    m_bResetOnce = false;
+
+                    // Debug.Log("Turn End - Resetting");
+
+                    m_EndTurn();
+                }
             }
         }
     }

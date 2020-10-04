@@ -15,6 +15,13 @@ public class Unit_Spwaning : MonoBehaviour
     [SerializeField]
     GameObject m_BaseUnit = null;
 
+    /// <summary>
+    /// This will hold the list of sprites used for the units within the game, it will allow for newly spawned units to have 
+    /// proper art assets to be applied to them. 
+    /// </summary>
+    [SerializeField]
+    GameObject m_UnitSpriteManager; 
+
     #endregion
 
     #region Member Functions 
@@ -24,6 +31,8 @@ public class Unit_Spwaning : MonoBehaviour
     /// </summary>
     /// <param name="newPrefab">The prefab object used to create all other units. </param>
     public void m_SetBaseUnit(GameObject newPrefab) { m_BaseUnit = newPrefab; }
+
+    public void m_SetSpriteManager(GameObject spriteManager) { m_UnitSpriteManager = spriteManager; } 
 
     #region Units To Spawn
 
@@ -46,8 +55,10 @@ public class Unit_Spwaning : MonoBehaviour
         {
             gameObject.transform.parent.GetComponentInChildren<Resource_Management>().m_RemoveFromGold(l_fGoldCost); 
 
+            // Create new game object for the unit. 
             GameObject l_NewMilitiaUnit = Instantiate(m_BaseUnit);
 
+            // Assign stats for the new unit using random ranges; values vary depending upon unit. 
             float l_fNewAttack = Random.Range(10, 20);
             float l_fNewDefence = Random.Range(10, 20);
             float l_fNewHitChance = Random.Range(90, 110);
@@ -58,7 +69,13 @@ public class Unit_Spwaning : MonoBehaviour
             l_NewMilitiaUnit.GetComponent<Unit_Attack>().m_SetUnitStats(l_fNewAttack, l_fNewDefence, l_fNewHitChance, l_fNewSpeed, l_fNewAttackRange, l_NewType);
             l_NewMilitiaUnit.GetComponent<Unit_Movement>().m_SetPosition(spawnCell);
 
+            // Apply unit name and sprite. 
+
             l_NewMilitiaUnit.name = "Militia";
+
+            l_NewMilitiaUnit.GetComponent<SpriteRenderer>().sprite = m_UnitSpriteManager.GetComponent<Sprite_Loader>().m_GetSpriteFromList("Archer");
+
+            // Return the newly created unit allowing for them to be added into the creator's unit list. 
 
             return l_NewMilitiaUnit;
         }

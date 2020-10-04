@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc09d9d9e1366f488b68441c37745df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TileSpriteManager: {fileID: 4900000, guid: b0997483f2da7bb408267e5c541fb524, type: 3}
+  m_SpriteManager: {fileID: 4900000, guid: 06d9a391c4d54724b9d5154e81861aea, type: 3}
   m_ListOfTiles:
     sprites: []
 --- !u!114 &3847762256882915993
@@ -77,11 +77,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Grid: []
-  m_MinBounds: {x: 0, y: 0}
-  m_MaxBounds: {x: 0, y: 0}
   m_Cell: {fileID: 5759563300985394516, guid: ca0298caac486e246a776da759d4cdbe, type: 3}
   m_bAllowSelectable: 0
-  m_iCurrentLevel: 1
+  m_CurrentLevelLoaded:
+    levelName: 
+    rows: 0
+    columns: 0
+    description: 
+    tileConfig: []
+    playerPoints: 
+    aiPoints: 
+  m_MinBounds: {x: 0, y: 0}
+  m_MaxBounds: {x: 0, y: 0}
   m_HQPosOne:
     x: 0
     y: 0

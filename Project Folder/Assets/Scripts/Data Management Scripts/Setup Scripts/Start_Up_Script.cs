@@ -44,6 +44,14 @@ public class Start_Up_Script : Prefab_Loader
     [SerializeField]
     GameObject m_UserInterfaceManager;
 
+    /// <summary>
+    /// This will be used to hold the Unit Sprites for the game, they will be loaded upon game start-up from file, 
+    /// then they will be linked to the player managers upon a game start. This will allow for the sprites to be linked 
+    /// multiple times without needing to be loaded multiple times. 
+    /// </summary>
+    [SerializeField]
+    GameObject m_UnitSpriteManager;
+
     #endregion
 
     #region Players 
@@ -166,6 +174,43 @@ public class Start_Up_Script : Prefab_Loader
         }
 
         #endregion
+
+        #region Load Unit Sprites
+
+        // Create object to hold Unit Sprites. 
+
+        Debug.Log("Loading Unit sprites into game. ");
+
+        if(m_UnitSpriteManager == null)
+        {
+            m_UnitSpriteManager = new GameObject(); 
+        }
+
+        if (m_UnitSpriteManager != null)
+        {
+            m_UnitSpriteManager.name = "Unit Sprite Manager";
+
+            m_UnitSpriteManager.transform.parent = gameObject.transform;
+
+            // Attach component and begin loading process. 
+
+            m_UnitSpriteManager.AddComponent<Sprite_Loader>();
+
+            TextAsset l_UnitSpriteManager = (Resources.Load<TextAsset>("Json Files/Unit_Sprite_Manager"));
+
+            if (l_UnitSpriteManager != null)
+            {
+                m_UnitSpriteManager.GetComponent<Sprite_Loader>().m_AssignTextAsset(l_UnitSpriteManager);
+
+                m_UnitSpriteManager.GetComponent<Sprite_Loader>().m_LoadSpritesFromJSONFile(); 
+            }
+            else
+            {
+                Debug.LogError("Unable to find list of Unit sprites. ");
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -173,8 +218,9 @@ public class Start_Up_Script : Prefab_Loader
     /// </summary>
     public void m_Begin()
     {
-        if (m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_GetLoadNewLevel())
+        if (m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_GetLevelToLoad() >= 0)
         {
+
             m_StartSkirmishGame(m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_GetLevelToLoad());
 
             m_UserInterfaceManager.GetComponent<Interface_Controller>().m_GetLevelSelectDropDown().GetComponentInChildren<Attach_Levels_To_List>().m_LevelHasBeenLoaded();
@@ -342,6 +388,10 @@ public class Start_Up_Script : Prefab_Loader
                 l_UnitManager.AddComponent<Activate_Radial_Menu>();
 
                 l_UnitManager.AddComponent<Activate_Build_Menu>();
+
+                // Assign Sprite Manager to Spawning Script. 
+
+                l_UnitManager.GetComponent<Unit_Spwaning>().m_SetSpriteManager(m_UnitSpriteManager); 
 
                 // Assign functionality to the combat menu.
 
@@ -540,6 +590,11 @@ public class Start_Up_Script : Prefab_Loader
                 l_AIUnitManager.AddComponent<AI_Unit_Manager>();
 
                 l_AIUnitManager.AddComponent<Unit_Spwaning>();
+
+                // Assign Sprite Manager to Spawning Script. 
+
+                l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SetSpriteManager(m_UnitSpriteManager);
+
 
                 Debug.Log("Unit Manager Created and added to AI");
 

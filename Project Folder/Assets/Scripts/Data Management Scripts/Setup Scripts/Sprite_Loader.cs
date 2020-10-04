@@ -53,13 +53,13 @@ public class Sprite_Loader : MonoBehaviour
     /// This is the Json file which contains the data to be loaded for the sprites.
     /// </summary>
     [SerializeField]
-    TextAsset m_TileSpriteManager;
+    TextAsset m_SpriteManager;
 
     /// <summary>
     /// This list will contain all of the sprites to be used by this manager. 
     /// </summary>
     [SerializeField]
-    Sprites m_ListOfTiles = new Sprites();
+    Sprites m_ListOfSprites = new Sprites();
 
     //---------------------------------------------------------------------------------------------------------------------------\\
     // Member Functions Start
@@ -71,17 +71,17 @@ public class Sprite_Loader : MonoBehaviour
     /// <returns>A boolean used to check if there are any errors with the loading process. </returns>
     public bool m_LoadSpritesFromJSONFile()
     {
-        Debug.Log("Loading " + m_TileSpriteManager.name + " from file");
+        Debug.Log("Loading " + m_SpriteManager.name + " from file");
 
         // Override the new object to have the data from the json file. 
 
-        m_ListOfTiles = JsonUtility.FromJson<Sprites>(m_TileSpriteManager.text);
+        m_ListOfSprites = JsonUtility.FromJson<Sprites>(m_SpriteManager.text);
 
         // Debugging - Output the number of levels loaded from file \\
 
-        Debug.Log("Number of Spries loaded : " + m_ListOfTiles.sprites.Count);
+        Debug.Log("Number of Spries loaded : " + m_ListOfSprites.sprites.Count);
 
-        if (m_ListOfTiles.sprites.Count <= 0)
+        if (m_ListOfSprites.sprites.Count <= 0)
         {
             Debug.LogError("Error Code 0002-1 : Unable to load Json file into game. Tile Sprites have not been loaded.  ");
 
@@ -89,7 +89,7 @@ public class Sprite_Loader : MonoBehaviour
         }
         else
         {
-            foreach (var tile in m_ListOfTiles.sprites)
+            foreach (var tile in m_ListOfSprites.sprites)
             {
                 // This will load the sprites onto the loaded sprite slot uisng the provided file path.                 
 
@@ -116,7 +116,24 @@ public class Sprite_Loader : MonoBehaviour
     /// This will allow access to the list of sprites loaded into this class. 
     /// </summary>
     /// <returns></returns>
-    public Sprites m_GetSpriteList() => m_ListOfTiles;
+    public Sprites m_GetSpriteList() => m_ListOfSprites;
+
+    public void m_AssignTextAsset(TextAsset newSpriteManager) { m_SpriteManager = newSpriteManager; }
+
+    public Sprite m_GetSpriteFromList(string nameIndex)
+    {
+        foreach (var sprite in m_ListOfSprites.sprites)
+        {
+            if(sprite.spriteName == nameIndex)
+            {
+                return sprite.loadedSprite;
+            }
+        }
+
+        Debug.LogWarning("Unable to find sprite " + nameIndex + " in sprite list."); 
+
+        return null;
+    }
 
     //---------------------------------------------------------------------------------------------------------------------------\\
     // File End

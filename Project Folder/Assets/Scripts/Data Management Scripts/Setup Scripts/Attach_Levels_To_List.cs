@@ -102,6 +102,8 @@ public class Attach_Levels_To_List : MonoBehaviour
             Debug.Log(nameToAdd + " has been onto the end of the dropdown list.");
             */
         }
+
+        m_iLevelToLoad = 0;
     }
 
     /// <summary>
