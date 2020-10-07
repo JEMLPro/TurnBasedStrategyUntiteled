@@ -235,6 +235,17 @@ public class Unit_Attack : MonoBehaviour
     public void m_AttackBuildingTarget(GameObject targetForAttack)
     {
         targetForAttack.GetComponent<Health_Management>().m_TakeHit(m_fAttack); 
+
+        if(targetForAttack != null)
+        {
+            // This will check to see if the building has been defeted at the end of the combat resolution
+            // and then free up the cell allowing for the cell to be moved onto again. 
+
+            if(targetForAttack.GetComponent<Health_Management>().m_CheckForDeath())
+            {
+                targetForAttack.GetComponent<Building_Positioning>().m_GetPosition().GetComponent<Cell_Manager>().m_bSetObsticle(false); 
+            }
+        }
     }
 
     /// <summary>

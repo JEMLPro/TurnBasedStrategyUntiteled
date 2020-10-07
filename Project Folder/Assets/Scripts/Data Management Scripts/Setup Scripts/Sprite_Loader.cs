@@ -118,8 +118,18 @@ public class Sprite_Loader : MonoBehaviour
     /// <returns></returns>
     public Sprites m_GetSpriteList() => m_ListOfSprites;
 
+    /// <summary>
+    /// This will be used to assign the text asset into this class, the text asset should contain the 
+    /// details needed to load sprites from file.
+    /// </summary>
+    /// <param name="newSpriteManager">The new text asset. </param>
     public void m_AssignTextAsset(TextAsset newSpriteManager) { m_SpriteManager = newSpriteManager; }
 
+    /// <summary>
+    /// This will allow access to a sprite stored by this class using a string reference. 
+    /// </summary>
+    /// <param name="nameIndex">The string name given to the sprite given when loaded. </param>
+    /// <returns>The sprite if it is stored within this file. </returns>
     public Sprite m_GetSpriteFromList(string nameIndex)
     {
         foreach (var sprite in m_ListOfSprites.sprites)

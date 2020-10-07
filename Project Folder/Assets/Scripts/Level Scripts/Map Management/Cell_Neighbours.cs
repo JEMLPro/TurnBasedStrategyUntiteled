@@ -76,6 +76,33 @@ public class Cell_Neighbours : MonoBehaviour
     }
 
     /// <summary>
+    /// This will be used to return the closest cell to the starting cell, this function will also 
+    /// return cells which cannot be moved to as well. 
+    /// </summary>
+    /// <param name="startingCell">The cell you are trying to find the closest neighbour to. </param>
+    /// <returns></returns>
+    public GameObject m_CheckAdjacentNeighbour(GameObject startingCell)
+    {
+        GameObject l_ReturnNeighbour = null;
+
+        int l_iPrevDist = int.MaxValue;
+
+        foreach (var cell in m_CellNeighbours)
+        {
+            int l_iNewDist = cell.GetComponent<Cell_Manager>().m_Distance(startingCell);
+
+            if (l_iNewDist < l_iPrevDist)
+            {
+                l_ReturnNeighbour = cell;
+
+                l_iPrevDist = l_iNewDist;
+            }
+        }
+
+        return l_ReturnNeighbour;
+    }
+
+    /// <summary>
     /// This will be used to check if there are any free spaces arund this cell, this will be used to ensure
     /// the unit shairing this cell can be targeted by an AI opponent.
     /// </summary>

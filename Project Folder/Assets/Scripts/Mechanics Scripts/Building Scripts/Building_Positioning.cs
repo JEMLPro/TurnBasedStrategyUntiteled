@@ -20,18 +20,15 @@ public class Building_Positioning : MonoBehaviour
             if (transform.position != m_CurrentCell.transform.position + m_PlcementOffset)
             {
                 transform.position = m_CurrentCell.transform.position + m_PlcementOffset;
-
-                if(m_CurrentCell.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false)
-                {
-                    m_CurrentCell.GetComponent<Cell_Manager>().m_bSetObsticle(true); 
-                }
             }
         }
     }
 
     public void m_SetPosition(GameObject newCellPos)
     {
-        m_CurrentCell = newCellPos; 
+        m_CurrentCell = newCellPos;
+
+        m_CurrentCell.GetComponent<Cell_Manager>().m_bSetObsticle(true);
     }
 
     public GameObject m_GetPosition() => m_CurrentCell; 

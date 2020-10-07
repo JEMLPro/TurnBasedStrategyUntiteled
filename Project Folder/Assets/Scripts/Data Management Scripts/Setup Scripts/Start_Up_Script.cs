@@ -18,6 +18,9 @@ public class Start_Up_Script : Prefab_Loader
 
     #region Other
 
+    /// <summary>
+    /// This will allow for the game to check if it is in the main game loop. 
+    /// </summary>
     bool m_bInGame = false; 
 
     #endregion
@@ -664,6 +667,10 @@ public class Start_Up_Script : Prefab_Loader
         m_bInGame = true; 
     }
 
+    /// <summary>
+    /// This function will delete all single use game objects at either the start or end of the game, allowing 
+    /// for a new game to be initalized. 
+    /// </summary>
     public void m_ResetAllItems()
     {
         #region Delete all of the preveous items
@@ -685,8 +692,17 @@ public class Start_Up_Script : Prefab_Loader
         #endregion
     }
 
+    /// <summary>
+    /// This will be used to update the in-game variable, this will allow for functions to detect if the main game 
+    /// loop has started. 
+    /// </summary>
+    /// <param name="newValue"></param>
     public void m_SetInGameBoolean(bool newValue) { m_bInGame = newValue; }
 
+    /// <summary>
+    /// This will allow access to the in-game vaiable. 
+    /// </summary>
+    /// <returns></returns>
     public bool m_bGetInGame() => m_bInGame; 
 
     #endregion

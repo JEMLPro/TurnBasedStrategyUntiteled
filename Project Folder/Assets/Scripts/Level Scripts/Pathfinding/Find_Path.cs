@@ -82,6 +82,8 @@ public class Find_Path : MonoBehaviour
 
             bool l_bAddNeighbour = true;
 
+            // Prevent adding cells already in the closed set. 
+
             foreach (var cell in m_ClosedSet)
             {
                 if (neighbour == cell)
@@ -90,7 +92,17 @@ public class Find_Path : MonoBehaviour
                 }
             }
 
-            if (neighbour.GetComponent<Cell_Manager>().m_bcheckForObsticle() == true)
+            // Prevent adding duplicate cells 
+
+            foreach (var cell in m_OpenSet)
+            {
+                if (neighbour == cell)
+                {
+                    l_bAddNeighbour = false;
+                }
+            }
+
+            if (neighbour.GetComponent<Cell_Manager>().m_CanBeMovedTo() == false)
             {
                 l_bAddNeighbour = false;
             }

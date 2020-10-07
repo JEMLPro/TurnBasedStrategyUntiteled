@@ -353,29 +353,74 @@ public class Unit_Manager : MonoBehaviour
                     // If the cell exists. 
                     if (l_TempPosition != null)
                     {
+                        Debug.Log("Checking movement path."); 
+
+                        // Todo - Check movement path. 
+
+                        GameObject l_PathToCheck = l_TempPosition;
+
+                        bool l_bPathFree = true;
+
+                        int l_iCount = 0;
+
+                        for (int i = 0; i < m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentMoveRange(); i++)
+                        {
+
+                            Debug.Log("Checking Cell.");
+
+                            if (l_PathToCheck.GetComponent<Cell_Manager>().m_CanBeMovedTo())
+                            {
+                                l_PathToCheck = l_PathToCheck.GetComponent<Cell_Neighbours>().m_CheckAdjacentNeighbour(m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition());
+
+                                Debug.Log("Cell " + l_iCount + " is free");
+
+                                l_iCount++;
+
+                                if(l_PathToCheck == m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition())
+                                {
+                                    i = m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentMoveRange();
+                                }
+
+                                continue;
+                            }
+                            else
+                            {
+                                l_bPathFree = false;
+
+                                Debug.Log("Cell " + l_iCount + " cannot be moved to");
+
+                                break;
+                            }
+
+                        }
+
                         // Check that the unit can move to the destination.
 
-                        if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
-                        { 
-                            // Check the distance between the current cell and the new cell. 
-
-                            int l_DistToTarget = m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(l_TempPosition);
-
-                            // If the cell is within rage the unit will move towards it. 
-
-                            GameObject l_PreveousCell = m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition(); 
-
-                            if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, l_DistToTarget) == true)
+                        if (l_bPathFree)
+                        {
+                            if (l_TempPosition.GetComponent<Cell_Manager>().m_bcheckForObsticle() == false && l_TempPosition.GetComponent<Cell_Manager>().m_bCheckForOccupied() == false)
                             {
-                                // If the unit has moved reset the cells back to their origional state. 
+                                // Check the distance between the current cell and the new cell. 
 
-                                l_PreveousCell.GetComponent<Cell_Manager>().m_bSetOccupied(false);
+                                int l_DistToTarget = m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition().GetComponent<Cell_Manager>().m_Distance(l_TempPosition);
 
-                                m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
 
-                                m_bCheckRange = false;
+                                // If the cell is within rage the unit will move towards it. 
 
-                                m_SetActionNull();
+                                GameObject l_PreveousCell = m_GetSelectedUnit().GetComponent<Unit_Movement>().m_GetCurrentPosition();
+
+                                if (m_GetSelectedUnit().GetComponent<Unit_Movement>().m_UpdateUnitPosition(l_TempPosition, l_DistToTarget) == true)
+                                {
+                                    // If the unit has moved reset the cells back to their origional state. 
+
+                                    l_PreveousCell.GetComponent<Cell_Manager>().m_bSetOccupied(false);
+
+                                    m_GameMap.GetComponent<Tile_Map_Manager>().m_ResetCellColours();
+
+                                    m_bCheckRange = false;
+
+                                    m_SetActionNull();
+                                }
                             }
                         }
                     }
