@@ -594,6 +594,8 @@ public class Start_Up_Script : Prefab_Loader
 
                 l_AIUnitManager.AddComponent<Unit_Spwaning>();
 
+                l_AIUnitManager.AddComponent<Pathfinding>(); 
+
                 // Assign Sprite Manager to Spawning Script. 
 
                 l_AIUnitManager.GetComponent<Unit_Spwaning>().m_SetSpriteManager(m_UnitSpriteManager);

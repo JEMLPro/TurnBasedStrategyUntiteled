@@ -177,9 +177,9 @@ public class AI_Unit_Manager : Unit_Manager
             {
                 // Set path finding requirements. 
 
-                if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckRequirements() == false)
+                if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_bPathReached == false)
                 {
-                    if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckStateOfPath() == false)
+                    if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_bPathReached == false)
                     {
                         Debug.Log("Setting variables");
 
@@ -221,9 +221,9 @@ public class AI_Unit_Manager : Unit_Manager
             {
                 // Set path finding requirements. 
 
-                if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckRequirements() == false)
+                if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_bPathReached == false)
                 {
-                    if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_GetPathfinding().m_CheckStateOfPath() == false)
+                    if (m_ActiveUnit.GetComponent<AI_Unit_Movement>().m_bPathReached == false)
                     {
                         Debug.Log("Setting variables");
 
